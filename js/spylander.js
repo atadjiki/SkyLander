@@ -1,6 +1,7 @@
 var screenWidth = 800;
 var screenHeight = 600;
-var gravity = 25;
+var playerGravity = 10;
+
 
 var config = {
     title: "SpyLander",
@@ -11,18 +12,23 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: {y: gravity},
+            gravity: {y: playerGravity},
             debug: false
         }
     },
     scene: {
         preload: preload,
         create: create,
-        update: update
+        menu: menu,
+        update: update,
     }
 };
 
 var player;
+var playerStartX = screenWidth/2;
+var playerStartY = 25;
+var playerVelocity = 20;
+var playerStartVelocity = 2;
 var stars;
 var platforms;
 var score = 0;
@@ -30,10 +36,13 @@ var scoreText;
 var qKey;
 var leftKey;
 var rightKey;
+var spaceKey;
 
 var game = new Phaser.Game(config);
 
 var inAir = true;
+var falling = false;
+
 
 
 function preload() {
@@ -62,10 +71,11 @@ function create() {
     platforms.create(screenWidth / 2, screenHeight - 2, 'ground').setScale(2).refreshBody();
 
     //add player sprite to game world
-    player = this.physics.add.sprite(screenWidth, 5, 'dude');
-
+    player = this.physics.add.sprite(playerStartX, playerStartY, 'dude');
     player.setBounce(0);
     player.setCollideWorldBounds(true);
+    //player.setGravityY(-1 * playerGravity);
+    this.physics.pause();
 
     this.anims.create({
         key: 'left',
@@ -114,45 +124,88 @@ function create() {
     this.qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
     this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
     //manageInput();
+}
+
+function menu() {
+
 }
 
 function restart() {
 
     //reset variables
     inAir = true;
+    falling = false;
     score = 0;
     player.setVelocity(0, 0);
+    //player.setGravityY(-1 * playerGravity);
+
     player.anims.play('turn', true);
-    player.x = screenWidth / 2;
-    player.y = 0;
+    player.x = playerStartX;
+    player.y = playerStartY;
+
 
 }
 
 function update() {
+
+
     if (this.qKey.isDown) {
         console.log('Q is pressed');
+        this.physics.pause();
         restart();
     }
 
-    if (this.leftKey.isDown) {
-        if (inAir) {
-            player.setVelocityX(-20);
+    if (this.spaceKey.isDown && falling == false) {
+        falling = true;
+       // player.setGravityY(playerGravity);
+        this.physics.resume();
+    }
 
-            player.anims.play('left', true);
-        }
-    } else if (this.rightKey.isDown) {
-        if (inAir) {
-            player.setVelocityX(20);
+    if(falling){
+        if (this.leftKey.isDown) {
+            if (inAir) {
+                player.setVelocityX(-1 * playerVelocity);
 
-            player.anims.play('right', true);
-        }
-    } else {
-        if (inAir) {
+                player.anims.play('left', true);
+            }
+        } else if (this.rightKey.isDown) {
+            if (inAir) {
+                player.setVelocityX(playerVelocity);
 
-            player.anims.play('turn', true);
+                player.anims.play('right', true);
+            }
+        } else {
+            if (inAir) {
+
+                player.anims.play('turn', true);
+            }
         }
     }
+    else if(!falling){
+        if (this.leftKey.isDown) {
+            if (inAir) {
+                player.x -= playerStartVelocity;
+
+                player.anims.play('left', true);
+            }
+        } else if (this.rightKey.isDown) {
+            if (inAir) {
+
+                player.x += playerStartVelocity;
+
+                player.anims.play('right', true);
+            }
+        } else {
+            if (inAir) {
+
+                player.anims.play('turn', true);
+            }
+        }
+    }
+
 }
 
 function collectStar(player, star) {
@@ -166,4 +219,7 @@ function playerLand(player, platforms) {
     inAir = false;
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
+}
+
+function win() {
 }
