@@ -19,34 +19,52 @@ var config = {
     scene: {
         preload: preload,
         create: create,
-        menu: menu,
         update: update,
     }
 };
 
+//player variables
 var player;
 var playerStartX = screenWidth/2;
 var playerStartY = 25;
 var playerVelocity = 20;
 var playerStartVelocity = 2;
-var stars;
+
 var platforms;
+
+//score variables
 var score = 0;
+var landingFactor = 1;
+
+//UI
 var scoreText;
+var menuText;
+var endText;
+
+//inputs
 var qKey;
 var leftKey;
 var rightKey;
+var enterKey;
 var spaceKey;
+
+//elapsed time
+var startTime;
+var endTime;
+var currentTime;
 
 var game = new Phaser.Game(config);
 
+//bools/gamestates
 var inAir = true;
 var falling = false;
+var startMenu = true;
+var endMenu = false;
 
 
 
 function preload() {
-    this.load.image('sky', 'assets/sky.png');
+    this.load.image('background', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
@@ -58,16 +76,12 @@ function preload() {
 
 function create() {
 
-    //  Input Events
-    // cursors = this.input.keyboard.createCursorKeys();
-    //   quitKey = this.input.keyboard.keys().key(81);
 
-    //game variables
-    this.add.image(screenWidth / 2, screenHeight / 2, 'sky');
+    //set background
+    this.add.image(screenWidth / 2, screenHeight / 2, 'background');
 
     //static group for ground, these are unnaffected by physics
     platforms = this.physics.add.staticGroup();
-
     platforms.create(screenWidth / 2, screenHeight - 2, 'ground').setScale(2).refreshBody();
 
     //add player sprite to game world
@@ -77,6 +91,7 @@ function create() {
     //player.setGravityY(-1 * playerGravity);
     this.physics.pause();
 
+    //setup spritesheets for character
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
@@ -100,36 +115,26 @@ function create() {
     //collider object
     this.physics.add.collider(player, platforms, playerLand, null, this);
 
-    // stars = this.physics.add.group({
-    //     key: 'star',
-    //     repeat: 11,
-    //     setXY: { x: 12, y: 0, stepX: 70 }
-    // });
-    //
-    // stars.children.iterate(function (child) {
-    //
-    //     child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    //
-    // });
+    //initialize text
+    scoreText = this.add.text(16, 16, 'Time: 0', {fontSize: '32px', fill: '#000'});
+    menuText = this.add.text(screenWidth/4, screenHeight/2,
+        'Welcome to SpyLander! \n Press Enter to Start Game',{fontSize: '32px', fill: '#000'});
+
+    endText = this.add.text(screenWidth/4, screenHeight/2,
+        '',{fontSize: '32px', fill: '#000'});
 
 
-    // //collider for obstacles
-    // this.physics.add.collider(stars, platforms);
-    //
-    // this.physics.add.overlap(player, stars, collectStar, null, this); //check player/obstacle collide
-
-    scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
-
-
+    //setup key press listeners
     this.qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
     this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
-    //manageInput();
-}
-
-function menu() {
+    //hide game actors for now
+    hideGameActors();
+    hideEndMenu();
+    showStartMenu();
 
 }
 
@@ -146,80 +151,143 @@ function restart() {
     player.x = playerStartX;
     player.y = playerStartY;
 
+    hideGameActors();
+    hideEndMenu();
+
+    startMenu = true;
+    endMenu = false;
+
+    showStartMenu();
+
 
 }
 
 function update() {
 
+    if(startMenu == false && endMenu == false){
 
-    if (this.qKey.isDown) {
-        console.log('Q is pressed');
-        this.physics.pause();
-        restart();
-    }
+        if (this.qKey.isDown) {
+            this.physics.pause();
+            restart();
+        }
 
-    if (this.spaceKey.isDown && falling == false) {
-        falling = true;
-       // player.setGravityY(playerGravity);
-        this.physics.resume();
-    }
+        if (this.spaceKey.isDown && falling == false) {
+            falling = true;
+            // player.setGravityY(playerGravity);
+            this.physics.resume();
+            startTime = new Date();
+            currentTime = startTime;
+            console.log("Start Time is " + startTime);
 
-    if(falling){
-        if (this.leftKey.isDown) {
-            if (inAir) {
-                player.setVelocityX(-1 * playerVelocity);
+        }
 
-                player.anims.play('left', true);
-            }
-        } else if (this.rightKey.isDown) {
-            if (inAir) {
-                player.setVelocityX(playerVelocity);
+        if(falling){
+            currentTime = new Date();
+            var elapsed = currentTime - startTime;
+            scoreText.setText('Time: ' + parseInt((elapsed/1000).toString()));
+        }
 
-                player.anims.play('right', true);
-            }
-        } else {
-            if (inAir) {
+        if(falling){
+            if (this.leftKey.isDown) {
+                if (inAir) {
+                    player.setVelocityX(-1 * playerVelocity);
 
-                player.anims.play('turn', true);
+                    player.anims.play('left', true);
+                }
+            } else if (this.rightKey.isDown) {
+                if (inAir) {
+                    player.setVelocityX(playerVelocity);
+
+                    player.anims.play('right', true);
+                }
+            } else {
+                if (inAir) {
+
+                    player.anims.play('turn', true);
+                }
             }
         }
-    }
-    else if(!falling){
-        if (this.leftKey.isDown) {
-            if (inAir) {
-                player.x -= playerStartVelocity;
+        else if(!falling){
+            if (this.leftKey.isDown) {
+                if (inAir) {
+                    player.x -= playerStartVelocity;
 
-                player.anims.play('left', true);
+                    player.anims.play('left', true);
+                }
+            } else if (this.rightKey.isDown) {
+                if (inAir) {
+
+                    player.x += playerStartVelocity;
+
+                    player.anims.play('right', true);
+                }
+            } else {
+                if (inAir) {
+
+                    player.anims.play('turn', true);
+                }
             }
-        } else if (this.rightKey.isDown) {
-            if (inAir) {
-
-                player.x += playerStartVelocity;
-
-                player.anims.play('right', true);
-            }
-        } else {
-            if (inAir) {
-
-                player.anims.play('turn', true);
-            }
+        }
+    } else if(startMenu == false && endMenu == true){
+        showEndMenu();
+        if(this.enterKey.isDown){
+            hideEndMenu();
+            this.physics.pause();
+            restart();
+        }
+    } else if(startMenu == true && endMenu == false){
+        if(this.enterKey.isDown){
+            startMenu = false;
+            showGameActors();
+            hideStartMenu();
         }
     }
 
-}
 
-function collectStar(player, star) {
-    star.disableBody(true, true);
-
-    score += 10;
-    scoreText.setText('Score: ' + score);
 }
 
 function playerLand(player, platforms) {
     inAir = false;
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
+    endTime = new Date();
+    endMenu = true;
 }
 
-function win() {
+function hideGameActors(){
+    player.setVisible(false);
+   // platforms.setVisible(false);
+    scoreText.setVisible(false);
 }
+
+function showGameActors(){
+    player.setVisible(true);
+    //platforms.setVisible(true);
+    scoreText.setVisible(true);
+}
+
+function hideStartMenu(){
+    menuText.setVisible(false);
+}
+
+function showStartMenu(){
+    menuText.setVisible(true);
+}
+
+function hideEndMenu(){
+
+    endText.setVisible(false);
+
+}
+
+function showEndMenu(){
+
+    var time = endTime = startTime;
+    time = time/1000;
+    score = time * landingFactor;
+    //scoreText.setText('Score: ' + score);
+    endText.setText('Your score is: ' + score + '\n Press Enter to Restart');
+    endText.setVisible(true);
+
+}
+
