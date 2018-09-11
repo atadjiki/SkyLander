@@ -1,6 +1,6 @@
 function update() {
 
-    if(startMenu == false && winMenu == false){
+    if(startMenu == false && winMenu == false && alive){
 
         if (this.qKey.isDown) {
             this.physics.pause();
@@ -64,19 +64,29 @@ function update() {
                 }
             }
         }
-    } else if(startMenu == false && winMenu == true){
-        showEndMenu();
+    } else if(startMenu == false && winMenu == true && alive){
+        showWinMenu();
         if(this.enterKey.isDown){
-            hideEndMenu();
+            hideWinMenu();
             this.physics.pause();
             restart();
         }
-    } else if(startMenu == true && winMenu == false){
+    } else if(startMenu == true && winMenu == false && alive){
         if(this.enterKey.isDown){
             startMenu = false;
             showGameActors();
             hideStartMenu();
         }
+    }  else if(!alive){
+        this.physic.stop();
+        showDieMenu();
+        if(this.enterKey.isDown){
+            hideDieMenu();
+
+            restart();
+        }
+
+
     }
 
 

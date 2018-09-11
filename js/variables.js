@@ -42,4 +42,3 @@ var falling = false;
 var alive = true;
 var startMenu = true;
 var winMenu = false;
-var dieMenu = false;

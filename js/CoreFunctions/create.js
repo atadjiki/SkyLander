@@ -76,17 +76,22 @@ function create() {
     winText = this.add.text(screenWidth/4, screenHeight/2,
         '',{fontSize: '32px', fill: '#000'});
 
+    dieText = this.add.text(screenWidth/4, screenHeight/2, 'You Died! Press Enter to Restart' ,{fontSize: '32px', fill: '#000'});
+
 
     //setup key press listeners
     this.qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
     this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+    this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+    this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
     //hide game actors for now
     hideGameActors();
-    hideEndMenu();
+    hideWinMenu();
+    hideDieMenu();
     showStartMenu();
 
 }

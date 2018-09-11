@@ -8,7 +8,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: {y: playerGravity},
-            debug: false
+            debug: true
         }
     },
     scene: {
