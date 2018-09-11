@@ -1,9 +1,9 @@
 var config = {
-    title: "SpyLander",
     type: Phaser.AUTO,
-    parent: 'gameDiv',
     width: screenWidth,
     height: screenHeight,
+    backgroundColor: '#000000',
+    parent: 'gameDiv',
     physics: {
         default: 'arcade',
         arcade: {
@@ -11,12 +11,7 @@ var config = {
             debug: true
         }
     },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update,
-    }
+    scene: [Preloader, MainMenu, Game]
 };
-
 
 var game = new Phaser.Game(config);

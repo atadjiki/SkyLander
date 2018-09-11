@@ -18,9 +18,6 @@ var landingFactor = 1;
 
 //UI
 var scoreText;
-var menuText;
-var winText;
-var dieText;
 
 //inputs
 var qKey;
@@ -40,8 +37,6 @@ var currentTime;
 var inAir = true;
 var falling = false;
 var alive = true;
-var startMenu = true;
-var winMenu = false;
 
 //asset variables
 var parachuteName = 'parachute';

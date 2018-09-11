@@ -20,24 +20,24 @@ function restart() {
         platforms[i].setGravityX(0);
     }
 
-    hideGameActors();
-    hideWinMenu();
+   // hideGameActors();
+   // hideWinMenu();
 
-    startMenu = true;
-    winMenu = false;
+  //  startMenu = true;
+  //  winMenu = false;
 
-    showStartMenu();
+   // showStartMenu();
 }
 
-function playerLand(player, platforms) {
+function playerLand(player, ground) {
     inAir = false;
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
     endTime = new Date();
-    winMenu = true;
+   // winMenu = true;
 }
 
-function playerSeen(player, lightsaber){
+function playerSeen(player, spotlight){
 
     player.setVelocity(0,0);
     //TODO: play death animation?
