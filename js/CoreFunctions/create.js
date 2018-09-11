@@ -2,14 +2,14 @@ function create() {
 
 
     //set background
-    this.add.image(screenWidth / 2, screenHeight / 2, 'background');
+    this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
 
     //static group for ground, these are unnaffected by physics
     platforms = this.physics.add.staticGroup();
-    platforms.create(screenWidth / 2, screenHeight - 2, 'ground').setScale(2).refreshBody();
+    platforms.create(screenWidth / 2, screenHeight - 2, groundName).setScale(2).refreshBody();
 
     //add player sprite to game world
-    player = this.physics.add.sprite(playerStartX, playerStartY, 'dude');
+    player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
     player.setBounce(0);
     player.setCollideWorldBounds(true);
     //player.setGravityY(-1 * playerGravity);
@@ -18,20 +18,20 @@ function create() {
     //setup spritesheets for character
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
+        frames: this.anims.generateFrameNumbers(parachuteName, {start: 0, end: 3}),
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
         key: 'turn',
-        frames: [{key: 'dude', frame: 4}],
+        frames: [{key: parachuteName, frame: 4}],
         frameRate: 20
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 8}),
+        frames: this.anims.generateFrameNumbers(parachuteName, {start: 5, end: 8}),
         frameRate: 10,
         repeat: -1
     });
@@ -42,7 +42,7 @@ function create() {
     //static group for spotlight
     spotlights = [];
 
-    var spOne = this.physics.add.image(400, 400, 'spotlight');
+    var spOne = this.physics.add.image(400, 400, spotlightName);
     spOne.setScale(0.1).setRotation(-90);
     spOne.setGravityY(-1*playerGravity);
     spOne.setGravityX(0);

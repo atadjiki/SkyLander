@@ -78,16 +78,13 @@ function update() {
             hideStartMenu();
         }
     }  else if(!alive){
-        this.physic.stop();
+        //this.scene.stop();
+       // this.scene.start('create');
         showDieMenu();
+
         if(this.enterKey.isDown){
             hideDieMenu();
-
             restart();
         }
-
-
     }
-
-
 }

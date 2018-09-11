@@ -42,3 +42,15 @@ var falling = false;
 var alive = true;
 var startMenu = true;
 var winMenu = false;
+
+//asset variables
+var parachuteName = 'parachute';
+var groundName = 'ground';
+var spotlightName = 'spotlight';
+var backgroundName = 'background';
+
+var parachutePath = 'assets/parachute.png';
+var groundPath = 'assets/ground.png';
+var spotlightPath = 'assets/spotlight.png';
+var backgroundPath = 'assets/background.png';
+

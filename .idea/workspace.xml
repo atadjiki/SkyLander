@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b91c9379-6f79-49f0-b5df-c2bccaa48319" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/js/exampleStructure.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/bomb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dude.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/parachute.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/sky.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/star.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/js/CoreFunctions/create.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/CoreFunctions/create.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/CoreFunctions/preload.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/CoreFunctions/preload.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/CoreFunctions/update.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/CoreFunctions/update.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/HelperFunctions/uiHelpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/HelperFunctions/uiHelpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/spylander.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/spylander.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/variables.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/variables.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -42,7 +46,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="14" />
-          <entry key="js" value="33" />
+          <entry key="js" value="41" />
           <entry key="md" value="1" />
           <entry key="png" value="1" />
           <entry key="txt" value="1" />
@@ -52,20 +56,20 @@
         <counts>
           <entry key="HTML" value="14" />
           <entry key="Image" value="1" />
-          <entry key="JavaScript" value="33" />
+          <entry key="JavaScript" value="41" />
           <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="2303" />
-          <entry key="js" value="5152" />
+          <entry key="js" value="5617" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="2303" />
-          <entry key="JavaScript" value="5152" />
+          <entry key="JavaScript" value="5617" />
         </counts>
       </usages-collector>
     </session>
@@ -103,38 +107,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/spylander.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="21" lean-forward="true" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/HelperFunctions/uiHelpers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/CoreFunctions/create.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+            <state relative-caret-position="150">
+              <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -142,8 +119,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/CoreFunctions/update.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="80" column="27" selection-start-line="80" selection-start-column="27" selection-end-line="80" selection-end-column="27" />
+            <state relative-caret-position="253">
+              <caret line="81" column="35" selection-start-line="81" selection-start-column="35" selection-end-line="81" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/CoreFunctions/create.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="66" selection-start-line="8" selection-start-column="66" selection-end-line="8" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/exampleStructure.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="206" lean-forward="true" selection-start-line="206" selection-end-line="206" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/variables.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="318">
+              <caret line="54" column="43" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -192,12 +196,13 @@
         <option value="$PROJECT_DIR$/js/helpers.js" />
         <option value="$PROJECT_DIR$/js/UIhelpers.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/CoreFunctions/preload.js" />
-        <option value="$PROJECT_DIR$/js/variables.js" />
         <option value="$PROJECT_DIR$/js/HelperFunctions/uiHelpers.js" />
-        <option value="$PROJECT_DIR$/js/CoreFunctions/create.js" />
         <option value="$PROJECT_DIR$/js/spylander.js" />
         <option value="$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js" />
+        <option value="$PROJECT_DIR$/js/variables.js" />
+        <option value="$PROJECT_DIR$/js/CoreFunctions/preload.js" />
+        <option value="$PROJECT_DIR$/js/CoreFunctions/create.js" />
+        <option value="$PROJECT_DIR$/js/exampleStructure.js" />
         <option value="$PROJECT_DIR$/js/CoreFunctions/update.js" />
       </list>
     </option>
@@ -324,18 +329,19 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34745000" />
+    <option name="totallyTimeSpent" value="35254000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="825" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14925373" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14869626" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3286334" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32742155" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3286334" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49964765" weight="0.3991323" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49964765" visible="true" weight="0.3983629" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -343,10 +349,10 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3286334" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5003524" side_tool="true" weight="0.39972714" />
-      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="3" side_tool="true" weight="0.32995737" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14925373" />
@@ -378,7 +384,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/license.txt" />
     <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/assets/sky.png">
+    <entry file="file://$PROJECT_DIR$/assets/background.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/part10.html" />
@@ -402,24 +408,10 @@
     <entry file="file://$PROJECT_DIR$/js/update.js" />
     <entry file="file://$PROJECT_DIR$/js/UIhelpers.js" />
     <entry file="file://$PROJECT_DIR$/js/helpers.js" />
-    <entry file="file://$PROJECT_DIR$/js/CoreFunctions/preload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="47">
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/variables.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -430,31 +422,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/spylander.js">
+    <entry file="file://$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        <state relative-caret-position="425">
+          <caret line="25" column="21" lean-forward="true" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/CoreFunctions/preload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="48" selection-start-line="6" selection-start-column="48" selection-end-line="6" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/variables.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="54" column="43" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/CoreFunctions/create.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+        <state relative-caret-position="120">
+          <caret line="8" column="66" selection-start-line="8" selection-start-column="66" selection-end-line="8" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/exampleStructure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="206" lean-forward="true" selection-start-line="206" selection-end-line="206" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/CoreFunctions/update.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="80" column="27" selection-start-line="80" selection-start-column="27" selection-end-line="80" selection-end-column="27" />
+        <state relative-caret-position="253">
+          <caret line="81" column="35" selection-start-line="81" selection-start-column="35" selection-end-line="81" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js">
+    <entry file="file://$PROJECT_DIR$/js/spylander.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="21" lean-forward="true" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+        <state relative-caret-position="150">
+          <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
         </state>
       </provider>
     </entry>
