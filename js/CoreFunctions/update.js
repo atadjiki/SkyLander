@@ -1,6 +1,6 @@
 function update() {
 
-    if(startMenu == false && endMenu == false){
+    if(startMenu == false && winMenu == false){
 
         if (this.qKey.isDown) {
             this.physics.pause();
@@ -64,14 +64,14 @@ function update() {
                 }
             }
         }
-    } else if(startMenu == false && endMenu == true){
+    } else if(startMenu == false && winMenu == true){
         showEndMenu();
         if(this.enterKey.isDown){
             hideEndMenu();
             this.physics.pause();
             restart();
         }
-    } else if(startMenu == true && endMenu == false){
+    } else if(startMenu == true && winMenu == false){
         if(this.enterKey.isDown){
             startMenu = false;
             showGameActors();

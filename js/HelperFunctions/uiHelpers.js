@@ -20,7 +20,7 @@ function showStartMenu(){
 
 function hideEndMenu(){
 
-    endText.setVisible(false);
+    winText.setVisible(false);
 
 }
 
@@ -30,7 +30,7 @@ function showEndMenu(){
     time = time/1000;
     score = time * landingFactor;
     //scoreText.setText('Score: ' + score);
-    endText.setText('Your score is: ' + score + '\n Press Enter to Restart');
-    endText.setVisible(true);
+    winText.setText('Your score is: ' + score + '\n Press Enter to Restart');
+    winText.setVisible(true);
 
 }
