@@ -10,6 +10,7 @@ var playerVelocity = 20;
 var playerStartVelocity = 2;
 
 var platforms;
+var spotlights;
 
 //score variables
 var score = 0;
@@ -18,12 +19,15 @@ var landingFactor = 1;
 //UI
 var scoreText;
 var menuText;
-var endText;
+var winText;
+var dieText;
 
 //inputs
 var qKey;
 var leftKey;
 var rightKey;
+var upKey;
+var downKey;
 var enterKey;
 var spaceKey;
 
@@ -35,5 +39,7 @@ var currentTime;
 //bools/gamestates
 var inAir = true;
 var falling = false;
+var alive = true;
 var startMenu = true;
-var endMenu = false;
+var winMenu = false;
+var dieMenu = false;

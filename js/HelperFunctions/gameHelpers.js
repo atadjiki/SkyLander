@@ -15,7 +15,7 @@ function restart() {
     hideEndMenu();
 
     startMenu = true;
-    endMenu = false;
+    winMenu = false;
 
     showStartMenu();
 }
@@ -25,6 +25,14 @@ function playerLand(player, platforms) {
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
     endTime = new Date();
-    endMenu = true;
+    winMenu = true;
+}
+
+function playerSeen(player, lightsaber){
+
+    player.setVelocity(0,0);
+    //TODO: play death animation?
+    console.log("Dead!");
+    alive = false;
 }
 

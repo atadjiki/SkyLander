@@ -36,15 +36,44 @@ function create() {
         repeat: -1
     });
 
-    //collider object
+    //collider between player and platforms
     this.physics.add.collider(player, platforms, playerLand, null, this);
+
+    //static group for spotlight
+    spotlights = [];
+
+    var spOne = this.physics.add.image(400, 400, 'spotlight');
+    spOne.setScale(0.1).setRotation(-90);
+    spOne.setGravityY(-1*playerGravity);
+    spOne.setGravityX(0);
+    spotlights.push(spOne);
+
+    for(let i = 0; i < spotlights.length; i++){
+        this.tweens.add({
+            targets: spotlights[i],
+            angle: 45,
+            duration: 5000,
+            ease: 'Power.5',
+            yoyo: true,
+            delay: 1000,
+            loop: -1
+        });
+    }
+
+    //overlap between player and spotlights
+    for(let i = 0; i< spotlights.length; i++){
+
+        this.physics.add.collider(player, spotlights[i], playerSeen, null, this);
+
+    }
+
 
     //initialize text
     scoreText = this.add.text(16, 16, 'Time: 0', {fontSize: '32px', fill: '#000'});
     menuText = this.add.text(screenWidth/4, screenHeight/2,
         'Welcome to SpyLander! \n Press Enter to Start Game',{fontSize: '32px', fill: '#000'});
 
-    endText = this.add.text(screenWidth/4, screenHeight/2,
+    winText = this.add.text(screenWidth/4, screenHeight/2,
         '',{fontSize: '32px', fill: '#000'});
 
 
