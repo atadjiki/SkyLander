@@ -42,11 +42,7 @@ var Game = new Phaser.Class({
         spOne.setGravityX(0);
         spotlights.push(spOne);
 
-        var kbOne = this.physics.add.image(350, 350, spotlightName);
-        kbOne.setScale(0.1);
-        kbOne.setGravityY(-1 * playerGravity);
-        kbOne.setGravityX(0);
-
+        
         for (let i = 0; i < spotlights.length; i++) {
             this.tweens.add({
                 targets: spotlights[i],
@@ -59,16 +55,24 @@ var Game = new Phaser.Class({
             });
         }
 
-        this.tweens.add({
-            targets: kbOne,
-            x: (spotlights[0].x + 70),
-            duration: 5000,
-            ease: 'Power.5',
-            yoyo: true,
-            delay: 1000,
-            loop: -1
-        });
+        //initialize killzones
+        for (let i = 0; i < spotlights.length; i++) {
 
+            var kbOne = this.physics.add.image((spotlights[i].x - 50), (spotlights[i].y - 75), spotlightName);
+            kbOne.setScale(0.1);
+            kbOne.setGravityY(-1 * playerGravity);
+            kbOne.setGravityX(0);
+
+            this.tweens.add({
+                targets: kbOne,
+                x: (spotlights[i].x + 70),
+                duration: 5000,
+                ease: 'Power.5',
+                yoyo: true,
+                delay: 1000,
+                loop: -1
+            });
+        }
 
 
         //overlap between player and spotlights

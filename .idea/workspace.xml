@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b91c9379-6f79-49f0-b5df-c2bccaa48319" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/PhaserCE/phaserCE.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/Scenes/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Scenes/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/Scenes/MainMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Scenes/MainMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/Scenes/Preloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Scenes/Preloader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/phaser.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Phaser3/phaser.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/spylander.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Game/spylander.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/variables.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Game/variables.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -60,13 +51,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="2402" />
-          <entry key="js" value="7706" />
+          <entry key="js" value="7737" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="2402" />
-          <entry key="JavaScript" value="7706" />
+          <entry key="JavaScript" value="7737" />
         </counts>
       </usages-collector>
     </session>
@@ -104,20 +95,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Scenes/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="176" column="33" selection-start-line="176" selection-start-column="33" selection-end-line="176" selection-end-column="33" />
+            <state relative-caret-position="381">
+              <caret line="54" column="32" lean-forward="true" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -311,7 +293,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43950000" />
+    <option name="totallyTimeSpent" value="44177000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="825" extended-state="6" />
@@ -323,7 +305,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32742155" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49964765" visible="true" weight="0.3983629" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49964765" weight="0.3983629" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -468,8 +450,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Scenes/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="176" column="33" selection-start-line="176" selection-start-column="33" selection-end-line="176" selection-end-column="33" />
+        <state relative-caret-position="381">
+          <caret line="54" column="32" lean-forward="true" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
         </state>
       </provider>
     </entry>
