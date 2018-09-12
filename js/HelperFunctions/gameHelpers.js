@@ -6,7 +6,7 @@ function restart() {
     falling = false;
     score = 0;
     player.setVelocity(0, 0);
-    player.body.acceleration.y = 1;
+    player.body.acceleration.y = 0;
 
     player.anims.play('turn', true);
     player.x = playerStartX;

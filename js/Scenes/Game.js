@@ -77,7 +77,7 @@ var Game = new Phaser.Class({
         //initialize killzones
         for (let i = 0; i < spotlights.length; i++) {
 
-            var killbox = this.physics.add.image((spotlights[i].x - 50), (spotlights[i].y - 75), spotlightName);
+            var killbox = this.physics.add.image((spotlights[i].x - 50), (spotlights[i].y - 75), killboxName);
             killbox.setScale(0.1);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
@@ -100,7 +100,7 @@ var Game = new Phaser.Class({
         //overlap between player and spotlights
         for (let i = 0; i < spotlights.length; i++) {
 
-            this.physics.add.collider(player, killBoxes[i], playerSeen, null, this);
+            this.physics.add.overlap(player, killBoxes[i], playerSeen, null, this);
 
         }
 
@@ -124,11 +124,11 @@ var Game = new Phaser.Class({
 
         if (this.qKey.isDown && falling && inAir) {
             this.physics.pause();
-            pauseTweens(tweens);
+            //pauseTweens(tweens);
             restart();
         }
 
-        if (this.spaceKey.isDown && falling == false) {
+        if (this.spaceKey.isDown && !falling && !inAir) {
             falling = true;
             this.physics.resume();
             startTime = new Date();
@@ -205,11 +205,11 @@ var Game = new Phaser.Class({
 
 
         }
-        if (!alive) {
+        if (!alive && inAir) {
 
             this.physics.pause();
             pauseTweens(tweens);
-            this.add.text(screenWidth / 2, screenHeight / 2, 'You Lose! Enter to Restart', {
+            this.add.text(screenWidth / 4, screenHeight / 2, 'You Lose! Enter to Restart', {
                 fontSize: '32px',
                 fill: '#000000'
             });
@@ -227,7 +227,7 @@ var Game = new Phaser.Class({
 
             this.score = landingFactor - (diffTime/1000);
 
-            this.add.text(screenWidth / 2, screenHeight / 2, 'You Win!\n Your Score was: ' + this.score + ' \nPress Enter to Restart', {
+            this.add.text(screenWidth / 4, screenHeight / 2, 'You Win!\n Your Score was: ' + this.score + ' \nPress Enter to Restart', {
                 fontSize: '24px',
                 fill: '#000000'
             });

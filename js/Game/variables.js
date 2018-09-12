@@ -1,8 +1,7 @@
 var screenWidth = 800;
 var screenHeight = 600;
-var gravity = 10;
-var accelMax = 30;
-var accelMin = 0;
+var gravity = 10; //gravitational constant
+var accelMax = 30; //how much over gravity we can fall
 
 //player variables
 var player;
@@ -57,6 +56,7 @@ var alive = true;
 var parachuteName = 'parachute';
 var groundName = 'ground';
 var spotlightName = 'spotlight';
+var killboxName = 'hitbox';
 var backgroundName = 'background';
 var goldName = 'gold';
 var silverName = 'silver';
@@ -65,6 +65,7 @@ var bronzeName = 'bronze';
 var parachutePath = 'assets/parachute.png';
 var groundPath = 'assets/ground.png';
 var spotlightPath = 'assets/spotlight.png';
+var killboxPath = 'assets/killbox.png';
 var backgroundPath = 'assets/background.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';
