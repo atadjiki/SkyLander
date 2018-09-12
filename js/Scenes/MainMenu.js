@@ -10,7 +10,6 @@ var MainMenu = new Phaser.Class({
         },
 
     create: function () {
-        console.log('%c MainMenu ', 'background: green; color: white; display: block;');
 
       //  var bg = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
 

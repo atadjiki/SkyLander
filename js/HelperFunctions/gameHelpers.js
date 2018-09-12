@@ -6,7 +6,6 @@ function restart() {
     falling = false;
     score = 0;
     player.setVelocity(0, 0);
-    //player.setGravityY(-1 * playerGravity);
 
     player.anims.play('turn', true);
     player.x = playerStartX;
@@ -19,14 +18,6 @@ function restart() {
         platforms[i].setGravityY(-1*playerGravity);
         platforms[i].setGravityX(0);
     }
-
-   // hideGameActors();
-   // hideWinMenu();
-
-  //  startMenu = true;
-  //  winMenu = false;
-
-   // showStartMenu();
 }
 
 function playerLand(player, ground) {
@@ -34,7 +25,6 @@ function playerLand(player, ground) {
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
     endTime = new Date();
-   // winMenu = true;
 }
 
 function playerSeen(player, spotlight){

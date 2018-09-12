@@ -29,38 +29,23 @@ var Game = new Phaser.Class({
         //player.setGravityY(-1 * playerGravity);
         this.physics.pause();
 
-        //setup spritesheets for character
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers(parachuteName, {start: 0, end: 3}),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'turn',
-            frames: [{key: parachuteName, frame: 4}],
-            frameRate: 20
-        });
-
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers(parachuteName, {start: 5, end: 8}),
-            frameRate: 10,
-            repeat: -1
-        });
-
         //collider between player and platforms
         this.physics.add.collider(player, platforms, playerLand, null, this);
 
         //static group for spotlight
         spotlights = [];
+        var killBoxes = [];
 
         var spOne = this.physics.add.image(400, 400, spotlightName);
         spOne.setScale(0.1).setRotation(-90);
         spOne.setGravityY(-1 * playerGravity);
         spOne.setGravityX(0);
         spotlights.push(spOne);
+
+        var kbOne = this.physics.add.image(350, 350, spotlightName);
+        kbOne.setScale(0.1);
+        kbOne.setGravityY(-1 * playerGravity);
+        kbOne.setGravityX(0);
 
         for (let i = 0; i < spotlights.length; i++) {
             this.tweens.add({
@@ -74,13 +59,24 @@ var Game = new Phaser.Class({
             });
         }
 
+        this.tweens.add({
+            targets: kbOne,
+            x: (spotlights[0].x + 70),
+            duration: 5000,
+            ease: 'Power.5',
+            yoyo: true,
+            delay: 1000,
+            loop: -1
+        });
+
+
+
         //overlap between player and spotlights
         for (let i = 0; i < spotlights.length; i++) {
 
             this.physics.add.collider(player, spotlights[i], playerSeen, null, this);
 
         }
-
 
         //initialize text
         scoreText = this.add.text(16, 16, 'Time: 0', {fontSize: '32px', fill: '#000'});
@@ -103,8 +99,6 @@ var Game = new Phaser.Class({
         if (this.qKey.isDown) {
             this.physics.pause();
             restart();
-            this.scene.start('mainmenu');
-
         }
 
         if (this.spaceKey.isDown && falling == false) {
@@ -116,7 +110,7 @@ var Game = new Phaser.Class({
 
         }
 
-        if (falling) {
+        if (falling && inAir) {
             currentTime = new Date();
             var elapsed = currentTime - startTime;
             scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()));
@@ -163,26 +157,35 @@ var Game = new Phaser.Class({
                 }
             }
 
-            if (alive && !inAir) {
-                this.add.text(screenWidth / 2, screenHeight / 2, 'You Win! Enter to Restart', {
-                    fontSize: '32px',
-                    fill: '#ffffff'
-                });
-                if (this.enterKey.isDown) {
-                    restart();
-                    this.scene.start("mainmenu");
-                }
 
-            }
         }
         if (!alive) {
+
+            this.physics.pause();
             this.add.text(screenWidth / 2, screenHeight / 2, 'You Lose! Enter to Restart', {
                 fontSize: '32px',
-                fill: '#ffffff'
+                fill: '#000000'
             });
             if (this.enterKey.isDown) {
                 restart();
                 this.scene.start('mainmenu');
+            }
+
+        }
+        if (alive && !inAir) {
+
+            this.physics.pause();
+            var diffTime = endTime - startTime;
+
+            this.score = landingFactor - (diffTime/1000);
+
+            this.add.text(screenWidth / 2, screenHeight / 2, 'You Win!\n Your Score was: ' + this.score + ' \nPress Enter to Restart', {
+                fontSize: '24px',
+                fill: '#000000'
+            });
+            if (this.enterKey.isDown) {
+                restart();
+                this.scene.start("mainmenu");
             }
 
         }
