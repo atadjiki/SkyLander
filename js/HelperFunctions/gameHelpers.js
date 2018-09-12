@@ -1,10 +1,11 @@
 function restart() {
 
     //reset variables
-    inAir = true;
+    hasJumped = false;
     alive = true;
-    falling = false;
+    landed = false;
     score = 0;
+    scoreText = '';
     player.setVelocity(0, 0);
     player.body.acceleration.y = 0;
 
@@ -19,6 +20,8 @@ function restart() {
         platforms[i].setGravityY(-1*gravity);
         platforms[i].setGravityX(0);
     }
+
+    UnPauseTweens(tweens);
 }
 
 function playerCrash(player, ground) {
@@ -26,11 +29,13 @@ function playerCrash(player, ground) {
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
     endTime = new Date();
+    messageText.setText('You Lose! Enter to Restart');
 }
 
 function landGold(player, zone) {
 
     landingFactor*=goldBonus;
+
 
     doLand(player);
 
@@ -54,10 +59,16 @@ function landBronze(player, zone) {
 
 function doLand(player){
 
-    inAir = false;
+    landed = true;
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
     endTime = new Date();
+
+    var diffTime = endTime - startTime;
+
+    score = landingFactor - (diffTime / 1000); //the less time it took the better
+
+    messageText.setText('You Win!\n Your Score was: ' + score + ' \nPress Enter to Restart');
 
 }
 
@@ -67,12 +78,21 @@ function playerSeen(player, spotlight){
     //TODO: play death animation?
     console.log("Dead!");
     alive = false;
+    messageText.setText('You Lose! Enter to Restart');
 }
 
 function pauseTweens(tweens){
 
     for(let i = 0; i < tweens.length; i++){
         tweens[i].stop();
+    }
+
+}
+
+function UnPauseTweens(tweens){
+
+    for(let i = 0; i < tweens.length; i++){
+        tweens[i].play();
     }
 
 }

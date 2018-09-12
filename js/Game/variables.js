@@ -6,7 +6,7 @@ var accelMax = 30; //how much over gravity we can fall
 //player variables
 var player;
 var playerStartX = screenWidth/2;
-var playerStartY = 25;
+var playerStartY = 35;
 var playerVelocity = 20;
 var playerStartVelocity = 2;
 
@@ -25,6 +25,9 @@ var bronzeBonus = 40;
 var spotlights;
 var killboxes;
 var tweens;
+var killBoxOffsetX = 110;
+var killBoxOffsetY = 75;
+var killBoxTrailX = 70;
 
 //score variables
 var score = 0;
@@ -32,6 +35,7 @@ var landingFactor = 1;
 
 //UI
 var scoreText;
+var messageText;
 
 //inputs
 var qKey;
@@ -48,9 +52,9 @@ var endTime;
 var currentTime;
 
 //bools/gamestates
-var inAir = true;
-var falling = false;
+var hasJumped = false;
 var alive = true;
+var landed = false;
 
 //asset variables
 var parachuteName = 'parachute';

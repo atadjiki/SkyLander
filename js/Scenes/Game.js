@@ -22,20 +22,21 @@ var Game = new Phaser.Class({
         platforms = this.physics.add.staticGroup();
         platforms.create(screenWidth / 2, screenHeight - 2, groundName).setScale(2).refreshBody();
 
+        //create landing zones
         gold = this.physics.add.staticGroup();
-        gold.create(screenWidth/2, (screenHeight+10), goldName);
+        gold.create(screenWidth / 2, (screenHeight + 10), goldName);
 
         silver = this.physics.add.staticGroup();
-        silver.create((screenWidth/2-250), (screenHeight+10), silverName);
+        silver.create((screenWidth / 2 - 250), (screenHeight + 10), silverName);
 
         bronze = this.physics.add.staticGroup();
-        bronze.create((250+screenWidth/2), (screenHeight+10), bronzeName);
+        bronze.create((250 + screenWidth / 2), (screenHeight + 10), bronzeName);
 
         //add player sprite to game world
         player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
-        
+
         //player.setGravityY(-1 * gravity);
         this.physics.pause();
 
@@ -50,16 +51,24 @@ var Game = new Phaser.Class({
         //static group for spotlight
         spotlights = [];
         killBoxes = [];
-        tweens = [];
+        tweens = []; //keep track of tweens so we can pause/unpause them
 
 
+        //to add a spotlight, copy and paste this block below, killboxes will automatically get created
         var spOne = this.physics.add.image(400, 400, spotlightName);
         spOne.setScale(0.1).setRotation(-90);
-        spOne.setGravityY(-1 * gravity);
+        spOne.setGravityY(-1 * gravity); //for now we have to suspend these objects
         spOne.setGravityX(0);
         spotlights.push(spOne);
 
+        var spTwo = this.physics.add.image(650, 200, spotlightName);
+        spTwo.setScale(0.1).setRotation(-90);
+        spTwo.setGravityY(-1 * gravity);
+        spTwo.setGravityX(0);
+        spotlights.push(spTwo);
 
+
+        //create tweens for spotlights, in the future we can add more configs for different spotlight types
         for (let i = 0; i < spotlights.length; i++) {
             var temp = this.tweens.add({
                 targets: spotlights[i],
@@ -74,24 +83,24 @@ var Game = new Phaser.Class({
             tweens.push(temp);
         }
 
-        //initialize killzones
+        //initialize killzones, creates the hitbox that floats above the spotlight
         for (let i = 0; i < spotlights.length; i++) {
 
-            var killbox = this.physics.add.image((spotlights[i].x - 50), (spotlights[i].y - 75), killboxName);
+            var killbox = this.physics.add.image((spotlights[i].x - killBoxOffsetX), (spotlights[i].y - killBoxOffsetY), killboxName);
             killbox.setScale(0.1);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
 
             var temp = this.tweens.add({
                 targets: killbox,
-                x: (spotlights[i].x + 70),
+                x: (spotlights[i].x + killBoxTrailX),
                 duration: 5000,
                 ease: 'Power.5',
                 yoyo: true,
                 delay: 1000,
                 loop: -1
             });
-            
+
             killBoxes.push(killbox);
             tweens.push(temp);
         }
@@ -104,8 +113,13 @@ var Game = new Phaser.Class({
 
         }
 
-        //initialize text
-        scoreText = this.add.text(16, 16, 'Time: 0', {fontSize: '32px', fill: '#000'});
+        //initialize UI
+        var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, 2*playerStartY/3);
+        var graphics = this.add.graphics({ fillStyle: { color: 0x000000 } });
+        graphics.fillRectShape(headerPanel);
+
+        scoreText = this.add.text(2, 2, '', {fontSize: '16px', fill: '#ffffff'});
+        messageText = this.add.text(screenWidth/2, 2, 'Press Space to Launch', {fontSize: '16px', fill: '#00b821'});
 
         //setup key press listeners
         this.qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
@@ -122,14 +136,16 @@ var Game = new Phaser.Class({
     update: function () {
 
 
-        if (this.qKey.isDown && falling && inAir) {
+        //allow player to reset midair
+        if (this.qKey.isDown && hasJumped) {
             this.physics.pause();
-            //pauseTweens(tweens);
+            pauseTweens(tweens);
             restart();
         }
 
-        if (this.spaceKey.isDown && !falling && !inAir) {
-            falling = true;
+        //if the parachute hasnt jumped yet, wait for signal to
+        if (this.spaceKey.isDown && !hasJumped) {
+            hasJumped = true;
             this.physics.resume();
             startTime = new Date();
             currentTime = startTime;
@@ -137,100 +153,86 @@ var Game = new Phaser.Class({
 
         }
 
-        if (falling && inAir) {
+        //if parachute has jumped, start tracking time
+        if (hasJumped && alive && !landed) {
             currentTime = new Date();
             var elapsed = currentTime - startTime;
-            scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '\nAccel: ' + player.body.acceleration.y);
+            scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '  Accel: ' + player.body.acceleration.y);
         }
 
-        if (falling) {
+        //if player is midair
+        if (hasJumped) {
             if (this.leftKey.isDown) {
-                if (inAir) {
-                    player.setVelocityX(-1 * playerVelocity);
+                player.setVelocityX(-1 * playerVelocity);
 
-                    player.anims.play('left', true);
-                }
+                player.anims.play('left', true);
+
             } else if (this.rightKey.isDown) {
-                if (inAir) {
-                    player.setVelocityX(playerVelocity);
+                player.setVelocityX(playerVelocity);
 
-                    player.anims.play('right', true);
-                }
+                player.anims.play('right', true);
+
             } else if (this.upKey.isDown) {
-                if (inAir) {
-                    if(player.body.acceleration.y > (-1*gravity)){
-                        var decrement = player.body.acceleration.y - 1;
-                        player.body.setAccelerationY(decrement);
-                    }
-
-                    player.anims.play('turn', true);
+                if (player.body.acceleration.y > (-1 * gravity)) { //player cant fall upwards
+                    var decrement = player.body.acceleration.y - 1;
+                    player.body.setAccelerationY(decrement);
                 }
+
+                player.anims.play('turn', true);
+
             } else if (this.downKey.isDown) {
-                if (inAir) {
 
-                    if(player.body.acceleration.y < accelMax){
-                        var increment = player.body.acceleration.y  + 1;
-                        player.body.setAccelerationY(increment);
-                    }
-
-                    player.anims.play('turn', true);
+                if (player.body.acceleration.y < accelMax) {
+                    var increment = player.body.acceleration.y + 1;
+                    player.body.setAccelerationY(increment);
                 }
+
+                player.anims.play('turn', true);
+
             } else {
-                if (inAir) {
+                if (hasJumped) {
 
                     player.anims.play('turn', true);
                 }
             }
         }
-        else if (!falling) {
+        //if player is choosing starting position
+        else if (!hasJumped) {
             if (this.leftKey.isDown) {
-                if (inAir) {
-                    player.x -= playerStartVelocity;
 
-                    player.anims.play('left', true);
-                }
+                player.x -= playerStartVelocity;
+
+                player.anims.play('left', true);
+
             } else if (this.rightKey.isDown) {
-                if (inAir) {
 
-                    player.x += playerStartVelocity;
+                player.x += playerStartVelocity;
 
-                    player.anims.play('right', true);
-                }
+                player.anims.play('right', true);
+
             } else {
-                if (inAir) {
 
-                    player.anims.play('turn', true);
-                }
+
+                player.anims.play('turn', true);
             }
-
-
         }
-        if (!alive && inAir) {
+        //if the player jumped and died, present lose screen
+        if (!alive && hasJumped) {
 
             this.physics.pause();
             pauseTweens(tweens);
-            this.add.text(screenWidth / 4, screenHeight / 2, 'You Lose! Enter to Restart', {
-                fontSize: '32px',
-                fill: '#000000'
-            });
             if (this.enterKey.isDown) {
                 restart();
                 this.scene.start('mainmenu');
             }
 
         }
-        if (alive && !inAir) {
+        //if the player landed on a zone, display this
+        if (alive && hasJumped && landed) {
 
             this.physics.pause();
             pauseTweens(tweens);
-            var diffTime = endTime - startTime;
 
-            this.score = landingFactor - (diffTime/1000);
-
-            this.add.text(screenWidth / 4, screenHeight / 2, 'You Win!\n Your Score was: ' + this.score + ' \nPress Enter to Restart', {
-                fontSize: '24px',
-                fill: '#000000'
-            });
             if (this.enterKey.isDown) {
                 restart();
                 this.scene.start("mainmenu");

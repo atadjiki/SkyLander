@@ -11,10 +11,8 @@ var MainMenu = new Phaser.Class({
 
     create: function () {
 
-      //  var bg = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
-
-       // bg.setInteractive();
-        var title = this.add.text(screenWidth/4, screenHeight/2, 'SpyLander - Click to start', {font: '24px Courier', fill: '#00ff00'});
+        var bg = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
+        var title = this.add.text(screenWidth/4, screenHeight/2, 'SpyLander - Click to start', {font: '24px Courier', fill: '#000000'});
         title.setInteractive();
 
         title.once('pointerup', function () {
