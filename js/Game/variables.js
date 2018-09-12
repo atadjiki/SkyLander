@@ -1,3 +1,5 @@
+var debug = true;
+
 var screenWidth = 800;
 var screenHeight = 600;
 var gravity = 10; //gravitational constant
@@ -10,16 +12,9 @@ var playerStartY = 35;
 var playerVelocity = 20;
 var playerStartVelocity = 2;
 
-//game actors
-var platforms; //generic ground
-var gold;
-var silver;
-var bronze;
-
 var goldBonus = 100;
 var silverBonus = 60;
 var bronzeBonus = 40;
-
 
 //spotlight animation stuff
 var spotlights;
@@ -32,6 +27,12 @@ var killBoxTrailX = 70;
 //score variables
 var score = 0;
 var landingFactor = 1;
+
+//bools/gamestates
+var hasJumped = false;
+var alive = true;
+var landed = false;
+
 
 //UI
 var scoreText;
@@ -51,10 +52,12 @@ var startTime;
 var endTime;
 var currentTime;
 
-//bools/gamestates
-var hasJumped = false;
-var alive = true;
-var landed = false;
+//game actors
+var platforms; //generic ground
+var gold;
+var silver;
+var bronze;
+
 
 //asset variables
 var parachuteName = 'parachute';
@@ -74,4 +77,11 @@ var backgroundPath = 'assets/background.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';
 var bronzePath = 'assets/bronze.png';
+
+var black =  "#000000";
+var white = "#ffffff";
+var green = "#00b605";
+var red = "#d91d23";
+
+var gameEnded = false;
 

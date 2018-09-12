@@ -9,6 +9,8 @@ var Preloader = new Phaser.Class({
         },
 
     preload: function () {
+
+        if(debug) console.log("Loading Assets");
         this.load.image(backgroundName, backgroundPath);
         this.load.image(groundName, groundPath);
         this.load.image(spotlightName, spotlightPath);
@@ -26,6 +28,7 @@ var Preloader = new Phaser.Class({
     create: function ()
     {
 
+        if(debug) console.log("Creating Spritesheets");
         //setup spritesheets for character
         this.anims.create({
             key: 'left',

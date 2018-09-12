@@ -12,10 +12,10 @@ var MainMenu = new Phaser.Class({
     create: function () {
 
         var bg = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
-        var title = this.add.text(screenWidth/4, screenHeight/2, 'SpyLander - Click to start', {font: '24px Courier', fill: '#000000'});
-        title.setInteractive();
+        this.add.text(screenWidth/4, screenHeight/2, 'SpyLander - Click anywhere to start', {font: '24px Courier', fill: '#000000'});
+        bg.setInteractive();
 
-        title.once('pointerup', function () {
+        bg.once('pointerup', function () {
 
             this.scene.start('game');
 

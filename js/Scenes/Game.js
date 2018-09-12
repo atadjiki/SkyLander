@@ -14,9 +14,12 @@ var Game = new Phaser.Class({
 
     create: function () {
 
+        if(debug) console.log("Enter Create");
+        if(debug) console.log("Initializing Sprites");
 
         //set background
         this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
+
 
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
@@ -54,6 +57,7 @@ var Game = new Phaser.Class({
         tweens = []; //keep track of tweens so we can pause/unpause them
 
 
+        if(debug) console.log("Creating Tweens");
         //to add a spotlight, copy and paste this block below, killboxes will automatically get created
         var spOne = this.physics.add.image(400, 400, spotlightName);
         spOne.setScale(0.1).setRotation(-90);
@@ -113,14 +117,16 @@ var Game = new Phaser.Class({
 
         }
 
+        if(debug) console.log("Creating UI");
         //initialize UI
         var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, 2*playerStartY/3);
         var graphics = this.add.graphics({ fillStyle: { color: 0x000000 } });
         graphics.fillRectShape(headerPanel);
 
-        scoreText = this.add.text(2, 2, '', {fontSize: '16px', fill: '#ffffff'});
-        messageText = this.add.text(screenWidth/2, 2, 'Press Space to Launch', {fontSize: '16px', fill: '#00b821'});
+        scoreText = this.add.text(2, 2, '', {fontSize: '16px', fill: white});
+        messageText = this.add.text(screenWidth/2-100, 2, 'Press Space to Launch', {fontSize: '16px', fill: green});
 
+        if(debug) console.log("Initializing Input");
         //setup key press listeners
         this.qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -141,15 +147,19 @@ var Game = new Phaser.Class({
             this.physics.pause();
             pauseTweens(tweens);
             restart();
+            if(debug) console.log("Q Pressed");
         }
 
         //if the parachute hasnt jumped yet, wait for signal to
         if (this.spaceKey.isDown && !hasJumped) {
             hasJumped = true;
+            messageText.setText('');
             this.physics.resume();
             startTime = new Date();
             currentTime = startTime;
-            console.log("Start Time is " + startTime);
+            if(debug) console.log("Space Pressed");
+            if(debug) console.log("Start Time is " + startTime);
+
 
         }
 
@@ -158,6 +168,7 @@ var Game = new Phaser.Class({
             currentTime = new Date();
             var elapsed = currentTime - startTime;
             scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '  Accel: ' + player.body.acceleration.y);
+            scoreText.setColor(white);
         }
 
         //if player is midair
@@ -176,7 +187,10 @@ var Game = new Phaser.Class({
                 if (player.body.acceleration.y > (-1 * gravity)) { //player cant fall upwards
                     var decrement = player.body.acceleration.y - 1;
                     player.body.setAccelerationY(decrement);
+                } else{
+                    if(debug) console.log("Player at min acceleration");
                 }
+
 
                 player.anims.play('turn', true);
 
@@ -185,6 +199,8 @@ var Game = new Phaser.Class({
                 if (player.body.acceleration.y < accelMax) {
                     var increment = player.body.acceleration.y + 1;
                     player.body.setAccelerationY(increment);
+                } else{
+                    if(debug) console.log("Player at max acceleration");
                 }
 
                 player.anims.play('turn', true);
@@ -217,11 +233,16 @@ var Game = new Phaser.Class({
             }
         }
         //if the player jumped and died, present lose screen
-        if (!alive && hasJumped) {
+        if (!alive && hasJumped &&!landed) {
 
-            this.physics.pause();
-            pauseTweens(tweens);
+            if(!gameEnded){
+                this.physics.pause();
+                pauseTweens(tweens);
+                gameEnded = true;
+            }
+
             if (this.enterKey.isDown) {
+                this.enterKey.reset();
                 restart();
                 this.scene.start('mainmenu');
             }
@@ -230,14 +251,16 @@ var Game = new Phaser.Class({
         //if the player landed on a zone, display this
         if (alive && hasJumped && landed) {
 
-            this.physics.pause();
-            pauseTweens(tweens);
-
+            if(!gameEnded){
+                this.physics.pause();
+                pauseTweens(tweens);
+                gameEnded = true;
+            }
             if (this.enterKey.isDown) {
+                this.enterKey.reset();
                 restart();
                 this.scene.start("mainmenu");
             }
-
         }
     }
 
