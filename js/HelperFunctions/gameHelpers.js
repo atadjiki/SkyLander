@@ -6,6 +6,7 @@ function restart() {
     falling = false;
     score = 0;
     player.setVelocity(0, 0);
+    player.body.acceleration.y = 1;
 
     player.anims.play('turn', true);
     player.x = playerStartX;
@@ -15,7 +16,7 @@ function restart() {
 
         platforms[i].setVelocity(0, 0);
         platforms[i].setAngularVelocity(0);
-        platforms[i].setGravityY(-1*playerGravity);
+        platforms[i].setGravityY(-1*gravity);
         platforms[i].setGravityX(0);
     }
 }
@@ -33,5 +34,13 @@ function playerSeen(player, spotlight){
     //TODO: play death animation?
     console.log("Dead!");
     alive = false;
+}
+
+function pauseTweens(tweens){
+
+    for(let i = 0; i < tweens.length; i++){
+        tweens[i].stop();
+    }
+
 }
 

@@ -1,6 +1,8 @@
 var screenWidth = 800;
 var screenHeight = 600;
-var playerGravity = 10;
+var gravity = 10;
+var accelMax = 30;
+var accelMin = 0;
 
 //player variables
 var player;
@@ -11,6 +13,8 @@ var playerStartVelocity = 2;
 
 var platforms;
 var spotlights;
+var killboxes;
+var tweens;
 
 //score variables
 var score = 0;

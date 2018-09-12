@@ -26,7 +26,8 @@ var Game = new Phaser.Class({
         player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
-        //player.setGravityY(-1 * playerGravity);
+        
+        //player.setGravityY(-1 * gravity);
         this.physics.pause();
 
         //collider between player and platforms
@@ -34,17 +35,19 @@ var Game = new Phaser.Class({
 
         //static group for spotlight
         spotlights = [];
-        var killBoxes = [];
+        killBoxes = [];
+        tweens = [];
+
 
         var spOne = this.physics.add.image(400, 400, spotlightName);
         spOne.setScale(0.1).setRotation(-90);
-        spOne.setGravityY(-1 * playerGravity);
+        spOne.setGravityY(-1 * gravity);
         spOne.setGravityX(0);
         spotlights.push(spOne);
 
-        
+
         for (let i = 0; i < spotlights.length; i++) {
-            this.tweens.add({
+            var temp = this.tweens.add({
                 targets: spotlights[i],
                 angle: 45,
                 duration: 5000,
@@ -53,18 +56,20 @@ var Game = new Phaser.Class({
                 delay: 1000,
                 loop: -1
             });
+
+            tweens.push(temp);
         }
 
         //initialize killzones
         for (let i = 0; i < spotlights.length; i++) {
 
-            var kbOne = this.physics.add.image((spotlights[i].x - 50), (spotlights[i].y - 75), spotlightName);
-            kbOne.setScale(0.1);
-            kbOne.setGravityY(-1 * playerGravity);
-            kbOne.setGravityX(0);
+            var killbox = this.physics.add.image((spotlights[i].x - 50), (spotlights[i].y - 75), spotlightName);
+            killbox.setScale(0.1);
+            killbox.setGravityY(-1 * gravity);
+            killbox.setGravityX(0);
 
-            this.tweens.add({
-                targets: kbOne,
+            var temp = this.tweens.add({
+                targets: killbox,
                 x: (spotlights[i].x + 70),
                 duration: 5000,
                 ease: 'Power.5',
@@ -72,13 +77,16 @@ var Game = new Phaser.Class({
                 delay: 1000,
                 loop: -1
             });
+            
+            killBoxes.push(killbox);
+            tweens.push(temp);
         }
 
 
         //overlap between player and spotlights
         for (let i = 0; i < spotlights.length; i++) {
 
-            this.physics.add.collider(player, spotlights[i], playerSeen, null, this);
+            this.physics.add.collider(player, killBoxes[i], playerSeen, null, this);
 
         }
 
@@ -100,8 +108,9 @@ var Game = new Phaser.Class({
     update: function () {
 
 
-        if (this.qKey.isDown) {
+        if (this.qKey.isDown && falling && inAir) {
             this.physics.pause();
+            pauseTweens(tweens);
             restart();
         }
 
@@ -117,7 +126,7 @@ var Game = new Phaser.Class({
         if (falling && inAir) {
             currentTime = new Date();
             var elapsed = currentTime - startTime;
-            scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()));
+            scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '\nAccel: ' + player.body.acceleration.y);
         }
 
         if (falling) {
@@ -132,6 +141,24 @@ var Game = new Phaser.Class({
                     player.setVelocityX(playerVelocity);
 
                     player.anims.play('right', true);
+                }
+            } else if (this.upKey.isDown) {
+                if (inAir) {
+                    if(player.body.acceleration.y < accelMax){
+                        var increment = player.body.acceleration.y  + 1;
+                        player.body.setAccelerationY(increment);
+                    }
+
+                    player.anims.play('turn', true);
+                }
+            } else if (this.downKey.isDown) {
+                if (inAir) {
+                    if(player.body.acceleration.y > (-1*gravity)){
+                        var decrement = player.body.acceleration.y - 1;
+                        player.body.setAccelerationY(decrement);
+                    }
+
+                    player.anims.play('turn', true);
                 }
             } else {
                 if (inAir) {
@@ -166,6 +193,7 @@ var Game = new Phaser.Class({
         if (!alive) {
 
             this.physics.pause();
+            pauseTweens(tweens);
             this.add.text(screenWidth / 2, screenHeight / 2, 'You Lose! Enter to Restart', {
                 fontSize: '32px',
                 fill: '#000000'
@@ -179,6 +207,7 @@ var Game = new Phaser.Class({
         if (alive && !inAir) {
 
             this.physics.pause();
+            pauseTweens(tweens);
             var diffTime = endTime - startTime;
 
             this.score = landingFactor - (diffTime/1000);
