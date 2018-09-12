@@ -21,11 +21,44 @@ function restart() {
     }
 }
 
-function playerLand(player, ground) {
+function playerCrash(player, ground) {
+    alive = false;
+    player.setVelocity(0, 0);
+    player.anims.play('turn', true);
+    endTime = new Date();
+}
+
+function landGold(player, zone) {
+
+    landingFactor*=goldBonus;
+
+    doLand(player);
+
+}
+
+function landSilver(player, zone) {
+
+    landingFactor*=silverBonus;
+
+    doLand(player);
+
+}
+
+function landBronze(player, zone) {
+
+    landingFactor*=bronzeBonus;
+
+    doLand(player);
+
+}
+
+function doLand(player){
+
     inAir = false;
     player.setVelocity(0, 0);
     player.anims.play('turn', true);
     endTime = new Date();
+
 }
 
 function playerSeen(player, spotlight){

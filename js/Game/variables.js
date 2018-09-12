@@ -11,7 +11,18 @@ var playerStartY = 25;
 var playerVelocity = 20;
 var playerStartVelocity = 2;
 
-var platforms;
+//game actors
+var platforms; //generic ground
+var gold;
+var silver;
+var bronze;
+
+var goldBonus = 100;
+var silverBonus = 60;
+var bronzeBonus = 40;
+
+
+//spotlight animation stuff
 var spotlights;
 var killboxes;
 var tweens;
@@ -47,9 +58,15 @@ var parachuteName = 'parachute';
 var groundName = 'ground';
 var spotlightName = 'spotlight';
 var backgroundName = 'background';
+var goldName = 'gold';
+var silverName = 'silver';
+var bronzeName = 'bronze';
 
 var parachutePath = 'assets/parachute.png';
 var groundPath = 'assets/ground.png';
 var spotlightPath = 'assets/spotlight.png';
 var backgroundPath = 'assets/background.png';
+var goldPath = 'assets/gold.png';
+var silverPath = 'assets/silver.png';
+var bronzePath = 'assets/bronze.png';
 

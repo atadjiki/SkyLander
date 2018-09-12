@@ -22,6 +22,15 @@ var Game = new Phaser.Class({
         platforms = this.physics.add.staticGroup();
         platforms.create(screenWidth / 2, screenHeight - 2, groundName).setScale(2).refreshBody();
 
+        gold = this.physics.add.staticGroup();
+        gold.create(screenWidth/2, (screenHeight+10), goldName);
+
+        silver = this.physics.add.staticGroup();
+        silver.create((screenWidth/2-250), (screenHeight+10), silverName);
+
+        bronze = this.physics.add.staticGroup();
+        bronze.create((250+screenWidth/2), (screenHeight+10), bronzeName);
+
         //add player sprite to game world
         player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
         player.setBounce(0);
@@ -31,7 +40,12 @@ var Game = new Phaser.Class({
         this.physics.pause();
 
         //collider between player and platforms
-        this.physics.add.collider(player, platforms, playerLand, null, this);
+        this.physics.add.collider(player, platforms, playerCrash, null, this);
+
+        //for landing zones
+        this.physics.add.collider(player, gold, landGold, null, this);
+        this.physics.add.collider(player, silver, landSilver, null, this);
+        this.physics.add.collider(player, bronze, landBronze, null, this);
 
         //static group for spotlight
         spotlights = [];
@@ -144,18 +158,19 @@ var Game = new Phaser.Class({
                 }
             } else if (this.upKey.isDown) {
                 if (inAir) {
-                    if(player.body.acceleration.y < accelMax){
-                        var increment = player.body.acceleration.y  + 1;
-                        player.body.setAccelerationY(increment);
+                    if(player.body.acceleration.y > (-1*gravity)){
+                        var decrement = player.body.acceleration.y - 1;
+                        player.body.setAccelerationY(decrement);
                     }
 
                     player.anims.play('turn', true);
                 }
             } else if (this.downKey.isDown) {
                 if (inAir) {
-                    if(player.body.acceleration.y > (-1*gravity)){
-                        var decrement = player.body.acceleration.y - 1;
-                        player.body.setAccelerationY(decrement);
+
+                    if(player.body.acceleration.y < accelMax){
+                        var increment = player.body.acceleration.y  + 1;
+                        player.body.setAccelerationY(increment);
                     }
 
                     player.anims.play('turn', true);
