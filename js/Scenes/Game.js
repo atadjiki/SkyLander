@@ -155,6 +155,8 @@ var Game = new Phaser.Class({
         upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+
     },
 
 
@@ -221,11 +223,13 @@ var Game = new Phaser.Class({
                     player.setVelocityX(-1 * playerVelocity);
                     player.setRotation(playerRotation);
                     integrity-=horizDamage;
+                    player.anims.play('left', true);
 
                 } else if (rightKey.isDown) {
                     player.setVelocityX(playerVelocity);
                     player.setRotation(-playerRotation);
                     integrity-=horizDamage;
+                    player.anims.play('right', true);
 
                 } else if (upKey.isDown) {
 
@@ -237,6 +241,7 @@ var Game = new Phaser.Class({
                         if(debug) console.log("Player at min acceleration");
                     }
                     player.setRotation(0);
+                    player.anims.play('turn', true);
 
                 } else if (downKey.isDown) {
 
@@ -249,12 +254,14 @@ var Game = new Phaser.Class({
                     }
 
                     player.setRotation(0);
+                    player.anims.play('turn', true);
 
                 }
 
                 else{
                     if(debug) console.log("Parachute Integrity at 0%");
                     player.setRotation(0);
+                    player.anims.play('turn', true);
                 }
             }
             else {
@@ -265,6 +272,7 @@ var Game = new Phaser.Class({
                         player.body.setAccelerationY(increment);
                     }
                     player.setRotation(0);
+                    player.anims.play('turn', true);
                 }
             }
         }
@@ -368,6 +376,8 @@ var Game = new Phaser.Class({
     messageText.setText('You Lose! Space to Restart');
     messageText.setColor(red);
     player.setVelocity(0,0);
+    player.anims.play(explosionName, true);
+    player.visible = false;
 
 }
 

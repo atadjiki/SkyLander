@@ -89,6 +89,7 @@ var backgroundName = 'background';
 var goldName = 'gold';
 var silverName = 'silver';
 var bronzeName = 'bronze';
+var explosionName = 'explosion';
 
 var parachutePath = 'assets/parachute.png';
 var helicopterPath = 'assets/helicopter.png';
@@ -99,6 +100,7 @@ var backgroundPath = 'assets/background.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';
 var bronzePath = 'assets/bronze.png';
+var explosionPath = 'assets/explosion.png';
 
 var black =  "#000000";
 var white = "#ffffff";
