@@ -246,15 +246,17 @@ var Game = new Phaser.Class({
             if (leftKey.isDown) {
 
                 helicopter.flipX = false;
-                helicopter.x -= playerStartVelocity;
+
                 player.x -= playerStartVelocity;
+                helicopter.x = player.x;
 
 
             } else if (rightKey.isDown) {
 
                 helicopter.flipX = true;
-                helicopter.x += playerStartVelocity;
+
                 player.x += playerStartVelocity;
+                helicopter.x = player.x;
 
             } else {
             }
