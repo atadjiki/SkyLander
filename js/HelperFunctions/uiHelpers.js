@@ -1,6 +1,6 @@
 function hideGameActors(){
     player.setVisible(false);
-    scoreText.setVisible(false);
+    hudText.setVisible(false);
 
     for(let i = 0; i < spotlights.length; i++){
         spotlights[i].setVisible(false);
@@ -10,7 +10,7 @@ function hideGameActors(){
 
 function showGameActors(){
     player.setVisible(true);
-    scoreText.setVisible(true);
+    hudText.setVisible(true);
 
     for(let i = 0; i < spotlights.length; i++){
         spotlights[i].setVisible(true);
@@ -33,7 +33,7 @@ function showWinMenu(){
     var time = endTime = startTime;
     time = time/1000;
     score = time * landingFactor;
-    //scoreText.setText('Score: ' + score);
+    //hudText.setText('Score: ' + score);
     winText.setText('Your score is: ' + score + '\n Press Enter to Restart');
     winText.setVisible(true);
 }

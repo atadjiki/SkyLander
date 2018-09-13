@@ -12,6 +12,8 @@ var playerStartY = 35;
 var playerVelocity = 20;
 var playerStartVelocity = 2;
 
+var helicopter;
+
 var goldBonus = 100;
 var silverBonus = 60;
 var bronzeBonus = 40;
@@ -35,8 +37,9 @@ var landed = false;
 
 
 //UI
-var scoreText;
+var hudText;
 var messageText;
+var message = 'Press Space to Launch';;
 
 //inputs
 var qKey;
@@ -61,6 +64,7 @@ var bronze;
 
 //asset variables
 var parachuteName = 'parachute';
+var helicopterName = 'helicopter';
 var groundName = 'ground';
 var spotlightName = 'spotlight';
 var killboxName = 'hitbox';
@@ -70,6 +74,7 @@ var silverName = 'silver';
 var bronzeName = 'bronze';
 
 var parachutePath = 'assets/parachute.png';
+var helicopterPath = 'assets/helicopter.png';
 var groundPath = 'assets/ground.png';
 var spotlightPath = 'assets/spotlight.png';
 var killboxPath = 'assets/killbox.png';

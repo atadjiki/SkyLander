@@ -8,7 +8,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: {y: gravity},
-            debug: true
+            debug: debug
         }
     },
     scene: [Preloader, MainMenu, Game]

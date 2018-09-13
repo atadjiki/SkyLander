@@ -18,6 +18,7 @@ var Preloader = new Phaser.Class({
         this.load.image(goldName, goldPath);
         this.load.image(silverName, silverPath);
         this.load.image(bronzeName, bronzePath);
+        this.load.image(helicopterName, helicopterPath);
         this.load.spritesheet(parachuteName,
             parachutePath,
             {frameWidth: 32, frameHeight: 48});

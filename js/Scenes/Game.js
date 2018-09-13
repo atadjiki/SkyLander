@@ -17,13 +17,12 @@ var Game = new Phaser.Class({
         if(debug) console.log("Enter Create");
         if(debug) console.log("Initializing Sprites");
 
-        //set background
-        this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
-
-
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
-        platforms.create(screenWidth / 2, screenHeight - 2, groundName).setScale(2).refreshBody();
+        platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/14).refreshBody();
+
+        //set background
+        this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth,screenHeight);
 
         //create landing zones
         gold = this.physics.add.staticGroup();
@@ -35,10 +34,18 @@ var Game = new Phaser.Class({
         bronze = this.physics.add.staticGroup();
         bronze.create((250 + screenWidth / 2), (screenHeight + 10), bronzeName);
 
+
         //add player sprite to game world
+        helicopter = this.physics.add.sprite(playerStartX, playerStartY, helicopterName);
+        helicopter.setBounce(0);
+        helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
+        helicopter.setGravityX(0);
+        helicopter.setCollideWorldBounds(true);
+
         player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
+        player.visible = false;
 
         //player.setGravityY(-1 * gravity);
         this.physics.pause();
@@ -69,6 +76,7 @@ var Game = new Phaser.Class({
         spTwo.setScale(0.1).setRotation(-90);
         spTwo.setGravityY(-1 * gravity);
         spTwo.setGravityX(0);
+        spTwo.setCircle(spTwo.width);
         spotlights.push(spTwo);
 
 
@@ -122,19 +130,18 @@ var Game = new Phaser.Class({
         var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, 2*playerStartY/3);
         var graphics = this.add.graphics({ fillStyle: { color: 0x000000 } });
         graphics.fillRectShape(headerPanel);
-
-        scoreText = this.add.text(2, 2, '', {fontSize: '16px', fill: white});
-        messageText = this.add.text(screenWidth/2-100, 2, 'Press Space to Launch', {fontSize: '16px', fill: green});
+        this.hudText = this.add.text(2, 2, '   ', {fontSize: '16px', fill: white});
+        messageText = this.add.text(screenWidth/2-100, 2, message, {fontSize: '16px', fill: green});
 
         if(debug) console.log("Initializing Input");
         //setup key press listeners
-        this.qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-        this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
     },
 
@@ -143,47 +150,47 @@ var Game = new Phaser.Class({
 
 
         //allow player to reset midair
-        if (this.qKey.isDown && hasJumped) {
+        if (qKey.isDown && hasJumped &&!gameEnded) {
             this.physics.pause();
             pauseTweens(tweens);
-            restart();
+            this.restart()
             if(debug) console.log("Q Pressed");
+            qKey.reset();
         }
 
         //if the parachute hasnt jumped yet, wait for signal to
-        if (this.spaceKey.isDown && !hasJumped) {
+        if (spaceKey.isDown && !hasJumped) {
             hasJumped = true;
-            messageText.setText('');
+            player.visible = true;
+            message = '';
             this.physics.resume();
             startTime = new Date();
             currentTime = startTime;
             if(debug) console.log("Space Pressed");
             if(debug) console.log("Start Time is " + startTime);
-
-
         }
 
         //if parachute has jumped, start tracking time
         if (hasJumped && alive && !landed) {
             currentTime = new Date();
             var elapsed = currentTime - startTime;
-            scoreText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '  Accel: ' + player.body.acceleration.y);
-            scoreText.setColor(white);
+            this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '  Accel: ' + player.body.acceleration.y);
+            this.hudText.setColor(white);
         }
 
         //if player is midair
         if (hasJumped) {
-            if (this.leftKey.isDown) {
+            if (leftKey.isDown) {
                 player.setVelocityX(-1 * playerVelocity);
 
                 player.anims.play('left', true);
 
-            } else if (this.rightKey.isDown) {
+            } else if (rightKey.isDown) {
                 player.setVelocityX(playerVelocity);
 
                 player.anims.play('right', true);
 
-            } else if (this.upKey.isDown) {
+            } else if (upKey.isDown) {
                 if (player.body.acceleration.y > (-1 * gravity)) { //player cant fall upwards
                     var decrement = player.body.acceleration.y - 1;
                     player.body.setAccelerationY(decrement);
@@ -191,10 +198,9 @@ var Game = new Phaser.Class({
                     if(debug) console.log("Player at min acceleration");
                 }
 
-
                 player.anims.play('turn', true);
 
-            } else if (this.downKey.isDown) {
+            } else if (downKey.isDown) {
 
                 if (player.body.acceleration.y < accelMax) {
                     var increment = player.body.acceleration.y + 1;
@@ -207,29 +213,25 @@ var Game = new Phaser.Class({
 
             } else {
                 if (hasJumped) {
-
                     player.anims.play('turn', true);
                 }
             }
         }
         //if player is choosing starting position
         else if (!hasJumped) {
-            if (this.leftKey.isDown) {
+            if (leftKey.isDown) {
 
+                helicopter.x -= playerStartVelocity;
                 player.x -= playerStartVelocity;
 
-                player.anims.play('left', true);
 
-            } else if (this.rightKey.isDown) {
+            } else if (rightKey.isDown) {
+
+                helicopter.x += playerStartVelocity;
 
                 player.x += playerStartVelocity;
 
-                player.anims.play('right', true);
-
             } else {
-
-
-                player.anims.play('turn', true);
             }
         }
         //if the player jumped and died, present lose screen
@@ -238,12 +240,13 @@ var Game = new Phaser.Class({
             if(!gameEnded){
                 this.physics.pause();
                 pauseTweens(tweens);
+                this.doDeath();
                 gameEnded = true;
             }
 
-            if (this.enterKey.isDown) {
-                this.enterKey.reset();
-                restart();
+            if (enterKey.isDown) {
+                enterKey.reset();
+                this.restart();
                 this.scene.start('mainmenu');
             }
 
@@ -254,15 +257,66 @@ var Game = new Phaser.Class({
             if(!gameEnded){
                 this.physics.pause();
                 pauseTweens(tweens);
+                this.doLand();
                 gameEnded = true;
             }
-            if (this.enterKey.isDown) {
-                this.enterKey.reset();
-                restart();
+            if (enterKey.isDown) {
+                enterKey.reset();
+                this.restart();
                 this.scene.start("mainmenu");
             }
         }
-    }
+    }, restart: function (){
+
+        //reset variables
+        gameEnded = false;
+        hasJumped = false;
+        alive = true;
+        landed = false;
+        score = 0;
+        messageText.setText(message);
+        player.setVelocity(0, 0);
+        player.body.setAccelerationY(0);
+
+        player.anims.play('turn', true);
+        player.x = playerStartX;
+        player.y = playerStartY;
+
+        for(let i = 0; i < platforms.length; i++){
+
+            platforms[i].setVelocity(0, 0);
+            platforms[i].setAngularVelocity(0);
+            platforms[i].setGravityY(-1*gravity);
+            platforms[i].setGravityX(0);
+        }
+
+        UnPauseTweens(tweens);
+
+        if(debug) console.log("Restarting Game");
+    },
+
+    doLand: function () {
+
+            player.setVelocity(0, 0);
+            player.anims.play('turn', true);
+            endTime = new Date();
+
+            var diffTime = endTime - startTime;
+            score = landingFactor - (diffTime / 1000); //the less time it took the better
+            messageText.setText('You Win! Score ' + parseInt(score) + ' Press Enter to Restart');
+            messageText.setColor(green);
+
+    },
+
+    doDeath: function(){
+
+    messageText.setText('You Lose! Enter to Restart');
+    messageText.setColor(red);
+
+    player.anims.play('turn', true);
+    player.setVelocity(0,0);
+
+}
 
 });
 
