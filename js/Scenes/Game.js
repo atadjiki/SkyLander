@@ -19,24 +19,27 @@ var Game = new Phaser.Class({
 
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
-        platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/14).refreshBody();
+        platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/15).refreshBody();
 
         //set background
         this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth,screenHeight);
 
         //create landing zones
         gold = this.physics.add.staticGroup();
-        gold.create(2*screenWidth / 3, (screenHeight + 10), goldName);
+        gold.create(goldX, goldY, goldName).setSize(80,0,true).setVisible(false);
+        this.add.text(goldX-2, goldY+10, 'Gold', {fontSize: '16px', fill: goldColor});
 
         silver = this.physics.add.staticGroup();
-        silver.create((screenWidth / 2 - 250), (screenHeight + 10), silverName);
+        silver.create(silverX, silverY, silverName).setSize(70,0,true).setVisible(false);;
+        this.add.text(silverX-15, silverY+10, 'Silver', {fontSize: '16px', fill: silverColor});
 
         bronze = this.physics.add.staticGroup();
-        bronze.create((screenWidth / 1.5), (screenHeight - screenHeight/6), bronzeName);
+        bronze.create(bronzeX, bronzeY, bronzeName).setSize(70,0,true).setVisible(false);;
+        this.add.text(bronzeX-15, bronzeY+10, 'Bronze', {fontSize: '16px', fill: bronzeColor});
 
 
         //add helicopter
-        helicopter = this.physics.add.sprite(playerStartX, playerStartY, helicopterName);
+        helicopter = this.physics.add.sprite(playerStartX, playerStartY, helicopterName).setDisplaySize(64,64);
         helicopter.setBounce(0);
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
@@ -66,26 +69,26 @@ var Game = new Phaser.Class({
 
 
         if(debug) console.log("Creating Tweens");
-        //to add a spotlight, copy and paste this block below, killboxes will automatically get created
-        var spOne = this.physics.add.image(400, 400, spotlightName);
-        spOne.setScale(0.1).setRotation(-90);
-        spOne.setGravityY(-1 * gravity); //for now we have to suspend these objects
-        spOne.setGravityX(0);
-        spotlights.push(spOne);
+        //to add a spotlight, add the x and y coordinates, and the rotation below
+        var xSP = [540, 656, 844, 211, 60];
+        var ySP = [430, 482, 648, 558, 625];
+        var rotSP = [-90,-90, -90, -90, -90];
+        var durSP = [5000,3000,5000,5000, 5000];
 
-        var spTwo = this.physics.add.image(650, 200, spotlightName);
-        spTwo.setScale(0.1).setRotation(-90);
-        spTwo.setGravityY(-1 * gravity);
-        spTwo.setGravityX(0);
-        spotlights.push(spTwo);
-
+        for(let i = 0; i < xSP.length; i++){
+            var temp = this.physics.add.image(xSP[i], ySP[i], spotlightName);
+            temp.setScale(0.1).setRotation(rotSP[i]);
+            temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
+            temp.setGravityX(0);
+            spotlights.push(temp);
+        }
 
         //create tweens for spotlights, in the future we can add more configs for different spotlight types
         for (let i = 0; i < spotlights.length; i++) {
             var temp = this.tweens.add({
                 targets: spotlights[i],
                 angle: 45,
-                duration: 5000,
+                duration: durSP[i],
                 ease: 'Power.5',
                 yoyo: true,
                 delay: 1000,
@@ -137,6 +140,7 @@ var Game = new Phaser.Class({
         if(debug) console.log("Initializing Input");
         //setup key press listeners
         qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -159,6 +163,22 @@ var Game = new Phaser.Class({
             qKey.reset();
         }
 
+        if(pKey.isDown && !gameEnded && hasJumped){
+
+            if(paused==false){
+                this.physics.pause();
+                pauseTweens(tweens);
+                paused = true;
+            } else{
+                this.physics.resume();
+                UnPauseTweens(tweens);
+                paused = false;
+            }
+
+            pKey.reset();
+
+        }
+
         //if the parachute hasnt jumped yet, wait for signal to
         if (spaceKey.isDown && !hasJumped) {
             hasJumped = true;
@@ -173,10 +193,13 @@ var Game = new Phaser.Class({
         }
 
         //if parachute has jumped, start tracking time
-        if (hasJumped && alive && !landed) {
+        if (hasJumped && alive && !landed && !paused) {
             currentTime = new Date();
             var elapsed = currentTime - startTime;
-            this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString()) + '  Accel: ' + player.body.acceleration.y);
+            this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString())
+                + '  Accel: ' + player.body.acceleration.y
+                + '  X: ' + parseInt(player.x).toString()
+                + '  Y: ' + parseInt(player.y).toString());
             this.hudText.setColor(white);
         }
 
@@ -222,14 +245,15 @@ var Game = new Phaser.Class({
         else if (!hasJumped) {
             if (leftKey.isDown) {
 
+                helicopter.flipX = false;
                 helicopter.x -= playerStartVelocity;
                 player.x -= playerStartVelocity;
 
 
             } else if (rightKey.isDown) {
 
+                helicopter.flipX = true;
                 helicopter.x += playerStartVelocity;
-
                 player.x += playerStartVelocity;
 
             } else {

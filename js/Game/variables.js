@@ -17,6 +17,12 @@ var helicopter;
 var goldBonus = 100;
 var silverBonus = 60;
 var bronzeBonus = 40;
+var goldX = 600;
+var goldY = 560;
+var silverX = 105;
+var silverY = 705;
+var bronzeX = 905;
+var bronzeY = 760;
 
 //spotlight animation stuff
 var spotlights;
@@ -34,6 +40,7 @@ var landingFactor = 1;
 var hasJumped = false;
 var alive = true;
 var landed = false;
+var paused = false;
 
 
 //UI
@@ -43,6 +50,7 @@ var message = 'Press Space to Launch';;
 
 //inputs
 var qKey;
+var pKey;
 var leftKey;
 var rightKey;
 var upKey;
@@ -87,6 +95,9 @@ var black =  "#000000";
 var white = "#ffffff";
 var green = "#00b605";
 var red = "#d91d23";
+var goldColor = '#e3cd00';
+var silverColor = '#d9d9d9';
+var bronzeColor = '#ffa111';
 
 var gameEnded = false;
 
