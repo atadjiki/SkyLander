@@ -1,9 +1,18 @@
 var debug = true;
+var lunarMode = true;
 
 var screenWidth = 1280;
 var screenHeight = 800;
-var gravity = 10; //gravitational constant
-var accelMax = 30; //how much over gravity we can fall
+var hudHeight = 67;
+var gravity = 10 //gravitational constant
+var accelMax = 75; //how much over gravity we can fall
+var accelMin = -50;
+
+var integrityMax = 2000;
+var integrity;
+var horizDamage = 1;
+var vertDamage = 10;
+
 
 //player variables
 var player;

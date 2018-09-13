@@ -21,6 +21,9 @@ var Game = new Phaser.Class({
         platforms = this.physics.add.staticGroup();
         platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/15).refreshBody();
 
+        var hudBox = this.physics.add.staticGroup();
+        hudBox.create(screenWidth/2, hudHeight/2, groundName).setDisplaySize(screenWidth, hudHeight+playerStartY).refreshBody();
+
         //set background
         this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth,screenHeight);
 
@@ -39,23 +42,25 @@ var Game = new Phaser.Class({
 
 
         //add helicopter
-        helicopter = this.physics.add.sprite(playerStartX, playerStartY, helicopterName).setDisplaySize(64,64);
+        helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(64,64);
         helicopter.setBounce(0);
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
         helicopter.setCollideWorldBounds(true);
 
         //add player sprite to game world
-        player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
+        player = this.physics.add.sprite(playerStartX, playerStartY + 10 + hudHeight, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
         player.setCircle(player.width/4, player.width/4, player.height/4);
         player.visible = false;
+        player.on('outofbounds', function(){player.x = playerStartX; player.y = playerStartY});
 
         this.physics.pause();
 
         //collider between player and platforms
         this.physics.add.collider(player, platforms, playerCrash, null, this);
+        this.physics.add.collider(player, hudBox, function(){}, null, this);
 
         //for landing zones
         this.physics.add.collider(player, gold, landGold, null, this);
@@ -80,6 +85,7 @@ var Game = new Phaser.Class({
             temp.setScale(0.1).setRotation(rotSP[i]);
             temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
             temp.setGravityX(0);
+            if(lunarMode) temp.visible = false;
             spotlights.push(temp);
         }
 
@@ -94,7 +100,6 @@ var Game = new Phaser.Class({
                 delay: 1000,
                 loop: -1
             });
-
             tweens.push(temp);
         }
 
@@ -109,7 +114,7 @@ var Game = new Phaser.Class({
             var temp = this.tweens.add({
                 targets: killbox,
                 x: (spotlights[i].x + killBoxTrailX),
-                duration: 5000,
+                duration: durSP[i],
                 ease: 'Power.5',
                 yoyo: true,
                 delay: 1000,
@@ -118,23 +123,28 @@ var Game = new Phaser.Class({
 
             killbox.setCircle(killbox.width/2);
             killBoxes.push(killbox);
+            if(lunarMode) killbox.visible = false;
             tweens.push(temp);
         }
 
         //overlap between player and spotlights
-        for (let i = 0; i < spotlights.length; i++) {
+        if(!lunarMode){
+            for (let i = 0; i < spotlights.length; i++) {
 
-            this.physics.add.overlap(player, killBoxes[i], playerSeen, null, this);
+                this.physics.add.overlap(player, killBoxes[i], playerSeen, null, this);
 
+            }
         }
 
         if(debug) console.log("Creating UI");
         //initialize UI
-        var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, 2*playerStartY/3);
+        var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, hudHeight);
         var graphics = this.add.graphics({ fillStyle: { color: 0x000000 } });
         graphics.fillRectShape(headerPanel);
         this.hudText = this.add.text(2, 2, '   ', {fontSize: '16px', fill: white});
         messageText = this.add.text(screenWidth/2-100, 2, message, {fontSize: '16px', fill: green});
+
+        integrity = integrityMax;
 
         if(debug) console.log("Initializing Input");
         //setup key press listeners
@@ -197,6 +207,7 @@ var Game = new Phaser.Class({
             var elapsed = currentTime - startTime;
             this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString())
                 + '  Accel: ' + player.body.acceleration.y
+                + '  Integrity: ' + parseInt(100*(integrity/integrityMax)).toString() + '%'
                 + '  X: ' + parseInt(player.x).toString()
                 + '  Y: ' + parseInt(player.y).toString());
             this.hudText.setColor(white);
@@ -204,36 +215,48 @@ var Game = new Phaser.Class({
 
         //if player is midair
         if (hasJumped) {
-            if (leftKey.isDown) {
-                player.setVelocityX(-1 * playerVelocity);
-                player.setRotation(45);
+            if(integrity > 0)
+            {
+                if (leftKey.isDown) {
+                    player.setVelocityX(-1 * playerVelocity);
+                    player.setRotation(45);
+                    integrity-=horizDamage;
 
-            } else if (rightKey.isDown) {
-                player.setVelocityX(playerVelocity);
-                player.setRotation(-45);
+                } else if (rightKey.isDown) {
+                    player.setVelocityX(playerVelocity);
+                    player.setRotation(-45);
+                    integrity-=horizDamage;
 
-            } else if (upKey.isDown) {
-                if (player.body.acceleration.y > (-1 * gravity)) { //player cant fall upwards
-                    var decrement = player.body.acceleration.y - 1;
-                    player.body.setAccelerationY(decrement);
-                } else{
-                    if(debug) console.log("Player at min acceleration");
+                } else if (upKey.isDown) {
+
+                    if (player.body.acceleration.y > (accelMin)) { //player cant fall upwards
+                        var decrement = player.body.acceleration.y - 1;
+                        player.body.setAccelerationY(decrement);
+                        integrity-=vertDamage;
+                    } else{
+                        if(debug) console.log("Player at min acceleration");
+                    }
+                    player.setRotation(0);
+
+                } else if (downKey.isDown) {
+
+                    if (player.body.acceleration.y < accelMax) {
+                        var increment = player.body.acceleration.y + 1;
+                        player.body.setAccelerationY(increment);
+                        integrity-=vertDamage;
+                    } else{
+                        if(debug) console.log("Player at max acceleration");
+                    }
+
+                    player.setRotation(0);
+
                 }
 
-                player.setRotation(0);
-
-            } else if (downKey.isDown) {
-
-                if (player.body.acceleration.y < accelMax) {
-                    var increment = player.body.acceleration.y + 1;
-                    player.body.setAccelerationY(increment);
-                } else{
-                    if(debug) console.log("Player at max acceleration");
+                else{
+                    if(debug) console.log("Parachute Integrity at 0%");
                 }
-
-                player.setRotation(0);
-
-            } else {
+            }
+            else {
                 if (hasJumped) {
                    //set back to original rotiation
                     player.setRotation(0);
@@ -300,11 +323,12 @@ var Game = new Phaser.Class({
         alive = true;
         landed = false;
         score = 0;
+        integrity = integrityMax
         messageText.setText(message);
         player.setVelocity(0, 0);
         player.body.setAccelerationY(0);
         player.x = playerStartX;
-        player.y = playerStartY;
+        player.y = playerStartY + 10 + hudHeight;
         player.visible = false;
         helicopter.visible = true;
 

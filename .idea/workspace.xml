@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b91c9379-6f79-49f0-b5df-c2bccaa48319" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bronze.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/bronze.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/gold.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gold.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/helicopter.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/helicopter.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/silver.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/silver.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/parachute.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/parachute.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/spotlight.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/spotlight.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/Game/variables.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Game/variables.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/Scenes/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/Scenes/Game.js" afterDir="false" />
     </list>
@@ -74,31 +72,35 @@
     <session id="-2090339552">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
-          <entry key="project.open.time.4" value="2" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.4" value="5" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="1" />
-          <entry key="js" value="23" />
+          <entry key="html" value="2" />
+          <entry key="js" value="36" />
+          <entry key="png" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="1" />
-          <entry key="JavaScript" value="23" />
+          <entry key="HTML" value="2" />
+          <entry key="Image" value="5" />
+          <entry key="JavaScript" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="3729" />
+          <entry key="html" value="290" />
+          <entry key="js" value="5020" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="3729" />
+          <entry key="HTML" value="290" />
+          <entry key="JavaScript" value="5020" />
         </counts>
       </usages-collector>
     </session>
@@ -108,8 +110,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Scenes/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="85" column="107" lean-forward="true" selection-start-line="85" selection-start-column="107" selection-end-line="85" selection-end-column="107" />
+            <state relative-caret-position="255">
+              <caret line="24" column="112" selection-start-line="24" selection-start-column="112" selection-end-line="24" selection-end-column="112" />
             </state>
           </provider>
         </entry>
@@ -117,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Game/variables.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+            <state>
+              <caret column="16" selection-start-column="16" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -135,12 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>keyboard</find>
-      <find>gravity</find>
-      <find>showWinMenu</find>
-      <find>falling</find>
-      <find>scoreTe</find>
-      <find>console</find>
       <find>messageT</find>
       <find>parseint</find>
       <find>scene</find>
@@ -160,11 +156,17 @@
       <find>player.visible</find>
       <find>gold</find>
       <find>hudText</find>
-      <find>hud</find>
       <find>bronze</find>
       <find>player</find>
       <find>text</find>
       <find>helic</find>
+      <find>setCirlce</find>
+      <find>setCircle</find>
+      <find>circle</find>
+      <find>integrity</find>
+      <find>hud</find>
+      <find>player.x</find>
+      <find>geom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -197,11 +199,11 @@
         <option value="$PROJECT_DIR$/js/exampleStructure.js" />
         <option value="$PROJECT_DIR$/js/variables.js" />
         <option value="$PROJECT_DIR$/js/spylander.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/Scenes/MainMenu.js" />
         <option value="$PROJECT_DIR$/js/Game/spylander.js" />
         <option value="$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js" />
         <option value="$PROJECT_DIR$/js/Scenes/Preloader.js" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/Game/variables.js" />
         <option value="$PROJECT_DIR$/js/Scenes/Game.js" />
       </list>
@@ -213,7 +215,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="22" />
     <option name="width" value="1440" />
     <option name="height" value="825" />
@@ -226,17 +228,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="SkyLander" type="b2602c69:ProjectViewProjectNode" />
               <item name="SkyLander" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SkyLander" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SkyLander" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SkyLander" type="b2602c69:ProjectViewProjectNode" />
@@ -253,7 +251,7 @@
               <item name="SkyLander" type="b2602c69:ProjectViewProjectNode" />
               <item name="SkyLander" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="HelperFunctions" type="462c0819:PsiDirectoryNode" />
+              <item name="PhaserCE" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SkyLander" type="b2602c69:ProjectViewProjectNode" />
@@ -265,7 +263,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -347,30 +344,33 @@
       <workItem from="1536798117713" duration="7013000" />
       <workItem from="1536807292106" duration="249000" />
       <workItem from="1536807629608" duration="5519000" />
+      <workItem from="1536850962981" duration="1923000" />
+      <workItem from="1536853357053" duration="3104000" />
+      <workItem from="1536857954564" duration="4475000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66909000" />
+    <option name="totallyTimeSpent" value="76411000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="825" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14799154" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10906217" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32742155" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32742155" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49964765" weight="0.3983629" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49894625" visible="true" weight="0.39804772" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3286334" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5003524" side_tool="true" weight="0.39972714" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50105375" side_tool="true" weight="0.39804772" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -445,9 +445,6 @@
     <entry file="file://$PROJECT_DIR$/assets/helicopter.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/background.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Scenes/MainMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -455,45 +452,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="33" column="29" lean-forward="true" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/bronze.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/background.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="77" selection-start-line="25" selection-start-column="77" selection-end-line="25" selection-end-column="77" />
+        <state relative-caret-position="303">
+          <caret line="58" column="26" lean-forward="true" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/killbox.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/Spotlight.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Game/spylander.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Scenes/Preloader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
+        <state relative-caret-position="357">
           <caret line="21" column="54" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/HelperFunctions/gameHelpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="33" column="29" lean-forward="true" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Game/spylander.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Game/variables.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+        <state>
+          <caret column="16" selection-start-column="16" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Scenes/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="85" column="107" lean-forward="true" selection-start-line="85" selection-start-column="107" selection-end-line="85" selection-end-column="107" />
+        <state relative-caret-position="255">
+          <caret line="24" column="112" selection-start-line="24" selection-start-column="112" selection-end-line="24" selection-end-column="112" />
         </state>
       </provider>
     </entry>
