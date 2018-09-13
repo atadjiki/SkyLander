@@ -26,28 +26,29 @@ var Game = new Phaser.Class({
 
         //create landing zones
         gold = this.physics.add.staticGroup();
-        gold.create(screenWidth / 2, (screenHeight + 10), goldName);
+        gold.create(2*screenWidth / 3, (screenHeight + 10), goldName);
 
         silver = this.physics.add.staticGroup();
         silver.create((screenWidth / 2 - 250), (screenHeight + 10), silverName);
 
         bronze = this.physics.add.staticGroup();
-        bronze.create((250 + screenWidth / 2), (screenHeight + 10), bronzeName);
+        bronze.create((screenWidth / 1.5), (screenHeight - screenHeight/6), bronzeName);
 
 
-        //add player sprite to game world
+        //add helicopter
         helicopter = this.physics.add.sprite(playerStartX, playerStartY, helicopterName);
         helicopter.setBounce(0);
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
         helicopter.setCollideWorldBounds(true);
 
+        //add player sprite to game world
         player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
+        player.setCircle(player.width/2)
         player.visible = false;
 
-        //player.setGravityY(-1 * gravity);
         this.physics.pause();
 
         //collider between player and platforms
@@ -76,7 +77,6 @@ var Game = new Phaser.Class({
         spTwo.setScale(0.1).setRotation(-90);
         spTwo.setGravityY(-1 * gravity);
         spTwo.setGravityX(0);
-        spTwo.setCircle(spTwo.width);
         spotlights.push(spTwo);
 
 
@@ -113,6 +113,7 @@ var Game = new Phaser.Class({
                 loop: -1
             });
 
+            killbox.setCircle(killbox.width/2);
             killBoxes.push(killbox);
             tweens.push(temp);
         }
@@ -162,6 +163,7 @@ var Game = new Phaser.Class({
         if (spaceKey.isDown && !hasJumped) {
             hasJumped = true;
             player.visible = true;
+            helicopter.visible = false;
             message = '';
             this.physics.resume();
             startTime = new Date();
@@ -182,13 +184,11 @@ var Game = new Phaser.Class({
         if (hasJumped) {
             if (leftKey.isDown) {
                 player.setVelocityX(-1 * playerVelocity);
-
-                player.anims.play('left', true);
+                player.setRotation(45);
 
             } else if (rightKey.isDown) {
                 player.setVelocityX(playerVelocity);
-
-                player.anims.play('right', true);
+                player.setRotation(-45);
 
             } else if (upKey.isDown) {
                 if (player.body.acceleration.y > (-1 * gravity)) { //player cant fall upwards
@@ -198,7 +198,7 @@ var Game = new Phaser.Class({
                     if(debug) console.log("Player at min acceleration");
                 }
 
-                player.anims.play('turn', true);
+                player.setRotation(0);
 
             } else if (downKey.isDown) {
 
@@ -209,11 +209,12 @@ var Game = new Phaser.Class({
                     if(debug) console.log("Player at max acceleration");
                 }
 
-                player.anims.play('turn', true);
+                player.setRotation(0);
 
             } else {
                 if (hasJumped) {
-                    player.anims.play('turn', true);
+                   //set back to original rotiation
+                    player.setRotation(0);
                 }
             }
         }
@@ -277,10 +278,10 @@ var Game = new Phaser.Class({
         messageText.setText(message);
         player.setVelocity(0, 0);
         player.body.setAccelerationY(0);
-
-        player.anims.play('turn', true);
         player.x = playerStartX;
         player.y = playerStartY;
+        player.visible = false;
+        helicopter.visible = true;
 
         for(let i = 0; i < platforms.length; i++){
 
@@ -298,7 +299,6 @@ var Game = new Phaser.Class({
     doLand: function () {
 
             player.setVelocity(0, 0);
-            player.anims.play('turn', true);
             endTime = new Date();
 
             var diffTime = endTime - startTime;
@@ -312,8 +312,6 @@ var Game = new Phaser.Class({
 
     messageText.setText('You Lose! Enter to Restart');
     messageText.setColor(red);
-
-    player.anims.play('turn', true);
     player.setVelocity(0,0);
 
 }

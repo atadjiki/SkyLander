@@ -1,7 +1,7 @@
 var debug = true;
 
-var screenWidth = 800;
-var screenHeight = 600;
+var screenWidth = 1280;
+var screenHeight = 800;
 var gravity = 10; //gravitational constant
 var accelMax = 30; //how much over gravity we can fall
 
