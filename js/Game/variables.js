@@ -65,7 +65,6 @@ var leftKey;
 var rightKey;
 var upKey;
 var downKey;
-var enterKey;
 var spaceKey;
 
 //elapsed time

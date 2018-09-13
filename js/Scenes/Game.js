@@ -155,8 +155,6 @@ var Game = new Phaser.Class({
         upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-
     },
 
 
@@ -300,8 +298,8 @@ var Game = new Phaser.Class({
                 gameEnded = true;
             }
 
-            if (enterKey.isDown) {
-                enterKey.reset();
+            if (spaceKey.isDown) {
+                spaceKey.reset();
                 this.restart();
                 this.scene.start('mainmenu');
             }
@@ -316,8 +314,8 @@ var Game = new Phaser.Class({
                 this.doLand();
                 gameEnded = true;
             }
-            if (enterKey.isDown) {
-                enterKey.reset();
+            if (spaceKey.isDown) {
+                spaceKey.reset();
                 this.restart();
                 this.scene.start("mainmenu");
             }
@@ -360,14 +358,14 @@ var Game = new Phaser.Class({
 
             var diffTime = endTime - startTime;
             score = landingFactor - (diffTime / 1000); //the less time it took the better
-            messageText.setText('You Win! Score ' + parseInt(score) + ' Press Enter to Restart');
+            messageText.setText('You Win! Score ' + parseInt(score) + ' Press Space to Restart');
             messageText.setColor(green);
 
     },
 
     doDeath: function(){
 
-    messageText.setText('You Lose! Enter to Restart');
+    messageText.setText('You Lose! Space to Restart');
     messageText.setColor(red);
     player.setVelocity(0,0);
 
