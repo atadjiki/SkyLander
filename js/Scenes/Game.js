@@ -24,9 +24,6 @@ var Game = new Phaser.Class({
         var hudBox = this.physics.add.staticGroup();
         hudBox.create(screenWidth/2, hudHeight/2, groundName).setDisplaySize(screenWidth, hudHeight+playerStartY).refreshBody();
 
-        //set background
-        this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth,screenHeight);
-
         //create landing zones
         gold = this.physics.add.staticGroup();
         gold.create(goldX, goldY, goldName).setSize(80,0,true).setVisible(false);
@@ -39,34 +36,7 @@ var Game = new Phaser.Class({
         bronze = this.physics.add.staticGroup();
         bronze.create(bronzeX, bronzeY, bronzeName).setSize(70,0,true).setVisible(false);;
         this.add.text(bronzeX-15, bronzeY+10, 'Bronze', {fontSize: '16px', fill: bronzeColor});
-
-
-        //add helicopter
-        helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(64,64);
-        helicopter.setBounce(0);
-        helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
-        helicopter.setGravityX(0);
-        helicopter.setCollideWorldBounds(true);
-
-        //add player sprite to game world
-        player = this.physics.add.sprite(playerStartX, playerStartY + 10 + hudHeight, parachuteName);
-        player.setBounce(0);
-        player.setCollideWorldBounds(true);
-        player.setCircle(player.width/4, player.width/4, player.height/4);
-        player.visible = false;
-        player.on('outofbounds', function(){player.x = playerStartX; player.y = playerStartY});
-
-        this.physics.pause();
-
-        //collider between player and platforms
-        this.physics.add.collider(player, platforms, playerCrash, null, this);
-        this.physics.add.collider(player, hudBox, function(){}, null, this);
-
-        //for landing zones
-        this.physics.add.collider(player, gold, landGold, null, this);
-        this.physics.add.collider(player, silver, landSilver, null, this);
-        this.physics.add.collider(player, bronze, landBronze, null, this);
-
+        
         //static group for spotlight
         spotlights = [];
         killBoxes = [];
@@ -126,6 +96,32 @@ var Game = new Phaser.Class({
             if(lunarMode) killbox.visible = false;
             tweens.push(temp);
         }
+
+        //add helicopter
+        helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(64,64);
+        helicopter.setBounce(0);
+        helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
+        helicopter.setGravityX(0);
+        helicopter.setCollideWorldBounds(true);
+
+        //add player sprite to game world
+        player = this.physics.add.sprite(playerStartX, playerStartY + 10 + hudHeight, parachuteName);
+        player.setBounce(0);
+        player.setCollideWorldBounds(true);
+        player.setCircle(player.width/4, player.width/4, player.height/4);
+        player.visible = false;
+        player.on('outofbounds', function(){player.x = playerStartX; player.y = playerStartY});
+
+        this.physics.pause();
+
+        //collider between player and platforms
+        this.physics.add.collider(player, platforms, playerCrash, null, this);
+        this.physics.add.collider(player, hudBox, function(){}, null, this);
+
+        //for landing zones
+        this.physics.add.collider(player, gold, landGold, null, this);
+        this.physics.add.collider(player, silver, landSilver, null, this);
+        this.physics.add.collider(player, bronze, landBronze, null, this);
 
         //overlap between player and spotlights
         if(!lunarMode){

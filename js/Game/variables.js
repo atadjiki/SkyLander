@@ -1,5 +1,5 @@
 var debug = false;
-var lunarMode = true;
+var lunarMode = false;
 
 var screenWidth = 1280;
 var screenHeight = 800;
@@ -86,6 +86,7 @@ var groundName = 'ground';
 var spotlightName = 'spotlight';
 var killboxName = 'hitbox';
 var backgroundName = 'background';
+var blackBackgroundName = 'Black_opacity';
 var goldName = 'gold';
 var silverName = 'silver';
 var bronzeName = 'bronze';
@@ -97,6 +98,7 @@ var groundPath = 'assets/ground.png';
 var spotlightPath = 'assets/spotlight.png';
 var killboxPath = 'assets/killbox.png';
 var backgroundPath = 'assets/background.png';
+var blackBackgroundPath = 'assets/Black_opacity.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';
 var bronzePath = 'assets/bronze.png';
