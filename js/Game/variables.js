@@ -1,4 +1,4 @@
-var debug = false;
+var debug = true;
 
 var screenWidth = 1280;
 var screenHeight = 800;

@@ -49,7 +49,7 @@ var Game = new Phaser.Class({
         player = this.physics.add.sprite(playerStartX, playerStartY, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
-        player.setCircle(player.width/2)
+        player.setCircle(player.width/4, player.width/4, player.height/4);
         player.visible = false;
 
         this.physics.pause();
@@ -120,7 +120,6 @@ var Game = new Phaser.Class({
             killBoxes.push(killbox);
             tweens.push(temp);
         }
-
 
         //overlap between player and spotlights
         for (let i = 0; i < spotlights.length; i++) {
