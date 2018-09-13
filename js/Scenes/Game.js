@@ -177,10 +177,12 @@ var Game = new Phaser.Class({
             if(paused==false){
                 this.physics.pause();
                 pauseTweens(tweens);
+                messageText.setText('Paused');
                 paused = true;
             } else{
                 this.physics.resume();
                 UnPauseTweens(tweens);
+                messageText.setText('');
                 paused = false;
             }
 
@@ -193,7 +195,7 @@ var Game = new Phaser.Class({
             hasJumped = true;
             player.visible = true;
             helicopter.visible = false;
-            message = '';
+            messageText.setText('');
             this.physics.resume();
             startTime = new Date();
             currentTime = startTime;
@@ -206,7 +208,7 @@ var Game = new Phaser.Class({
             currentTime = new Date();
             var elapsed = currentTime - startTime;
             this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString())
-                + '  Accel: ' + player.body.acceleration.y
+                + '  Accel: ' + parseInt(player.body.acceleration.y).toString()
                 + '  Integrity: ' + parseInt(100*(integrity/integrityMax)).toString() + '%'
                 + '  X: ' + parseInt(player.x).toString()
                 + '  Y: ' + parseInt(player.y).toString());
@@ -219,12 +221,12 @@ var Game = new Phaser.Class({
             {
                 if (leftKey.isDown) {
                     player.setVelocityX(-1 * playerVelocity);
-                    player.setRotation(45);
+                    player.setRotation(playerRotation);
                     integrity-=horizDamage;
 
                 } else if (rightKey.isDown) {
                     player.setVelocityX(playerVelocity);
-                    player.setRotation(-45);
+                    player.setRotation(-playerRotation);
                     integrity-=horizDamage;
 
                 } else if (upKey.isDown) {
@@ -254,11 +256,16 @@ var Game = new Phaser.Class({
 
                 else{
                     if(debug) console.log("Parachute Integrity at 0%");
+                    player.setRotation(0);
                 }
             }
             else {
                 if (hasJumped) {
                    //set back to original rotiation
+                    if(player.body.acceleration.y < 0){
+                        var increment = player.body.acceleration.y + 0.25;
+                        player.body.setAccelerationY(increment);
+                    }
                     player.setRotation(0);
                 }
             }
@@ -325,6 +332,7 @@ var Game = new Phaser.Class({
         score = 0;
         integrity = integrityMax
         messageText.setText(message);
+        messageText.setColor(green);
         player.setVelocity(0, 0);
         player.body.setAccelerationY(0);
         player.x = playerStartX;

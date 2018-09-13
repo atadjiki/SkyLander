@@ -13,12 +13,11 @@ var MainMenu = new Phaser.Class({
 
         var bg = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth, screenHeight);
         this.add.text(screenWidth/3, 100, 'SpyLander', {font: '50px Courier', fill: '#ffffff'});
-        this.add.text(screenWidth/3, 300, 'Click anywhere to start', {font: '24px Courier', fill: '#ffffff'});
-        bg.setInteractive();
+        this.add.text(screenWidth/3, 200, 'Spacebar to Start', {font: '24px Courier', fill: '#ffffff'});
 
-        bg.once('pointerup', function () {
-
+        this.input.keyboard.on('keydown_SPACE', function (event) {
             this.scene.start('game');
+            this.input.keyboard.stopListeners();
 
         }, this);
     }

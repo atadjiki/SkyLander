@@ -1,4 +1,4 @@
-var debug = true;
+var debug = false;
 var lunarMode = true;
 
 var screenWidth = 1280;
@@ -20,6 +20,7 @@ var playerStartX = screenWidth/2;
 var playerStartY = 35;
 var playerVelocity = 20;
 var playerStartVelocity = 2;
+var playerRotation = 170;
 
 var helicopter;
 
