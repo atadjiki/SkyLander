@@ -16,26 +16,6 @@ var Game = new Phaser.Class({
 
         if(debug) console.log("Enter Create");
         if(debug) console.log("Initializing Sprites");
-
-        //static group for ground, these are unnaffected by physics
-        platforms = this.physics.add.staticGroup();
-        platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/15).refreshBody();
-
-        var hudBox = this.physics.add.staticGroup();
-        hudBox.create(screenWidth/2, hudHeight/2, groundName).setDisplaySize(screenWidth, hudHeight+playerStartY).refreshBody();
-
-        //create landing zones
-        gold = this.physics.add.staticGroup();
-        gold.create(goldX, goldY, goldName).setSize(80,0,true).setVisible(false);
-        this.add.text(goldX-2, goldY+10, 'Gold', {fontSize: '16px', fill: goldColor});
-
-        silver = this.physics.add.staticGroup();
-        silver.create(silverX, silverY, silverName).setSize(70,0,true).setVisible(false);;
-        this.add.text(silverX-15, silverY+10, 'Silver', {fontSize: '16px', fill: silverColor});
-
-        bronze = this.physics.add.staticGroup();
-        bronze.create(bronzeX, bronzeY, bronzeName).setSize(70,0,true).setVisible(false);;
-        this.add.text(bronzeX-15, bronzeY+10, 'Bronze', {fontSize: '16px', fill: bronzeColor});
         
         //static group for spotlight
         spotlights = [];
@@ -50,12 +30,17 @@ var Game = new Phaser.Class({
         var rotSP = [-90,-90, -90, -90, -90];
         var durSP = [5000,3000,5000,5000, 5000];
 
+        //the darker image to mask
+        var backdrop = this.add.image(400, 300, blackBackgroundName);
+
         for(let i = 0; i < xSP.length; i++){
             var temp = this.physics.add.image(xSP[i], ySP[i], spotlightName);
             temp.setScale(0.1).setRotation(rotSP[i]);
             temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
             temp.setGravityX(0);
             if(lunarMode) temp.visible = false;
+            var pic = this.add.image(screenWidth/2, screenHeight/2, backgroundName);
+            pic.mask = new Phaser.Display.Masks.BitmapMask(this, temp);
             spotlights.push(temp);
         }
 
@@ -96,6 +81,26 @@ var Game = new Phaser.Class({
             if(lunarMode) killbox.visible = false;
             tweens.push(temp);
         }
+
+        //static group for ground, these are unnaffected by physics
+        platforms = this.physics.add.staticGroup();
+        platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/15).setVisible(false).refreshBody();
+
+        var hudBox = this.physics.add.staticGroup();
+        hudBox.create(screenWidth/2, hudHeight/2, groundName).setDisplaySize(screenWidth, hudHeight+playerStartY).setVisible(false).refreshBody();
+
+        //create landing zones
+        gold = this.physics.add.staticGroup();
+        gold.create(goldX, goldY, goldName).setSize(80,0,true).setVisible(false);
+        this.add.text(goldX-2, goldY+10, 'Gold', {fontSize: '16px', fill: goldColor});
+
+        silver = this.physics.add.staticGroup();
+        silver.create(silverX, silverY, silverName).setSize(70,0,true).setVisible(false);;
+        this.add.text(silverX-15, silverY+10, 'Silver', {fontSize: '16px', fill: silverColor});
+
+        bronze = this.physics.add.staticGroup();
+        bronze.create(bronzeX, bronzeY, bronzeName).setSize(70,0,true).setVisible(false);;
+        this.add.text(bronzeX-15, bronzeY+10, 'Bronze', {fontSize: '16px', fill: bronzeColor});
 
         //add helicopter
         helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(64,64);
