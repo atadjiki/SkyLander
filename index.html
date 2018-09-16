@@ -1,67 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-            <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
 
-            <! - - Title>
-        <title>SpyLander</title>
-        <style>
-            body {background-color: black; color: greenyellow}
-           </style>
-        <style>
-            * {
-                box-sizing: border-box;
-            }
+    <! - - Title>
+    <title>SpyLander</title>
+    <style>
+        body {
+            background-color: black;
+            color: greenyellow
+        }
+    </style>
+    <style>
+        div{
 
-            /* Create three equal columns that floats next to each other */
-            .column1 {
-                float: left;
-                width: 200px;
-                padding: 10px;
-                height: 300px; /* Should be removed. Only for demonstration */
-            }
+            padding:2.5em;
+        }
+    </style>
 
-            .column2 {
-                float: left;
-                width: 1280px;
-                padding: 10px;
-                height: 800px; /* Should be removed. Only for demonstration */
-            }
+    <script type="text/javascript" src="js/Phaser3/phaser.min.js"></script>
+    <script type="text/javascript" src="js/Game/variables.js"></script>
+    <script type="text/javascript" src="js/HelperFunctions/gameHelpers.js"></script>
+    <script type="text/javascript" src="js/HelperFunctions/uiHelpers.js"></script>
+    <script type="text/javascript" src="js/Scenes/Preloader.js"></script>
+    <script type="text/javascript" src="js/Scenes/MainMenu.js"></script>
+    <script type="text/javascript" src="js/Scenes/Game.js"></script>
+    <script type="text/javascript" src="js/Game/spylander.js"></script>
+</head>
 
-            /* Clear floats after the columns */
-            .row:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-        </style>
-
-        <script type="text/javascript" src="js/Phaser3/phaser.min.js"></script>
-        <script type="text/javascript" src="js/Game/variables.js"></script>
-        <script type="text/javascript" src="js/HelperFunctions/gameHelpers.js"></script>
-        <script type="text/javascript" src="js/HelperFunctions/uiHelpers.js"></script>
-        <script type="text/javascript" src="js/Scenes/Preloader.js"></script>
-        <script type="text/javascript" src="js/Scenes/MainMenu.js"></script>
-        <script type="text/javascript" src="js/Scenes/Game.js"></script>
-        <script type="text/javascript" src="js/Game/spylander.js"></script>
-    </head>
-
-    <body>
-
-    <div class="row">
-        <div class="column1" style="background-color:#000000;">
-            <p>Controls:</p>
-            <p>Left/Right - Direction</p>
-            <p>Up/Down - Acceleration</p>
-            <p>Space - Launch Parachute</p>
-            <p>Q - Reset</p>
-            <p>P - Pause</p>
-            <p></p><p></p>
-            <p>Avoid the spotlights and land on the colored zones to win.</p>
-        </div>
-        <div class="column2" id="gameDiv" style="background-color:#000000;">
-        </div>
-
-    </div>
-    </body>
+<body>
+    <div id="gameDiv"></div>
+<p>Controls:</p>
+<p>Left/Right - Direction</p>
+<p>Up/Down - Acceleration</p>
+<p>Space - Launch Parachute</p>
+<p>Q - Reset</p>
+<p>P - Pause</p>
+<p></p>
+<p></p>
+<p>Avoid the spotlights and land on the colored zones to win.</p>
+</body>
 </html>
