@@ -106,6 +106,28 @@ var silverPath = 'assets/silver.png';
 var bronzePath = 'assets/bronze.png';
 var explosionPath = 'assets/explosion.png';
 
+//audio
+var spottedExplosionName = 'spotted_explosion';
+var fallExplosionName = 'fall_explosion';
+var winMusicName = 'win_music';
+var startMusicName = 'start_music';
+var loseMusicName = 'lose_music';
+var backgroundMusicName = 'background_music';
+
+var spottedExplosionPath = 'sound/fx/spotted_explosion.mp3';
+var fallExplosionPath = 'sound/fx/fall_explosion.mp3';
+var winMusicPath = 'sound/music/win_music.mp3';
+var startMusicPath = 'sound/music/start_music.mp3';
+var loseMusicPath = 'sound/music/lose_music.mp3';
+var backgroundMusicPath = 'sound//music/background_music.mp3';
+
+var backgroundMusic;
+var winMusic;
+var loseMusic;
+var fallFX;
+var spottedFX;
+var menuMusic;
+
 var black =  "#000000";
 var white = "#ffffff";
 var green = "#00b605";

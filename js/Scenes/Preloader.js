@@ -21,14 +21,26 @@ var Preloader = new Phaser.Class({
         this.load.image(silverName, silverPath);
         this.load.image(bronzeName, bronzePath);
         this.load.image(helicopterName, helicopterPath);
+
+        if(debug) console.log("Loading Spritesheets");
         this.load.spritesheet(parachuteName, parachutePath, { frameWidth: 64, frameHeight: 64, endFrame: 2 });
         this.load.spritesheet(explosionName, explosionPath, { frameWidth: 128, frameHeight: 128, endFrame: 18 });
+
+        if(debug) console.log("Loading Audio");
+        this.load.audio(fallExplosionName, fallExplosionPath);
+        this.load.audio(spottedExplosionName, spottedExplosionPath);
+
+        this.load.audio(backgroundMusicName, backgroundMusicPath);
+        this.load.audio(startMusicName, startMusicPath);
+        this.load.audio(loseMusicName, loseMusicPath);
+        this.load.audio(winMusicName, winMusicPath);
+
     },
 
     create: function ()
     {
 
-        if(debug) console.log("Creating Spritesheets");
+        if(debug) console.log("Creating Animations");
 
         this.anims.create({
             key: 'left',

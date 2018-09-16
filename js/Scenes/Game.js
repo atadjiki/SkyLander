@@ -176,6 +176,15 @@ var Game = new Phaser.Class({
         downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        //initialize audio
+        backgroundMusic = this.sound.add(backgroundMusicName);
+        winMusic = this.sound.add(winMusicName);
+        loseMusic = this.sound.add(loseMusicName);
+        fallFX = this.sound.add(fallExplosionName);
+        spottedFX = this.sound.add(spottedExplosionName);
+
+        backgroundMusic.play();
+
 
     },
 
@@ -320,6 +329,8 @@ var Game = new Phaser.Class({
 
             if (!gameEnded) {
                 this.physics.pause();
+                backgroundMusic.stop();
+                loseMusic.play();
                 pauseTweens(tweens);
                 this.doDeath();
                 gameEnded = true;
@@ -328,6 +339,7 @@ var Game = new Phaser.Class({
             if (spaceKey.isDown) {
                 spaceKey.reset();
                 this.restart();
+                backgroundMusic.stop();
                 this.scene.start('mainmenu');
             }
 
@@ -337,6 +349,8 @@ var Game = new Phaser.Class({
 
             if (!gameEnded) {
                 this.physics.pause();
+                backgroundMusic.stop();
+                winMusic.play();
                 pauseTweens(tweens);
                 this.doLand();
                 gameEnded = true;
@@ -375,6 +389,11 @@ var Game = new Phaser.Class({
 
         UnPauseTweens(tweens);
 
+        spottedFX.stop();
+        loseMusic.stop();
+        winMusic.stop();
+        backgroundMusic.play();
+
         if (debug) console.log("Restarting Game");
     },
 
@@ -398,6 +417,7 @@ var Game = new Phaser.Class({
         player.visible = false;
         var explode = this.physics.add.sprite(player.x, player.y, explosionName);
         explode.anims.play(explosionName, true);
+        spottedFX.play();
 
     }
 
