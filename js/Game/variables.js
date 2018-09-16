@@ -1,8 +1,8 @@
 var debug = false;
 var lunarMode = false;
 
-var screenWidth = 1280;
-var screenHeight = 800;
+var screenWidth = 1280; //1280
+var screenHeight = 800; //800
 var hudHeight = 67;
 var gravity = 10 //gravitational constant
 var accelMax = 75; //how much over gravity we can fall
@@ -87,6 +87,7 @@ var spotlightName = 'spotlight';
 var killboxName = 'hitbox';
 var backgroundName = 'background';
 var blackBackgroundName = 'blackbackground';
+var foregroundName = 'foreground';
 var goldName = 'gold';
 var silverName = 'silver';
 var bronzeName = 'bronze';
@@ -99,6 +100,7 @@ var spotlightPath = 'assets/spotlight.png';
 var killboxPath = 'assets/killbox.png';
 var backgroundPath = 'assets/background.png';
 var blackBackgroundPath = 'assets/blackbackground.png';
+var foregroundPath = 'assets/foreground.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';
 var bronzePath = 'assets/bronze.png';

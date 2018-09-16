@@ -13,6 +13,7 @@ var Preloader = new Phaser.Class({
         if(debug) console.log("Loading Assets");
         this.load.image(backgroundName, backgroundPath);
         this.load.image(blackBackgroundName, blackBackgroundPath);
+        this.load.image(foregroundName, foregroundPath);
         this.load.image(groundName, groundPath);
         this.load.image(spotlightName, spotlightPath);
         this.load.image(killboxName, killboxPath);

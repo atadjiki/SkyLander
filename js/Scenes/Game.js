@@ -14,32 +14,32 @@ var Game = new Phaser.Class({
 
     create: function () {
 
-        if(debug) console.log("Enter Create");
-        if(debug) console.log("Initializing Sprites");
-        
+        if (debug) console.log("Enter Create");
+        if (debug) console.log("Initializing Sprites");
+
         //static group for spotlight
         spotlights = [];
         killBoxes = [];
         tweens = []; //keep track of tweens so we can pause/unpause them
 
 
-        if(debug) console.log("Creating Tweens");
+        if (debug) console.log("Creating Tweens");
         //to add a spotlight, add the x and y coordinates, and the rotation below
-        var xSP = [540, 656, 844, 211, 60];
-        var ySP = [430, 482, 648, 558, 625];
-        var rotSP = [-90,-90, -90, -90, -90];
-        var durSP = [5000,3000,5000,5000, 5000];
+        var xSP = [0.42 * screenWidth, 0.5125 * screenWidth, 0.6593 * screenWidth, 0.1648 * screenWidth, 0.046 * screenWidth]; //screen width = 1280/1920
+        var ySP = [0.5375 * screenHeight, 0.6025 * screenHeight, 0.81 * screenHeight, 0.6975 * screenHeight, 0.78125 * screenHeight]; //screen height = 800/1080
+        var rotSP = [-90, -90, -90, -90, -90];
+        var durSP = [5000, 3000, 5000, 5000, 5000];
 
         //the darker image to mask
-        var backdrop = this.add.image(400, 300, blackBackgroundName);
+        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(50);
 
-        for(let i = 0; i < xSP.length; i++){
+        for (let i = 0; i < xSP.length; i++) {
             var temp = this.physics.add.image(xSP[i], ySP[i], spotlightName);
             temp.setScale(0.1).setRotation(rotSP[i]);
             temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
             temp.setGravityX(0);
-            if(lunarMode) temp.visible = false;
-            var pic = this.add.image(screenWidth/2, screenHeight/2, backgroundName);
+            if (lunarMode) temp.visible = false;
+            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, temp);
             spotlights.push(temp);
         }
@@ -65,7 +65,6 @@ var Game = new Phaser.Class({
             killbox.setScale(0.1);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
-
             var temp = this.tweens.add({
                 targets: killbox,
                 x: (spotlights[i].x + killBoxTrailX),
@@ -76,52 +75,72 @@ var Game = new Phaser.Class({
                 loop: -1
             });
 
-            killbox.setCircle(killbox.width/2);
+            killbox.setCircle(killbox.width / 2);
+            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
+            pic.mask = new Phaser.Display.Masks.BitmapMask(this, killbox);
             killBoxes.push(killbox);
-            if(lunarMode) killbox.visible = false;
+            if (lunarMode) killbox.visible = false;
             tweens.push(temp);
         }
 
+        //place foreground mountain range in front of mask
+        var foreground = this.add.image(screenWidth/2, screenHeight/2, foregroundName).setDisplaySize(screenWidth, screenHeight);
+
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
-        platforms.create(screenWidth/2,screenHeight, groundName).setDisplaySize(screenWidth, screenHeight/15).setVisible(false).refreshBody();
+        platforms.create(screenWidth / 2, screenHeight, groundName).setDisplaySize(screenWidth, screenHeight / 15).setVisible(false).refreshBody();
 
         var hudBox = this.physics.add.staticGroup();
-        hudBox.create(screenWidth/2, hudHeight/2, groundName).setDisplaySize(screenWidth, hudHeight+playerStartY).setVisible(false).refreshBody();
+        hudBox.create(screenWidth / 2, hudHeight / 2, groundName).setDisplaySize(screenWidth, hudHeight + playerStartY).setVisible(false).refreshBody();
 
         //create landing zones
         gold = this.physics.add.staticGroup();
-        gold.create(goldX, goldY, goldName).setSize(80,0,true).setVisible(false);
-        this.add.text(goldX-2, goldY+10, 'Gold', {fontSize: '16px', fill: goldColor});
+        gold.create(goldX, goldY, goldName).setSize(0.0625 * screenWidth, 0, true).setVisible(false);
+        this.add.text(goldX - (screenWidth * 0.00156), goldY + (screenHeight * 0.0125), 'Gold', {
+            fontSize: '16px',
+            fill: goldColor
+        });
 
         silver = this.physics.add.staticGroup();
-        silver.create(silverX, silverY, silverName).setSize(70,0,true).setVisible(false);;
-        this.add.text(silverX-15, silverY+10, 'Silver', {fontSize: '16px', fill: silverColor});
+        silver.create(silverX, silverY, silverName).setSize(70, 0, true).setVisible(false);
+
+        this.add.text(silverX - (screenWidth * 0.01171), silverY + (screenHeight * 0.0125), 'Silver', {
+            fontSize: '16px',
+            fill: silverColor
+        });
 
         bronze = this.physics.add.staticGroup();
-        bronze.create(bronzeX, bronzeY, bronzeName).setSize(70,0,true).setVisible(false);;
-        this.add.text(bronzeX-15, bronzeY+10, 'Bronze', {fontSize: '16px', fill: bronzeColor});
+        bronze.create(bronzeX, bronzeY, bronzeName).setSize(70, 0, true).setVisible(false);
+
+        this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (screenHeight * 0.0125), 'Bronze', {
+            fontSize: '16px',
+            fill: bronzeColor
+        });
 
         //add helicopter
-        helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(64,64);
+        helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(0.05 * screenWidth, 0.08 * screenHeight);
         helicopter.setBounce(0);
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
         helicopter.setCollideWorldBounds(true);
 
         //add player sprite to game world
-        player = this.physics.add.sprite(playerStartX, playerStartY + 10 + hudHeight, parachuteName);
+        player = this.physics.add.sprite(playerStartX, playerStartY + (screenHeight * 0.0125) + hudHeight, parachuteName);
         player.setBounce(0);
         player.setCollideWorldBounds(true);
-        player.setCircle(player.width/4, player.width/4, player.height/4);
+        player.setCircle(player.width / 4, player.width / 4, player.height / 4);
         player.visible = false;
-        player.on('outofbounds', function(){player.x = playerStartX; player.y = playerStartY});
+        player.on('outofbounds', function () {
+            player.x = playerStartX;
+            player.y = playerStartY
+        });
 
         this.physics.pause();
 
         //collider between player and platforms
         this.physics.add.collider(player, platforms, playerCrash, null, this);
-        this.physics.add.collider(player, hudBox, function(){}, null, this);
+        this.physics.add.collider(player, hudBox, function () {
+        }, null, this);
 
         //for landing zones
         this.physics.add.collider(player, gold, landGold, null, this);
@@ -129,7 +148,7 @@ var Game = new Phaser.Class({
         this.physics.add.collider(player, bronze, landBronze, null, this);
 
         //overlap between player and spotlights
-        if(!lunarMode){
+        if (!lunarMode) {
             for (let i = 0; i < spotlights.length; i++) {
 
                 this.physics.add.overlap(player, killBoxes[i], playerSeen, null, this);
@@ -137,17 +156,17 @@ var Game = new Phaser.Class({
             }
         }
 
-        if(debug) console.log("Creating UI");
+        if (debug) console.log("Creating UI");
         //initialize UI
         var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, hudHeight);
-        var graphics = this.add.graphics({ fillStyle: { color: 0x000000 } });
+        var graphics = this.add.graphics({fillStyle: {color: 0x000000}});
         graphics.fillRectShape(headerPanel);
         this.hudText = this.add.text(2, 2, '   ', {fontSize: '16px', fill: white});
-        messageText = this.add.text(screenWidth/2-100, 2, message, {fontSize: '16px', fill: green});
+        messageText = this.add.text(screenWidth / 2 - 100, 2, message, {fontSize: '16px', fill: green});
 
         integrity = integrityMax;
 
-        if(debug) console.log("Initializing Input");
+        if (debug) console.log("Initializing Input");
         //setup key press listeners
         qKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
@@ -165,22 +184,22 @@ var Game = new Phaser.Class({
 
 
         //allow player to reset midair
-        if (qKey.isDown && hasJumped &&!gameEnded) {
+        if (qKey.isDown && hasJumped && !gameEnded) {
             this.physics.pause();
             pauseTweens(tweens);
             this.restart()
-            if(debug) console.log("Q Pressed");
+            if (debug) console.log("Q Pressed");
             qKey.reset();
         }
 
-        if(pKey.isDown && !gameEnded && hasJumped){
+        if (pKey.isDown && !gameEnded && hasJumped) {
 
-            if(paused==false){
+            if (!paused) {
                 this.physics.pause();
                 pauseTweens(tweens);
                 messageText.setText('Paused');
                 paused = true;
-            } else{
+            } else {
                 this.physics.resume();
                 UnPauseTweens(tweens);
                 messageText.setText('');
@@ -200,8 +219,8 @@ var Game = new Phaser.Class({
             this.physics.resume();
             startTime = new Date();
             currentTime = startTime;
-            if(debug) console.log("Space Pressed");
-            if(debug) console.log("Start Time is " + startTime);
+            if (debug) console.log("Space Pressed");
+            if (debug) console.log("Start Time is " + startTime);
         }
 
         //if parachute has jumped, start tracking time
@@ -210,7 +229,7 @@ var Game = new Phaser.Class({
             var elapsed = currentTime - startTime;
             this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString())
                 + '  Accel: ' + parseInt(player.body.acceleration.y).toString()
-                + '  Integrity: ' + parseInt(100*(integrity/integrityMax)).toString() + '%'
+                + '  Integrity: ' + parseInt(100 * (integrity / integrityMax)).toString() + '%'
                 + '  X: ' + parseInt(player.x).toString()
                 + '  Y: ' + parseInt(player.y).toString());
             this.hudText.setColor(white);
@@ -218,18 +237,17 @@ var Game = new Phaser.Class({
 
         //if player is midair
         if (hasJumped) {
-            if(integrity > 0)
-            {
+            if (integrity > 0) {
                 if (leftKey.isDown) {
                     player.setVelocityX(-1 * playerVelocity);
                     player.setRotation(playerRotation);
-                    integrity-=horizDamage;
+                    integrity -= horizDamage;
                     player.anims.play('left', true);
 
                 } else if (rightKey.isDown) {
                     player.setVelocityX(playerVelocity);
                     player.setRotation(-playerRotation);
-                    integrity-=horizDamage;
+                    integrity -= horizDamage;
                     player.anims.play('right', true);
 
                 } else if (upKey.isDown) {
@@ -237,9 +255,9 @@ var Game = new Phaser.Class({
                     if (player.body.acceleration.y > (accelMin)) { //player cant fall upwards
                         var decrement = player.body.acceleration.y - 1;
                         player.body.setAccelerationY(decrement);
-                        integrity-=vertDamage;
-                    } else{
-                        if(debug) console.log("Player at min acceleration");
+                        integrity -= vertDamage;
+                    } else {
+                        if (debug) console.log("Player at min acceleration");
                     }
                     player.setRotation(0);
                     player.anims.play('turn', true);
@@ -249,9 +267,9 @@ var Game = new Phaser.Class({
                     if (player.body.acceleration.y < accelMax) {
                         var increment = player.body.acceleration.y + 1;
                         player.body.setAccelerationY(increment);
-                        integrity-=vertDamage;
-                    } else{
-                        if(debug) console.log("Player at max acceleration");
+                        integrity -= vertDamage;
+                    } else {
+                        if (debug) console.log("Player at max acceleration");
                     }
 
                     player.setRotation(0);
@@ -259,16 +277,16 @@ var Game = new Phaser.Class({
 
                 }
 
-                else{
-                    if(debug) console.log("Parachute Integrity at 0%");
+                else {
+                    if (debug) console.log("Parachute Integrity at 0%");
                     player.setRotation(0);
                     player.anims.play('turn', true);
                 }
             }
             else {
                 if (hasJumped) {
-                   //set back to original rotiation
-                    if(player.body.acceleration.y < 0){
+                    //set back to original rotiation
+                    if (player.body.acceleration.y < 0) {
                         var increment = player.body.acceleration.y + 0.25;
                         player.body.setAccelerationY(increment);
                     }
@@ -298,9 +316,9 @@ var Game = new Phaser.Class({
             }
         }
         //if the player jumped and died, present lose screen
-        if (!alive && hasJumped &&!landed) {
+        if (!alive && hasJumped && !landed) {
 
-            if(!gameEnded){
+            if (!gameEnded) {
                 this.physics.pause();
                 pauseTweens(tweens);
                 this.doDeath();
@@ -317,7 +335,7 @@ var Game = new Phaser.Class({
         //if the player landed on a zone, display this
         if (alive && hasJumped && landed) {
 
-            if(!gameEnded){
+            if (!gameEnded) {
                 this.physics.pause();
                 pauseTweens(tweens);
                 this.doLand();
@@ -329,7 +347,7 @@ var Game = new Phaser.Class({
                 this.scene.start("mainmenu");
             }
         }
-    }, restart: function (){
+    }, restart: function () {
 
         //reset variables
         gameEnded = false;
@@ -343,44 +361,45 @@ var Game = new Phaser.Class({
         player.setVelocity(0, 0);
         player.body.setAccelerationY(0);
         player.x = playerStartX;
-        player.y = playerStartY + 10 + hudHeight;
+        player.y = playerStartY + (screenHeight * 0.0125) + hudHeight;
         player.visible = false;
         helicopter.visible = true;
 
-        for(let i = 0; i < platforms.length; i++){
+        for (let i = 0; i < platforms.length; i++) {
 
             platforms[i].setVelocity(0, 0);
             platforms[i].setAngularVelocity(0);
-            platforms[i].setGravityY(-1*gravity);
+            platforms[i].setGravityY(-1 * gravity);
             platforms[i].setGravityX(0);
         }
 
         UnPauseTweens(tweens);
 
-        if(debug) console.log("Restarting Game");
+        if (debug) console.log("Restarting Game");
     },
 
     doLand: function () {
 
-            player.setVelocity(0, 0);
-            endTime = new Date();
+        player.setVelocity(0, 0);
+        endTime = new Date();
 
-            var diffTime = endTime - startTime;
-            score = landingFactor - (diffTime / 1000); //the less time it took the better
-            messageText.setText('You Win! Score ' + parseInt(score) + ' Press Space to Restart');
-            messageText.setColor(green);
+        var diffTime = endTime - startTime;
+        score = landingFactor - (diffTime / 1000); //the less time it took the better
+        messageText.setText('You Win! Score ' + parseInt(score) + ' Press Space to Restart');
+        messageText.setColor(green);
 
     },
 
-    doDeath: function(){
+    doDeath: function () {
 
-    messageText.setText('You Lose! Space to Restart');
-    messageText.setColor(red);
-    player.setVelocity(0,0);
-    player.anims.play(explosionName, true);
-    player.visible = false;
+        messageText.setText('You Lose! Space to Restart');
+        messageText.setColor(red);
+        player.setVelocity(0, 0);
+        player.visible = false;
+        var explode = this.physics.add.sprite(player.x, player.y, explosionName);
+        explode.anims.play(explosionName, true);
 
-}
+    }
 
 });
 
