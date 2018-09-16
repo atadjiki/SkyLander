@@ -183,7 +183,7 @@ var Game = new Phaser.Class({
         fallFX = this.sound.add(fallExplosionName);
         spottedFX = this.sound.add(spottedExplosionName);
 
-        backgroundMusic.play();
+        if(audio) backgroundMusic.play();
 
 
     },
@@ -329,8 +329,10 @@ var Game = new Phaser.Class({
 
             if (!gameEnded) {
                 this.physics.pause();
-                backgroundMusic.stop();
-                loseMusic.play();
+                if(audio){
+                    backgroundMusic.stop();
+                    loseMusic.play();
+                }
                 pauseTweens(tweens);
                 this.doDeath();
                 gameEnded = true;
@@ -339,7 +341,7 @@ var Game = new Phaser.Class({
             if (spaceKey.isDown) {
                 spaceKey.reset();
                 this.restart();
-                backgroundMusic.stop();
+                if(audio) backgroundMusic.stop();
                 this.scene.start('mainmenu');
             }
 
@@ -349,8 +351,10 @@ var Game = new Phaser.Class({
 
             if (!gameEnded) {
                 this.physics.pause();
-                backgroundMusic.stop();
-                winMusic.play();
+                if(audio){
+                    backgroundMusic.stop();
+                    winMusic.play();
+                }
                 pauseTweens(tweens);
                 this.doLand();
                 gameEnded = true;
@@ -358,6 +362,7 @@ var Game = new Phaser.Class({
             if (spaceKey.isDown) {
                 spaceKey.reset();
                 this.restart();
+                if(audio) backgroundMusic.stop();
                 this.scene.start("mainmenu");
             }
         }
@@ -389,10 +394,12 @@ var Game = new Phaser.Class({
 
         UnPauseTweens(tweens);
 
-        spottedFX.stop();
-        loseMusic.stop();
-        winMusic.stop();
-        backgroundMusic.play();
+        if(audio){
+            spottedFX.stop();
+            loseMusic.stop();
+            winMusic.stop();
+            backgroundMusic.play();
+        }
 
         if (debug) console.log("Restarting Game");
     },
@@ -417,7 +424,7 @@ var Game = new Phaser.Class({
         player.visible = false;
         var explode = this.physics.add.sprite(player.x, player.y, explosionName);
         explode.anims.play(explosionName, true);
-        spottedFX.play();
+        if(audio) spottedFX.play();
 
     }
 
