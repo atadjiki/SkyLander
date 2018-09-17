@@ -152,9 +152,10 @@ var Preloader = new Phaser.Class({
                 { key: explosionName+'15'},
                 { key: explosionName+'16'},
                 { key: explosionName+'17'},
-                { key: explosionName+'19'},
+                { key: explosionName+'18'},
             ],
             frameRate: 20,
+            repeat: -1
         });
 
         this.scene.start('mainmenu');

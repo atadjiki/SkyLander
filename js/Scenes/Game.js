@@ -29,6 +29,9 @@ var Game = new Phaser.Class({
         var ySP = [0.5375 * screenHeight, 0.6025 * screenHeight, 0.81 * screenHeight, 0.6975 * screenHeight, 0.78125 * screenHeight]; //screen height = 800/1080
         var rotSP = [-90, -90, -90, -90, -90];
         var durSP = [5000, 3000, 5000, 5000, 5000];
+        var xScale = [.3, .8, .5, 0.3, 0.3];
+        var yScale = [.3, .8, .5, 0.3, 0.3];
+
 
         //the darker image to mask
         var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(50);
@@ -44,20 +47,6 @@ var Game = new Phaser.Class({
             spotlights.push(temp);
         }
 
-        //create tweens for spotlights, in the future we can add more configs for different spotlight types
-        // for (let i = 0; i < spotlights.length; i++) {
-        //     var temp = this.tweens.add({
-        //         targets: spotlights[i],
-        //         angle: 45,
-        //         duration: durSP[i],
-        //         ease: 'Power.5',
-        //         yoyo: true,
-        //         delay: 1000,
-        //         loop: -1
-        //     });
-        //     tweens.push(temp);
-        // }
-
         //initialize killzones, creates the hitbox that floats above the spotlight
         for (let i = 0; i < spotlights.length; i++) {
 
@@ -72,7 +61,9 @@ var Game = new Phaser.Class({
                 ease: 'Power.5',
                 yoyo: true,
                 delay: 1000,
-                loop: -1
+                loop: -1,
+                scaleX: xScale[i],
+                scaleY: yScale[i]
             });
 
             killbox.setCircle(killbox.width / 2);
@@ -96,7 +87,7 @@ var Game = new Phaser.Class({
         //create landing zones
         gold = this.physics.add.staticGroup();
         gold.create(goldX, goldY, goldName).setSize(0.0625 * screenWidth, 0, true).setVisible(false);
-        this.add.text(goldX - (screenWidth * 0.00156), goldY + (screenHeight * 0.0125), 'Gold', {
+        this.add.text(goldX - (screenWidth * 0.0015), goldY + (40), 'Gold', {
             fontSize: '16px',
             fill: goldColor
         });
@@ -104,7 +95,7 @@ var Game = new Phaser.Class({
         silver = this.physics.add.staticGroup();
         silver.create(silverX, silverY, silverName).setSize(70, 0, true).setVisible(false);
 
-        this.add.text(silverX - (screenWidth * 0.01171), silverY + (screenHeight * 0.0125), 'Silver', {
+        this.add.text(silverX - (screenWidth * 0.0118), silverY + (40), 'Silver', {
             fontSize: '16px',
             fill: silverColor
         });
@@ -112,7 +103,7 @@ var Game = new Phaser.Class({
         bronze = this.physics.add.staticGroup();
         bronze.create(bronzeX, bronzeY, bronzeName).setSize(70, 0, true).setVisible(false);
 
-        this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (screenHeight * 0.0125), 'Bronze', {
+        this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (15), 'Bronze', {
             fontSize: '16px',
             fill: bronzeColor
         });
