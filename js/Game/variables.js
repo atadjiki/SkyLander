@@ -39,7 +39,7 @@ var bronzeY = 760;
 var spotlights;
 var killboxes;
 var tweens;
-var killBoxOffsetX = 110;
+var killBoxOffsetX = 60;
 var killBoxOffsetY = 75;
 var killBoxTrailX = 70;
 
@@ -105,7 +105,7 @@ var foregroundPath = 'assets/foreground.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';
 var bronzePath = 'assets/bronze.png';
-var explosionPath = 'assets/explosion.png';
+var explosionPath = 'assets/explosion/explosion';
 
 //audio
 var spottedExplosionName = 'spotted_explosion';

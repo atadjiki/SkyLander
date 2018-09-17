@@ -35,7 +35,7 @@ var Game = new Phaser.Class({
 
         for (let i = 0; i < xSP.length; i++) {
             var temp = this.physics.add.image(xSP[i], ySP[i], spotlightName);
-            temp.setScale(0.1).setRotation(rotSP[i]);
+            temp.setScale(0.1);
             temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
             temp.setGravityX(0);
             if (lunarMode) temp.visible = false;
@@ -45,24 +45,24 @@ var Game = new Phaser.Class({
         }
 
         //create tweens for spotlights, in the future we can add more configs for different spotlight types
-        for (let i = 0; i < spotlights.length; i++) {
-            var temp = this.tweens.add({
-                targets: spotlights[i],
-                angle: 45,
-                duration: durSP[i],
-                ease: 'Power.5',
-                yoyo: true,
-                delay: 1000,
-                loop: -1
-            });
-            tweens.push(temp);
-        }
+        // for (let i = 0; i < spotlights.length; i++) {
+        //     var temp = this.tweens.add({
+        //         targets: spotlights[i],
+        //         angle: 45,
+        //         duration: durSP[i],
+        //         ease: 'Power.5',
+        //         yoyo: true,
+        //         delay: 1000,
+        //         loop: -1
+        //     });
+        //     tweens.push(temp);
+        // }
 
         //initialize killzones, creates the hitbox that floats above the spotlight
         for (let i = 0; i < spotlights.length; i++) {
 
             var killbox = this.physics.add.image((spotlights[i].x - killBoxOffsetX), (spotlights[i].y - killBoxOffsetY), killboxName);
-            killbox.setScale(0.1);
+            killbox.setScale(0.3);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
             var temp = this.tweens.add({

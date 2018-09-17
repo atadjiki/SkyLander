@@ -83,7 +83,11 @@ var Preloader = new Phaser.Class({
 
         if(debug) console.log("Loading Spritesheets");
         this.load.spritesheet(parachuteName, parachutePath, { frameWidth: 64, frameHeight: 64, endFrame: 2 });
-        this.load.spritesheet(explosionName, explosionPath, { frameWidth: 128, frameHeight: 128, endFrame: 18 });
+
+        for(var i = 1; i < 19; i++){
+            this.load.image(explosionName+i, explosionPath + i +'.png');
+        }
+
 
         if(debug) console.log("Loading Audio");
         this.load.audio(fallExplosionName, fallExplosionPath);
@@ -121,11 +125,36 @@ var Preloader = new Phaser.Class({
             repeat: -1
         });
 
+        // this.anims.create({
+        //     key: explosionName,
+        //     frames: this.anims.generateFrameNumbers(explosionName, { start: 0, end: 18, first: 0}),
+        //     frameRate: 25,
+        //
+        // });
+
         this.anims.create({
             key: explosionName,
-            frames: this.anims.generateFrameNumbers(explosionName, { start: 0, end: 19, first: 0}),
-            frameRate: 25,
-
+            frames: [
+                { key: explosionName+'1'},
+                { key: explosionName+'2'},
+                { key: explosionName+'3'},
+                { key: explosionName+'4'},
+                { key: explosionName+'5'},
+                { key: explosionName+'6'},
+                { key: explosionName+'7'},
+                { key: explosionName+'8'},
+                { key: explosionName+'9'},
+                { key: explosionName+'10'},
+                { key: explosionName+'11'},
+                { key: explosionName+'12'},
+                { key: explosionName+'13'},
+                { key: explosionName+'14'},
+                { key: explosionName+'15'},
+                { key: explosionName+'16'},
+                { key: explosionName+'17'},
+                { key: explosionName+'19'},
+            ],
+            frameRate: 20,
         });
 
         this.scene.start('mainmenu');
