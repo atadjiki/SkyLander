@@ -16,9 +16,9 @@ var MainMenu = new Phaser.Class({
 
         this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth, screenHeight);
         this.add.text(screenWidth/3, 100, 'SpyLander', {font: '100px Courier', fill: '#ffffff'});
-        this.add.text(screenWidth/3 + 50, 700, 'Spacebar to Start', {font: '24px Courier', fill: '#ffffff'});
+        this.add.text(screenWidth/3 + 50, 700, 'Any Key to Start', {font: '24px Courier', fill: '#ffffff'});
 
-        this.input.keyboard.on('keydown_SPACE', function (event) {
+        this.input.keyboard.on('keydown', function (event){
             if(audio) menuMusic.pause();
             this.scene.start('game');
             this.input.keyboard.stopListeners();
