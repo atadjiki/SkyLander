@@ -76,6 +76,7 @@ var Preloader = new Phaser.Class({
         this.load.image(groundName, groundPath);
         this.load.image(spotlightName, spotlightPath);
         this.load.image(killboxName, killboxPath);
+        this.load.image(towerName, towerPath);
         this.load.image(goldName, goldPath);
         this.load.image(silverName, silverPath);
         this.load.image(bronzeName, bronzePath);

@@ -27,36 +27,25 @@ var Game = new Phaser.Class({
         //to add a spotlight, add the x and y coordinates, and the rotation below
         var xSP = [0.42 * screenWidth, 0.5125 * screenWidth, 0.6593 * screenWidth, 0.1648 * screenWidth, 0.046 * screenWidth]; //screen width = 1280/1920
         var ySP = [0.5375 * screenHeight, 0.6025 * screenHeight, 0.81 * screenHeight, 0.6975 * screenHeight, 0.78125 * screenHeight]; //screen height = 800/1080
-        var rotSP = [-90, -90, -90, -90, -90];
-        var durSP = [5000, 3000, 5000, 5000, 5000];
-        var xScale = [.2, .5, .5, 0.3, 0.1];
-        var yScale = [.2, .5, .5, 0.3, 0.1];
+        var rotSP = [35, 35, 35, 35, 35];
+        var durSP = [3000, 3000, 3000, 3000, 3000];
+        var xScale = [.2, .2, .3, 0.2, 0.2];
+        var yScale = [.2, .2, .3, 0.2, 0.2];
 
 
         //the darker image to mask
-        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.1);
+        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.5);
 
+        //initialize killzones, creates the circle that floats above the spotlight
         for (let i = 0; i < xSP.length; i++) {
-            var temp = this.physics.add.image(xSP[i], ySP[i], spotlightName);
-            temp.setScale(0.1);
-            temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
-            temp.setGravityX(0);
-            if (lunarMode) temp.visible = false;
-            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
-            pic.mask = new Phaser.Display.Masks.BitmapMask(this, temp);
-            spotlights.push(temp);
-        }
 
-        //initialize killzones, creates the hitbox that floats above the spotlight
-        for (let i = 0; i < spotlights.length; i++) {
-
-            var killbox = this.physics.add.image((spotlights[i].x - killBoxOffsetX), (spotlights[i].y - killBoxOffsetY), killboxName);
-            killbox.setScale(0.3);
+            var killbox = this.physics.add.image((xSP[i]), (ySP[i]) - killBoxOffsetY, killboxName);
+            killbox.setScale(0.2);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
             var temp = this.tweens.add({
                 targets: killbox,
-                x: (spotlights[i].x + killBoxTrailX),
+                x: (xSP[i] + killBoxTrailX),
                 duration: durSP[i],
                 ease: 'Power.5',
                 yoyo: true,
@@ -74,8 +63,44 @@ var Game = new Phaser.Class({
             tweens.push(temp);
         }
 
+        //create spotlight cones
+        for (let i = 0; i < xSP.length; i++) {
+            var spotlight = this.physics.add.image(xSP[i] + 10, ySP[i]-20, spotlightName);
+            spotlight.setScale(0.05);
+            spotlight.setGravityY(-1 * gravity); //for now we have to suspend these objects
+            spotlight.setGravityX(0);
+            if (lunarMode) temp.visible = false;
+            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
+            pic.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+            spotlights.push(spotlight);
+
+            //animate spotlights
+            var temp = this.tweens.add({
+                targets: spotlight,
+                angle: rotSP[i],
+                duration: durSP[i],
+                ease: 'Power.5',
+                yoyo: true,
+                delay: 1000,
+                loop: -1,
+            });
+            tweens.push(temp);
+        }
+
+
         //place foreground mountain range in front of mask
         var foreground = this.add.image(screenWidth/2, screenHeight/2, foregroundName).setDisplaySize(screenWidth, screenHeight);
+
+        //draw watchtower sprites
+        for (let i = 0; i < xSP.length; i++) {
+            var temp = this.physics.add.image(xSP[i], ySP[i]+50, towerName);
+            temp.setScale(0.8);
+            temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
+            temp.setGravityX(0);
+            if (lunarMode) temp.visible = false;
+        }
+
+
 
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();

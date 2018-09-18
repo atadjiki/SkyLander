@@ -1,6 +1,6 @@
 var debug = false;
 var lunarMode = false;
-var audio = true;
+var audio = false;
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
@@ -86,6 +86,7 @@ var helicopterName = 'helicopter';
 var groundName = 'ground';
 var spotlightName = 'spotlight';
 var killboxName = 'hitbox';
+var towerName = 'tower';
 var backgroundName = 'background';
 var blackBackgroundName = 'blackbackground';
 var foregroundName = 'foreground';
@@ -99,6 +100,7 @@ var helicopterPath = 'assets/helicopter.png';
 var groundPath = 'assets/ground.png';
 var spotlightPath = 'assets/spotlight.png';
 var killboxPath = 'assets/killbox.png';
+var towerPath = 'assets/tower.png';
 var backgroundPath = 'assets/background.png';
 var blackBackgroundPath = 'assets/blackbackground.png';
 var foregroundPath = 'assets/foreground.png';
