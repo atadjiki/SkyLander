@@ -1,6 +1,6 @@
 var debug = false;
 var lunarMode = false;
-var audio = false;
+var audio = true;
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
@@ -53,6 +53,8 @@ var alive = true;
 var landed = false;
 var paused = false;
 
+var opacity;
+
 
 //UI
 var hudText;
@@ -89,6 +91,7 @@ var killboxName = 'hitbox';
 var towerName = 'tower';
 var backgroundName = 'background';
 var blackBackgroundName = 'blackbackground';
+var opacityName = 'opacity';
 var foregroundName = 'foreground';
 var goldName = 'gold';
 var silverName = 'silver';
@@ -103,6 +106,7 @@ var killboxPath = 'assets/killbox.png';
 var towerPath = 'assets/tower.png';
 var backgroundPath = 'assets/background.png';
 var blackBackgroundPath = 'assets/blackbackground.png';
+var opacityPath = 'assets/opacity.png';
 var foregroundPath = 'assets/foreground.png';
 var goldPath = 'assets/gold.png';
 var silverPath = 'assets/silver.png';

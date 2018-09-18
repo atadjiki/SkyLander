@@ -34,7 +34,7 @@ var Game = new Phaser.Class({
 
 
         //the darker image to mask
-        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.5);
+        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.6);
 
         //initialize killzones, creates the circle that floats above the spotlight
         for (let i = 0; i < xSP.length; i++) {
@@ -100,8 +100,6 @@ var Game = new Phaser.Class({
             if (lunarMode) temp.visible = false;
         }
 
-
-
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
         platforms.create(screenWidth / 2, screenHeight, groundName).setDisplaySize(screenWidth, screenHeight / 15).setVisible(false).refreshBody();
@@ -139,6 +137,10 @@ var Game = new Phaser.Class({
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
         helicopter.setCollideWorldBounds(true);
+
+        //opacity for end game
+        opacity = this.add.image(screenWidth/2, screenHeight/2 + hudHeight, opacityName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.5);
+        opacity.setVisible(false);
 
         //add player sprite to game world
         player = this.physics.add.sprite(playerStartX, playerStartY + (screenHeight * 0.0125) + hudHeight, parachuteName);
@@ -200,8 +202,6 @@ var Game = new Phaser.Class({
         spottedFX = this.sound.add(spottedExplosionName);
 
         if(audio) backgroundMusic.play();
-
-
     },
 
 
@@ -417,14 +417,16 @@ var Game = new Phaser.Class({
             backgroundMusic.play();
         }
 
+        this.hudText.setText('');
+
         if (debug) console.log("Restarting Game");
     },
 
     doLand: function () {
 
         player.setVelocity(0, 0);
+        opacity.setVisible(true);
         endTime = new Date();
-
         var diffTime = endTime - startTime;
         score = landingFactor - (diffTime / 1000); //the less time it took the better
         messageText.setText('You Win! Score ' + parseInt(score) + ' Press Space to Restart');
@@ -438,6 +440,7 @@ var Game = new Phaser.Class({
         messageText.setColor(red);
         player.setVelocity(0, 0);
         player.visible = false;
+        opacity.setVisible(true);
         var explode = this.physics.add.sprite(player.x, player.y, explosionName);
         explode.anims.play(explosionName, true);
         if(audio) spottedFX.play();

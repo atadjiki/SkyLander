@@ -73,6 +73,7 @@ var Preloader = new Phaser.Class({
         this.load.image(backgroundName, backgroundPath);
         this.load.image(blackBackgroundName, blackBackgroundPath);
         this.load.image(foregroundName, foregroundPath);
+        this.load.image(opacityName, opacityPath);
         this.load.image(groundName, groundPath);
         this.load.image(spotlightName, spotlightPath);
         this.load.image(killboxName, killboxPath);
