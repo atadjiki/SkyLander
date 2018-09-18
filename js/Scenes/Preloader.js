@@ -13,10 +13,10 @@ var Preloader = new Phaser.Class({
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(190, 270, 320, 50);
+        progressBox.fillRect(190*2, 270*2, 320*2, 50);
 
-        var width = screenWidth/2
-        var height = screenHeight/2;
+        var width = screenWidth;
+        var height = screenHeight;
         var loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 50,
@@ -54,7 +54,7 @@ var Preloader = new Phaser.Class({
             percentText.setText(parseInt(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(200, 280, 300 * value, 30);
+            progressBar.fillRect(200*2, 280*2, 300*2 * value, 10);
         });
 
         this.load.on('fileprogress', function (file) {

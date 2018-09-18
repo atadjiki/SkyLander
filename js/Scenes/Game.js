@@ -29,12 +29,12 @@ var Game = new Phaser.Class({
         var ySP = [0.5375 * screenHeight, 0.6025 * screenHeight, 0.81 * screenHeight, 0.6975 * screenHeight, 0.78125 * screenHeight]; //screen height = 800/1080
         var rotSP = [-90, -90, -90, -90, -90];
         var durSP = [5000, 3000, 5000, 5000, 5000];
-        var xScale = [.3, .8, .5, 0.3, 0.3];
-        var yScale = [.3, .8, .5, 0.3, 0.3];
+        var xScale = [.2, .5, .5, 0.3, 0.1];
+        var yScale = [.2, .5, .5, 0.3, 0.1];
 
 
         //the darker image to mask
-        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(50);
+        var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.1);
 
         for (let i = 0; i < xSP.length; i++) {
             var temp = this.physics.add.image(xSP[i], ySP[i], spotlightName);

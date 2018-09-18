@@ -118,9 +118,9 @@ var backgroundMusicName = 'background_music';
 var spottedExplosionPath = 'sound/fx/spotted_explosion.mp3';
 var fallExplosionPath = 'sound/fx/fall_explosion.mp3';
 var winMusicPath = 'sound/music/win_music.mp3';
-var startMusicPath = 'sound/music/start_music.mp3';
+var startMusicPath = 'sound//music/background_music.mp3';
 var loseMusicPath = 'sound/music/lose_music.mp3';
-var backgroundMusicPath = 'sound//music/background_music.mp3';
+var backgroundMusicPath = 'sound/music/start_music.mp3';
 
 var backgroundMusic;
 var winMusic;
