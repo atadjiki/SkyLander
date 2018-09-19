@@ -20,21 +20,24 @@ var Game = new Phaser.Class({
         //static group for spotlight
         spotlights = [];
         killBoxes = [];
-        tweens = []; //keep track of tweens so we can pause/unpause them
+        gameTweens = []; //keep track of tweens so we can pause/unpause them
 
 
         if (debug) console.log("Creating Tweens");
         //to add a spotlight, add the x and y coordinates, and the rotation below
-        var xSP = [537, 656, 843, 210, 58]; //screen width = 1280/1920
-        var ySP = [430, 482, 648, 558, 625]; //screen height = 800/1080
-        var rotSP = [30, 30, 30, 30, 30];
-        var durSP = [3000, 3000, 3000, 3000, 3000];
-        var xScale = [.2, .2, .3, 0.2, 0.2];
-        var yScale = [.2, .2, .3, 0.2, 0.2];
+        var xSP = [537, 670, 843, 210, 58,1067]; //screen width = 1280/1920
+        var ySP = [430, 482, 648, 558, 625,607]; //screen height = 800/1080
+        var rotSP = [30, 30, 30, 30, 30,30,30];
+        var durSP = [3000, 3000, 3000, 3000, 3000,3000,3000];
+        var xScale = [0.2, 0.2, 0.3, 0.2, 0.2,0.2,0.2];
+        var yScale = [0.2, 0.2, 0.3, 0.2, 0.2,0.2,0.2];
 
 
         //the darker image to mask
         var backdrop = this.add.image(screenWidth/2, screenHeight/2, blackBackgroundName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.6);
+
+        //place foreground mountain range in front of mask
+        var foreground = this.add.image(screenWidth/2, screenHeight/2, foregroundName).setDisplaySize(screenWidth, screenHeight);
 
         //initialize killzones, creates the circle that floats above the spotlight
         for (let i = 0; i < xSP.length; i++) {
@@ -59,7 +62,7 @@ var Game = new Phaser.Class({
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, killbox);
             killBoxes.push(killbox);
             if (lunarMode) killbox.visible = false;
-            tweens.push(temp);
+            gameTweens.push(temp);
         }
 
         //create spotlight cones
@@ -83,14 +86,8 @@ var Game = new Phaser.Class({
                 delay: 1000,
                 loop: -1,
             });
-            tweens.push(temp);
+            gameTweens.push(temp);
         }
-
-
-        //place foreground mountain range in front of mask
-        var foreground = this.add.image(screenWidth/2, screenHeight/2, foregroundName).setDisplaySize(screenWidth, screenHeight);
-
-
 
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
@@ -102,24 +99,12 @@ var Game = new Phaser.Class({
         //create landing zones
         gold = this.physics.add.staticGroup();
         gold.create(goldX, goldY + 10, goldName).setSize(0.0625 * screenWidth, 0, true).setVisible(false);
-        // this.add.text(goldX - (screenWidth * 0.0015), goldY + (40), 'Gold', {
-        //     fontSize: '16px',
-        //     fill: goldColor
-        // });
 
         silver = this.physics.add.staticGroup();
         silver.create(silverX, silverY + 10, silverName).setSize(70, 0, true).setVisible(false);
-        // this.add.text(silverX - (screenWidth * 0.0118), silverY + (40), 'Silver', {
-        //     fontSize: '16px',
-        //     fill: silverColor
-        // });
 
         bronze = this.physics.add.staticGroup();
         bronze.create(bronzeX, bronzeY + 2, bronzeName).setSize(70, 0, true).setVisible(false);
-        // this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (15), 'Bronze', {
-        //     fontSize: '16px',
-        //     fill: bronzeColor
-        // });
 
         //add helicopter
         helicopter = this.physics.add.sprite(50, 50 + hudHeight, helicopterName).setDisplaySize(0.05 * screenWidth, 0.08 * screenHeight);
@@ -130,7 +115,7 @@ var Game = new Phaser.Class({
         helicopter.setFlipX(true);
 
         //animate helicopter
-        this.tweens.add({
+        var heliTween = this.tweens.add({
             targets: helicopter,
             x: screenWidth-50,
             duration: 10000,
@@ -138,7 +123,8 @@ var Game = new Phaser.Class({
             flipX: true,
             yoyo: true,
             repeat: -1
-        })
+        });
+        gameTweens.push(heliTween);
 
         //opacity for end game
         opacity = this.add.image(screenWidth/2, screenHeight/2 + hudHeight, opacityName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.5);
@@ -189,8 +175,8 @@ var Game = new Phaser.Class({
         var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, hudHeight);
         var graphics = this.add.graphics({fillStyle: {color: 0x000000}});
         graphics.fillRectShape(headerPanel);
-        this.hudText = this.add.text(2, 2, '   ', {fontSize: '16px', fill: white});
-        messageText = this.add.text(screenWidth / 2, 2, message, {fontSize: '16px', fill: green});
+        this.hudText = this.add.text(5, 2, '   ', {fontSize: '16px', fill: white});
+        messageText = this.add.text(screenWidth / 2, 10, message, {fontSize: '16px', fill: green});
 
         integrity = integrityMax;
 
@@ -235,12 +221,12 @@ var Game = new Phaser.Class({
 
             if (!paused) {
                 this.physics.pause();
-                pauseTweens(tweens);
+                pauseTweens(gameTweens);
                 messageText.setText('Paused');
                 paused = true;
             } else {
                 this.physics.resume();
-                UnPauseTweens(tweens);
+                UnPauseTweens(gameTweens);
                 messageText.setText('');
                 paused = false;
             }
@@ -346,7 +332,7 @@ var Game = new Phaser.Class({
                     backgroundMusic.stop();
                     loseMusic.play();
                 }
-                pauseTweens(tweens);
+                pauseTweens(gameTweens);
                 this.doDeath();
                 gameEnded = true;
             }
@@ -385,7 +371,7 @@ var Game = new Phaser.Class({
             platforms[i].setGravityX(0);
         }
 
-        UnPauseTweens(tweens);
+        UnPauseTweens(gameTweens);
 
         if(audio){
             spottedFX.stop();

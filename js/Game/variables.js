@@ -1,10 +1,10 @@
-var debug = false;
+var debug = true;
 var lunarMode = false;
 var audio = true;
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
-var hudHeight = 67;
+var hudHeight = 40;
 var gravity = 10 //gravitational constant
 var accelMax = 75; //how much over gravity we can fall
 var accelMin = -50;
@@ -38,7 +38,7 @@ var bronzeY = 760;
 //spotlight animation stuff
 var spotlights;
 var killboxes;
-var tweens;
+var gameTweens;
 var killBoxOffsetX = 60;
 var killBoxOffsetY = 75;
 var killBoxTrailX = 70;

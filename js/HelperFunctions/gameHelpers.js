@@ -31,19 +31,19 @@ function landBronze(player, zone) {
     this.doLand();
 }
 
-function pauseTweens(tweens){
+function pauseTweens(input){
 
-    for(let i = 0; i < tweens.length; i++){
-        tweens[i].stop();
+    for(let i = 0; i < input.length; i++){
+        input[i].pause();
     }
     if(debug) console.log("Tweens Paused");
 
 }
 
-function UnPauseTweens(tweens){
+function UnPauseTweens(input){
 
-    for(let i = 0; i < tweens.length; i++){
-        tweens[i].play();
+    for(let i = 0; i < input.length; i++){
+        input[i].resume();
     }
     if(debug) console.log("Tweens Unpaused");
 
