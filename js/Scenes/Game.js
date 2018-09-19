@@ -210,6 +210,10 @@ var Game = new Phaser.Class({
         loseMusic = this.sound.add(loseMusicName);
         fallFX = this.sound.add(fallExplosionName);
         spottedFX = this.sound.add(spottedExplosionName);
+        alarmFX = this.sound.add(alarmName);
+        jumpFX = this.sound.add(jumpName);
+        landFX = this.sound.add(landName);
+
 
         if(audio) backgroundMusic.play();
     },
@@ -248,6 +252,7 @@ var Game = new Phaser.Class({
         //if the parachute hasnt jumped yet, wait for signal to
         if (spaceKey.isDown && !hasJumped) {
             hasJumped = true;
+            jumpFX.play();
             player.x = helicopter.x;
             player.y = helicopter.y + 50;
             player.visible = true;
@@ -401,9 +406,11 @@ var Game = new Phaser.Class({
         landedGuy.setGravityY(-1*gravity);
         landedGuy.setGravityX(0);
         landedGuy.setVelocity(0,0);
+        landFX.play();
 
         player.x = helicopter.x;
         player.y = helicopter.y + 50;
+        jumpFX.play();
 
         endTime = new Date();
         var diffTime = endTime - startTime;
@@ -425,6 +432,8 @@ var Game = new Phaser.Class({
             if(audio) spottedFX.play();
 
         }, [], this);
+
+        alarmFX.play();
 
         //spotlight track tween
         for(let i = 0; i < killBoxes.length; i++){

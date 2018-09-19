@@ -1,6 +1,6 @@
 var debug = false;
 var lunarMode = false;
-var audio = false;
+var audio = true;
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
@@ -121,6 +121,9 @@ var winMusicName = 'win_music';
 var startMusicName = 'start_music';
 var loseMusicName = 'lose_music';
 var backgroundMusicName = 'background_music';
+var alarmName = 'alarm';
+var jumpName = 'jump';
+var landName = 'land';
 
 var spottedExplosionPath = 'sound/fx/spotted_explosion.mp3';
 var fallExplosionPath = 'sound/fx/fall_explosion.mp3';
@@ -128,12 +131,18 @@ var winMusicPath = 'sound/music/win_music.mp3';
 var startMusicPath = 'sound/music/win_music.mp3';
 var loseMusicPath = 'sound/music/lose_music.mp3';
 var backgroundMusicPath = 'sound/music/start_music.mp3';
+var alarmPath = 'sound/fx/alarm.mp3';
+var jumpPath = 'sound/fx/jump.mp3';
+var landPath = 'sound/fx/land.mp3';
 
 var backgroundMusic;
 var winMusic;
 var loseMusic;
 var fallFX;
 var spottedFX;
+var jumpFX;
+var landFX;
+var alarmFX;
 var menuMusic;
 
 var black =  "#000000";

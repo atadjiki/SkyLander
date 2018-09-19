@@ -95,6 +95,9 @@ var Preloader = new Phaser.Class({
         if(debug) console.log("Loading Audio");
         this.load.audio(fallExplosionName, fallExplosionPath);
         this.load.audio(spottedExplosionName, spottedExplosionPath);
+        this.load.audio(alarmName, alarmPath);
+        this.load.audio(landName, landPath);
+        this.load.audio(jumpName, jumpPath);
 
         this.load.audio(backgroundMusicName, backgroundMusicPath);
         this.load.audio(startMusicName, startMusicPath);
