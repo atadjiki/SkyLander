@@ -1,10 +1,10 @@
-var debug = true;
+var debug = false;
 var lunarMode = false;
 var audio = true;
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
-var hudHeight = 40;
+var hudHeight = 30;
 var gravity = 10 //gravitational constant
 var accelMax = 75; //how much over gravity we can fall
 var accelMin = -50;

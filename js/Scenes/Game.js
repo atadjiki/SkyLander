@@ -25,12 +25,14 @@ var Game = new Phaser.Class({
 
         if (debug) console.log("Creating Tweens");
         //to add a spotlight, add the x and y coordinates, and the rotation below
-        var xSP = [537, 670, 843, 210, 58,1067]; //screen width = 1280/1920
-        var ySP = [430, 482, 648, 558, 625,607]; //screen height = 800/1080
-        var rotSP = [30, 30, 30, 30, 30,30,30];
-        var durSP = [3000, 3000, 3000, 3000, 3000,3000,3000];
-        var xScale = [0.2, 0.2, 0.3, 0.2, 0.2,0.2,0.2];
-        var yScale = [0.2, 0.2, 0.3, 0.2, 0.2,0.2,0.2];
+        var xSP =    [537, 675, 843, 210, 58,  1150]; //screen width = 1280/1920
+        var ySP =    [430, 450, 650, 558, 600, 625]; //screen height = 800/1080
+        var rotSP =  [35,  50,  30,  30,  30,  30];
+        var durSP =  [2000,3000,2000,6000,5000,4000];
+        var xScale = [0.3, 0.2, 0.3, 0.2, 0.4, 0.5];
+        var yScale = [0.3, 0.2, 0.3, 0.2, 0.4, 0.5];
+        var yOffset =[150, 150, 150, 150, 150, 150];
+        var xTrail = [140, 210,  70, 70,  70,  70];
 
 
         //the darker image to mask
@@ -42,18 +44,18 @@ var Game = new Phaser.Class({
         //initialize killzones, creates the circle that floats above the spotlight
         for (let i = 0; i < xSP.length; i++) {
 
-            var killbox = this.physics.add.image((xSP[i]), (ySP[i] - 2*killBoxOffsetY), killboxName);
+            var killbox = this.physics.add.image((xSP[i]), (ySP[i] - yOffset[i]), killboxName);
             killbox.setScale(0.2);
             killbox.setCircle(killbox.width/3, killbox.width/5, killbox.height/7);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
             var temp = this.tweens.add({
                 targets: killbox,
-                x: (xSP[i] + killBoxTrailX),
+                x: (xSP[i] + xTrail[i]),
                 duration: durSP[i],
                 ease: 'Power.5',
                 yoyo: true,
-                delay: 1000,
+                delay: 250,
                 loop: -1,
                 scaleX: xScale[i],
                 scaleY: yScale[i]
@@ -71,10 +73,11 @@ var Game = new Phaser.Class({
             spotlight.setScale(0.05, 0.08);
             spotlight.setGravityY(-1 * gravity); //for now we have to suspend these objects
             spotlight.setGravityX(0);
+            spotlight.setAlpha(0.5);
             if (lunarMode) temp.visible = false;
             var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
-            //spotlights.push(spotlight);
+            pic.setAlpha(0.5);
 
             //animate spotlights
             var temp = this.tweens.add({
@@ -83,10 +86,12 @@ var Game = new Phaser.Class({
                 duration: durSP[i],
                 ease: 'Power.5',
                 yoyo: true,
-                delay: 1000,
+                delay: 250,
                 loop: -1,
             });
             gameTweens.push(temp);
+            spotlights.push(spotlight);
+            spotlights.push(pic);
         }
 
         //static group for ground, these are unnaffected by physics
@@ -421,11 +426,12 @@ var Game = new Phaser.Class({
 
         alarmFX.play();
 
+        for(let i = 0; i < spotlights.length; i++){
+            spotlights[i].setVisible(false);
+        }
+
         //spotlight track tween
         for(let i = 0; i < killBoxes.length; i++){
-
-            if(spotlights.length > 0)
-                spotlights[i].setVisible(false);
 
             this.tweens.add({
                 targets: killBoxes[i],
