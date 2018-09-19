@@ -58,7 +58,7 @@ var opacity;
 //UI
 var hudText;
 var messageText;
-var message = 'Press Space to Launch';;
+var message = 'Space to Insert Coin';;
 
 //inputs
 var qKey;

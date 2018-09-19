@@ -219,7 +219,7 @@ var Game = new Phaser.Class({
 
 
         //allow player to reset midair
-        if (qKey.isDown && hasJumped && !gameEnded) {
+        if (qKey.isDown && hasJumped && !gameEnded && debug) {
             this.physics.pause();
             pauseTweens(tweens);
             this.restart()
@@ -412,11 +412,11 @@ var Game = new Phaser.Class({
 
     doDeath: function () {
 
-        messageText.setText('You Lose! Space to Restart');
+        messageText.setText('Game Over! You began WW3');
         messageText.setColor(red);
         player.setVelocity(0, 0);
 
-        var timedEvent = this.time.delayedCall(3000, function(){
+        var timedEvent = this.time.delayedCall(3250, function(){
 
             player.visible = false;
 
@@ -436,6 +436,7 @@ var Game = new Phaser.Class({
                 x: player.x,
                 y: player.y,
                 duration: 2000,
+                delay: 250,
                 ease: 'Power2',
             });
         }
