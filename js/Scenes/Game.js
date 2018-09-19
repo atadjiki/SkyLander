@@ -132,11 +132,22 @@ var Game = new Phaser.Class({
         });
 
         //add helicopter
-        helicopter = this.physics.add.sprite(playerStartX, playerStartY + hudHeight, helicopterName).setDisplaySize(0.05 * screenWidth, 0.08 * screenHeight);
+        helicopter = this.physics.add.sprite(50, 50 + hudHeight, helicopterName).setDisplaySize(0.05 * screenWidth, 0.08 * screenHeight);
         helicopter.setBounce(0);
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
         helicopter.setCollideWorldBounds(true);
+
+        //animate helicopter
+        this.tweens.add({
+            targets: helicopter,
+            x: screenWidth-50,
+            duration: 10000,
+            ease: 'Power.2',
+            flipX: true,
+            yoyo: true,
+            repeat: -1
+        })
 
         //opacity for end game
         opacity = this.add.image(screenWidth/2, screenHeight/2 + hudHeight, opacityName).setDisplaySize(screenWidth, screenHeight).setAlpha(0.5);
@@ -238,8 +249,9 @@ var Game = new Phaser.Class({
         //if the parachute hasnt jumped yet, wait for signal to
         if (spaceKey.isDown && !hasJumped) {
             hasJumped = true;
+            player.x = helicopter.x;
+            player.y = helicopter.y + 50;
             player.visible = true;
-            helicopter.visible = false;
             messageText.setText('');
             this.physics.resume();
             startTime = new Date();
@@ -320,26 +332,26 @@ var Game = new Phaser.Class({
                 }
             }
         }
-        //if player is choosing starting position
-        else if (!hasJumped) {
-            if (leftKey.isDown) {
-
-                helicopter.flipX = false;
-
-                player.x -= playerStartVelocity;
-                helicopter.x = player.x;
-
-
-            } else if (rightKey.isDown) {
-
-                helicopter.flipX = true;
-
-                player.x += playerStartVelocity;
-                helicopter.x = player.x;
-
-            } else {
-            }
-        }
+        // //if player is choosing starting position
+        // else if (!hasJumped) {
+        //     if (leftKey.isDown) {
+        //
+        //         helicopter.flipX = false;
+        //
+        //         player.x -= playerStartVelocity;
+        //         helicopter.x = player.x;
+        //
+        //
+        //     } else if (rightKey.isDown) {
+        //
+        //         helicopter.flipX = true;
+        //
+        //         player.x += playerStartVelocity;
+        //         helicopter.x = player.x;
+        //
+        //     } else {
+        //     }
+        // }
         //if the player jumped and died, present lose screen
         if (!alive && hasJumped && !landed) {
 
@@ -439,11 +451,35 @@ var Game = new Phaser.Class({
         messageText.setText('You Lose! Space to Restart');
         messageText.setColor(red);
         player.setVelocity(0, 0);
-        player.visible = false;
+
+        var timedEvent = this.time.delayedCall(2500, function(){
+
+            player.visible = false;
+
+            var explode = this.physics.add.sprite(player.x, player.y, explosionName);
+            explode.anims.play(explosionName, true);
+            if(audio) spottedFX.play();
+
+        }, [], this);
+
+        //spotlight track tween
+        for(let i = 0; i < killBoxes.length; i++){
+
+            spotlights[i].setVisible(false);
+
+            this.tweens.add({
+                targets: killBoxes[i],
+                x: player.x,
+                y: player.y,
+                duration: 2000,
+                ease: 'Power2',
+                delay: 1000
+            });
+        }
+
         opacity.setVisible(true);
-        var explode = this.physics.add.sprite(player.x, player.y, explosionName);
-        explode.anims.play(explosionName, true);
-        if(audio) spottedFX.play();
+
+
 
     }
 

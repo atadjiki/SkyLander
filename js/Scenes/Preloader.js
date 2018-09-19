@@ -20,7 +20,7 @@ var Preloader = new Phaser.Class({
         var loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 50,
-            text: 'Loading...',
+            text: 'Loading Game...',
             style: {
                 font: '20px monospace',
                 fill: '#ffffff'
