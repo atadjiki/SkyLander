@@ -25,9 +25,9 @@ var Game = new Phaser.Class({
 
         if (debug) console.log("Creating Tweens");
         //to add a spotlight, add the x and y coordinates, and the rotation below
-        var xSP = [0.42 * screenWidth, 0.5125 * screenWidth, 0.6593 * screenWidth, 0.1648 * screenWidth, 0.046 * screenWidth]; //screen width = 1280/1920
-        var ySP = [0.5375 * screenHeight, 0.6025 * screenHeight, 0.81 * screenHeight, 0.6975 * screenHeight, 0.78125 * screenHeight]; //screen height = 800/1080
-        var rotSP = [35, 35, 35, 35, 35];
+        var xSP = [537, 656, 843, 210, 58]; //screen width = 1280/1920
+        var ySP = [430, 482, 648, 558, 625]; //screen height = 800/1080
+        var rotSP = [30, 30, 30, 30, 30];
         var durSP = [3000, 3000, 3000, 3000, 3000];
         var xScale = [.2, .2, .3, 0.2, 0.2];
         var yScale = [.2, .2, .3, 0.2, 0.2];
@@ -39,8 +39,9 @@ var Game = new Phaser.Class({
         //initialize killzones, creates the circle that floats above the spotlight
         for (let i = 0; i < xSP.length; i++) {
 
-            var killbox = this.physics.add.image((xSP[i]), (ySP[i]) - killBoxOffsetY, killboxName);
+            var killbox = this.physics.add.image((xSP[i]), (ySP[i] - 2*killBoxOffsetY), killboxName);
             killbox.setScale(0.2);
+            killbox.setCircle(killbox.width/3, killbox.width/5, killbox.height/7);
             killbox.setGravityY(-1 * gravity);
             killbox.setGravityX(0);
             var temp = this.tweens.add({
@@ -54,8 +55,6 @@ var Game = new Phaser.Class({
                 scaleX: xScale[i],
                 scaleY: yScale[i]
             });
-
-            killbox.setCircle(killbox.width / 2);
             var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, killbox);
             killBoxes.push(killbox);
@@ -65,14 +64,14 @@ var Game = new Phaser.Class({
 
         //create spotlight cones
         for (let i = 0; i < xSP.length; i++) {
-            var spotlight = this.physics.add.image(xSP[i] + 10, ySP[i]-20, spotlightName);
-            spotlight.setScale(0.05);
+            var spotlight = this.physics.add.image(xSP[i] + 15, ySP[i] - 35, spotlightName);
+            spotlight.setScale(0.05, 0.08);
             spotlight.setGravityY(-1 * gravity); //for now we have to suspend these objects
             spotlight.setGravityX(0);
             if (lunarMode) temp.visible = false;
             var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
-            spotlights.push(spotlight);
+            //spotlights.push(spotlight);
 
             //animate spotlights
             var temp = this.tweens.add({
@@ -102,21 +101,21 @@ var Game = new Phaser.Class({
 
         //create landing zones
         gold = this.physics.add.staticGroup();
-        gold.create(goldX, goldY, goldName).setSize(0.0625 * screenWidth, 0, true).setVisible(false);
+        gold.create(goldX, goldY + 10, goldName).setSize(0.0625 * screenWidth, 0, true).setVisible(false);
         // this.add.text(goldX - (screenWidth * 0.0015), goldY + (40), 'Gold', {
         //     fontSize: '16px',
         //     fill: goldColor
         // });
 
         silver = this.physics.add.staticGroup();
-        silver.create(silverX, silverY, silverName).setSize(70, 0, true).setVisible(false);
+        silver.create(silverX, silverY + 10, silverName).setSize(70, 0, true).setVisible(false);
         // this.add.text(silverX - (screenWidth * 0.0118), silverY + (40), 'Silver', {
         //     fontSize: '16px',
         //     fill: silverColor
         // });
 
         bronze = this.physics.add.staticGroup();
-        bronze.create(bronzeX, bronzeY, bronzeName).setSize(70, 0, true).setVisible(false);
+        bronze.create(bronzeX, bronzeY + 2, bronzeName).setSize(70, 0, true).setVisible(false);
         // this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (15), 'Bronze', {
         //     fontSize: '16px',
         //     fill: bronzeColor
@@ -169,7 +168,7 @@ var Game = new Phaser.Class({
 
         //overlap between player and spotlights
         if (!lunarMode) {
-            for (let i = 0; i < spotlights.length; i++) {
+            for (let i = 0; i < killBoxes.length; i++) {
 
                 this.physics.add.overlap(player, killBoxes[i], playerSeen, null, this);
 
@@ -179,7 +178,8 @@ var Game = new Phaser.Class({
         //draw watchtower sprites
         for (let i = 0; i < xSP.length; i++) {
             var temp = this.physics.add.staticGroup();
-            temp.create(xSP[i], ySP[i]+50, towerName);
+            temp.create(xSP[i], ySP[i]+50, towerName).setScale(0.8).setSize(temp.width/4, temp.height/4, temp.width/2, temp.height/2).refreshBody();
+            //setSize( [width] [, height] [, center])
             if (lunarMode) temp.visible = false;
             this.physics.add.overlap(player, temp, playerCrash, null ,this);
         }
@@ -412,7 +412,7 @@ var Game = new Phaser.Class({
 
     doDeath: function () {
 
-        messageText.setText('Game Over! You began WW3');
+        messageText.setText('Game Over!');
         messageText.setColor(red);
         player.setVelocity(0, 0);
 
@@ -429,7 +429,8 @@ var Game = new Phaser.Class({
         //spotlight track tween
         for(let i = 0; i < killBoxes.length; i++){
 
-            spotlights[i].setVisible(false);
+            if(spotlights.length > 0)
+                spotlights[i].setVisible(false);
 
             this.tweens.add({
                 targets: killBoxes[i],
@@ -442,9 +443,6 @@ var Game = new Phaser.Class({
         }
 
         opacity.setVisible(true);
-
-
-
     }
 
 });

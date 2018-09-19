@@ -1,6 +1,6 @@
 var debug = false;
 var lunarMode = false;
-var audio = true;
+var audio = false;
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
@@ -125,7 +125,7 @@ var backgroundMusicName = 'background_music';
 var spottedExplosionPath = 'sound/fx/spotted_explosion.mp3';
 var fallExplosionPath = 'sound/fx/fall_explosion.mp3';
 var winMusicPath = 'sound/music/win_music.mp3';
-var startMusicPath = 'sound//music/background_music.mp3';
+var startMusicPath = 'sound/music/win_music.mp3';
 var loseMusicPath = 'sound/music/lose_music.mp3';
 var backgroundMusicPath = 'sound/music/start_music.mp3';
 
