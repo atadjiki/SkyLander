@@ -91,14 +91,7 @@ var Game = new Phaser.Class({
         //place foreground mountain range in front of mask
         var foreground = this.add.image(screenWidth/2, screenHeight/2, foregroundName).setDisplaySize(screenWidth, screenHeight);
 
-        //draw watchtower sprites
-        for (let i = 0; i < xSP.length; i++) {
-            var temp = this.physics.add.image(xSP[i], ySP[i]+50, towerName);
-            temp.setScale(0.8);
-            temp.setGravityY(-1 * gravity); //for now we have to suspend these objects
-            temp.setGravityX(0);
-            if (lunarMode) temp.visible = false;
-        }
+
 
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
@@ -110,26 +103,24 @@ var Game = new Phaser.Class({
         //create landing zones
         gold = this.physics.add.staticGroup();
         gold.create(goldX, goldY, goldName).setSize(0.0625 * screenWidth, 0, true).setVisible(false);
-        this.add.text(goldX - (screenWidth * 0.0015), goldY + (40), 'Gold', {
-            fontSize: '16px',
-            fill: goldColor
-        });
+        // this.add.text(goldX - (screenWidth * 0.0015), goldY + (40), 'Gold', {
+        //     fontSize: '16px',
+        //     fill: goldColor
+        // });
 
         silver = this.physics.add.staticGroup();
         silver.create(silverX, silverY, silverName).setSize(70, 0, true).setVisible(false);
-
-        this.add.text(silverX - (screenWidth * 0.0118), silverY + (40), 'Silver', {
-            fontSize: '16px',
-            fill: silverColor
-        });
+        // this.add.text(silverX - (screenWidth * 0.0118), silverY + (40), 'Silver', {
+        //     fontSize: '16px',
+        //     fill: silverColor
+        // });
 
         bronze = this.physics.add.staticGroup();
         bronze.create(bronzeX, bronzeY, bronzeName).setSize(70, 0, true).setVisible(false);
-
-        this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (15), 'Bronze', {
-            fontSize: '16px',
-            fill: bronzeColor
-        });
+        // this.add.text(bronzeX - (screenWidth * 0.01171), bronzeY + (15), 'Bronze', {
+        //     fontSize: '16px',
+        //     fill: bronzeColor
+        // });
 
         //add helicopter
         helicopter = this.physics.add.sprite(50, 50 + hudHeight, helicopterName).setDisplaySize(0.05 * screenWidth, 0.08 * screenHeight);
@@ -137,6 +128,7 @@ var Game = new Phaser.Class({
         helicopter.setGravityY(-1 * gravity); //for now we have to suspend these objects
         helicopter.setGravityX(0);
         helicopter.setCollideWorldBounds(true);
+        helicopter.setFlipX(true);
 
         //animate helicopter
         this.tweens.add({
@@ -168,8 +160,7 @@ var Game = new Phaser.Class({
 
         //collider between player and platforms
         this.physics.add.collider(player, platforms, playerCrash, null, this);
-        this.physics.add.collider(player, hudBox, function () {
-        }, null, this);
+        this.physics.add.collider(player, hudBox, function () {}, null, this);
 
         //for landing zones
         this.physics.add.collider(player, gold, landGold, null, this);
@@ -183,6 +174,14 @@ var Game = new Phaser.Class({
                 this.physics.add.overlap(player, killBoxes[i], playerSeen, null, this);
 
             }
+        }
+
+        //draw watchtower sprites
+        for (let i = 0; i < xSP.length; i++) {
+            var temp = this.physics.add.staticGroup();
+            temp.create(xSP[i], ySP[i]+50, towerName);
+            if (lunarMode) temp.visible = false;
+            this.physics.add.overlap(player, temp, playerCrash, null ,this);
         }
 
         if (debug) console.log("Creating UI");
@@ -452,7 +451,7 @@ var Game = new Phaser.Class({
         messageText.setColor(red);
         player.setVelocity(0, 0);
 
-        var timedEvent = this.time.delayedCall(2500, function(){
+        var timedEvent = this.time.delayedCall(3000, function(){
 
             player.visible = false;
 
@@ -473,7 +472,6 @@ var Game = new Phaser.Class({
                 y: player.y,
                 duration: 2000,
                 ease: 'Power2',
-                delay: 1000
             });
         }
 
