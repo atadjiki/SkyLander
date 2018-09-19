@@ -50,7 +50,6 @@ var landingFactor = 1;
 //bools/gamestates
 var hasJumped = false;
 var alive = true;
-var landed = false;
 var paused = false;
 
 var opacity;
@@ -85,6 +84,7 @@ var bronze;
 //asset variables
 var parachuteName = 'parachute';
 var helicopterName = 'helicopter';
+var landedParachuteName = 'landedParachute';
 var groundName = 'ground';
 var spotlightName = 'spotlight';
 var killboxName = 'hitbox';
@@ -100,6 +100,7 @@ var explosionName = 'explosion';
 
 var parachutePath = 'assets/parachute.png';
 var helicopterPath = 'assets/helicopter.png';
+var landedParachutePath = 'assets/landedParachute.png';
 var groundPath = 'assets/ground.png';
 var spotlightPath = 'assets/spotlight.png';
 var killboxPath = 'assets/killbox.png';

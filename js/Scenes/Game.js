@@ -190,7 +190,7 @@ var Game = new Phaser.Class({
         var graphics = this.add.graphics({fillStyle: {color: 0x000000}});
         graphics.fillRectShape(headerPanel);
         this.hudText = this.add.text(2, 2, '   ', {fontSize: '16px', fill: white});
-        messageText = this.add.text(screenWidth / 2 - 100, 2, message, {fontSize: '16px', fill: green});
+        messageText = this.add.text(screenWidth / 2, 2, message, {fontSize: '16px', fill: green});
 
         integrity = integrityMax;
 
@@ -260,14 +260,15 @@ var Game = new Phaser.Class({
         }
 
         //if parachute has jumped, start tracking time
-        if (hasJumped && alive && !landed && !paused) {
+        if (hasJumped && alive && !paused) {
             currentTime = new Date();
             var elapsed = currentTime - startTime;
             this.hudText.setText('Time: ' + parseInt((elapsed / 1000).toString())
                 + '  Accel: ' + parseInt(player.body.acceleration.y).toString()
                 + '  Integrity: ' + parseInt(100 * (integrity / integrityMax)).toString() + '%'
                 + '  X: ' + parseInt(player.x).toString()
-                + '  Y: ' + parseInt(player.y).toString());
+                + '  Y: ' + parseInt(player.y).toString()
+                + '  Score: ' + parseInt(score).toString());
             this.hudText.setColor(white);
         }
 
@@ -331,28 +332,8 @@ var Game = new Phaser.Class({
                 }
             }
         }
-        // //if player is choosing starting position
-        // else if (!hasJumped) {
-        //     if (leftKey.isDown) {
-        //
-        //         helicopter.flipX = false;
-        //
-        //         player.x -= playerStartVelocity;
-        //         helicopter.x = player.x;
-        //
-        //
-        //     } else if (rightKey.isDown) {
-        //
-        //         helicopter.flipX = true;
-        //
-        //         player.x += playerStartVelocity;
-        //         helicopter.x = player.x;
-        //
-        //     } else {
-        //     }
-        // }
         //if the player jumped and died, present lose screen
-        if (!alive && hasJumped && !landed) {
+        if (!alive && hasJumped) {
 
             if (!gameEnded) {
                 this.physics.pause();
@@ -373,33 +354,13 @@ var Game = new Phaser.Class({
             }
 
         }
-        //if the player landed on a zone, display this
-        if (alive && hasJumped && landed) {
-
-            if (!gameEnded) {
-                this.physics.pause();
-                if(audio){
-                    backgroundMusic.stop();
-                    winMusic.play();
-                }
-                pauseTweens(tweens);
-                this.doLand();
-                gameEnded = true;
-            }
-            if (spaceKey.isDown) {
-                spaceKey.reset();
-                this.restart();
-                if(audio) backgroundMusic.stop();
-                this.scene.start("mainmenu");
-            }
-        }
     }, restart: function () {
 
         //reset variables
         gameEnded = false;
         hasJumped = false;
         alive = true;
-        landed = false;
+        landingFactor = 1;
         score = 0;
         integrity = integrityMax
         messageText.setText(message);
@@ -435,14 +396,18 @@ var Game = new Phaser.Class({
 
     doLand: function () {
 
-        player.setVelocity(0, 0);
-        opacity.setVisible(true);
+        var landedGuy = this.physics.add.sprite(player.x, player.y, landedParachuteName);
+        landedGuy.anims.play('emote', true);
+        landedGuy.setGravityY(-1*gravity);
+        landedGuy.setGravityX(0);
+        landedGuy.setVelocity(0,0);
+
+        player.x = helicopter.x;
+        player.y = helicopter.y + 50;
+
         endTime = new Date();
         var diffTime = endTime - startTime;
         score = landingFactor - (diffTime / 1000); //the less time it took the better
-        messageText.setText('You Win! Score ' + parseInt(score) + ' Press Space to Restart');
-        messageText.setColor(green);
-
     },
 
     doDeath: function () {

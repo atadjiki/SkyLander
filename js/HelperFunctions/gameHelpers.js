@@ -14,21 +14,21 @@ function landGold(player, zone) {
 
     if(debug) console.log("Player Landed on Gold");
     landingFactor*=goldBonus;
-    landed = true;
+    this.doLand();
 }
 
 function landSilver(player, zone) {
 
     if(debug) console.log("Player Landed on Silver");
     landingFactor*=silverBonus;
-    landed = true;
+    this.doLand();
 }
 
 function landBronze(player, zone) {
 
     if(debug) console.log("Player Landed on Bronze");
     landingFactor*=bronzeBonus;
-    landed = true;
+    this.doLand();
 }
 
 function pauseTweens(tweens){

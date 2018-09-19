@@ -85,8 +85,9 @@ var Preloader = new Phaser.Class({
 
         if(debug) console.log("Loading Spritesheets");
         this.load.spritesheet(parachuteName, parachutePath, { frameWidth: 64, frameHeight: 64, endFrame: 2 });
+        this.load.spritesheet(landedParachuteName, landedParachutePath, {frameWidth: 64, frameHeight: 64, endFrame: 1});
 
-        for(var i = 1; i < 19; i++){
+        for(var i = 1; i < 15; i++){
             this.load.image(explosionName+i, explosionPath + i +'.png');
         }
 
@@ -127,12 +128,12 @@ var Preloader = new Phaser.Class({
             repeat: -1
         });
 
-        // this.anims.create({
-        //     key: explosionName,
-        //     frames: this.anims.generateFrameNumbers(explosionName, { start: 0, end: 18, first: 0}),
-        //     frameRate: 25,
-        //
-        // });
+        this.anims.create({
+            key: 'emote',
+            frames: [{ key: landedParachuteName, frame: 0}, {key: landedParachuteName, frame: 1}],
+            frameRate: 5,
+            repeat: -1
+        });
 
         this.anims.create({
             key: explosionName,
@@ -150,11 +151,7 @@ var Preloader = new Phaser.Class({
                 { key: explosionName+'11'},
                 { key: explosionName+'12'},
                 { key: explosionName+'13'},
-                { key: explosionName+'14'},
-                { key: explosionName+'15'},
-                { key: explosionName+'16'},
-                { key: explosionName+'17'},
-                { key: explosionName+'18'},
+                { key: explosionName+'14'}
             ],
             frameRate: 20,
             repeat: -1
