@@ -60,7 +60,7 @@ var Game = new Phaser.Class({
                 scaleX: xScale[i],
                 scaleY: yScale[i]
             });
-            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
+            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth, screenHeight);
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, killbox);
             killBoxes.push(killbox);
             if (lunarMode) killbox.visible = false;
@@ -75,7 +75,7 @@ var Game = new Phaser.Class({
             spotlight.setGravityX(0);
             spotlight.setAlpha(0.5);
             if (lunarMode) temp.visible = false;
-            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName);
+            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth, screenHeight);
             pic.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
             pic.setAlpha(0.5);
 
