@@ -180,8 +180,8 @@ var Game = new Phaser.Class({
         var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, hudHeight);
         var graphics = this.add.graphics({fillStyle: {color: 0x000000}});
         graphics.fillRectShape(headerPanel);
-        this.hudText = this.add.text(5, 10, '   ', {fontSize: '16px', fill: white});
-        messageText = this.add.text(screenWidth / 2 + 100, 10, message, {fontSize: '16px', fill: green});
+        this.hudText = this.add.text(5, 2, '   ', {font: '20px '+ fontName, fill: white});
+        messageText = this.add.text(screenWidth / 2 + 100, 2, message, {font: '20px '+ fontName, fill: green});
 
         integrity = integrityMax;
 

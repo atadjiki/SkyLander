@@ -54,6 +54,7 @@ var paused = false;
 var gameStarted = false;
 
 var opacity;
+var fontName = 'Verdana';
 
 
 //UI
