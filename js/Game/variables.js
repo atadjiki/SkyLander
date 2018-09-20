@@ -1,4 +1,4 @@
-var debug = false;
+var debug = true;
 var lunarMode = false;
 var audio = true;
 

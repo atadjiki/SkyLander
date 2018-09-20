@@ -27,7 +27,7 @@ var Game = new Phaser.Class({
         //to add a spotlight, add the x and y coordinates, and the rotation below
         var xSP =    [58,  210, 537, 675, 843, 1150]; //screen width = 1280/1920
         var ySP =    [600, 558, 430, 450, 650, 625 ]; //screen height = 800/1080
-        var rotSP =  [45,  30,  35,  50,  30,  30];
+        var rotSP =  [40,  25,  30,  50,  25,  25];
         var durSP =  [5000,6000,2000,3000,2000,4000];
         var xScale = [0.4, 0.2, 0.3, 0.2, 0.3, 0.5];
         var yScale = [0.4, 0.2, 0.3, 0.2, 0.3, 0.5];
@@ -98,6 +98,15 @@ var Game = new Phaser.Class({
         platforms = this.physics.add.staticGroup();
         platforms.create(screenWidth / 2, screenHeight, groundName).setDisplaySize(screenWidth, screenHeight / 15).setVisible(false).refreshBody();
 
+        var mountainBox1 = this.physics.add.staticGroup();
+        mountainBox1.create(0, screenHeight, groundName).setDisplaySize(screenWidth + 350, 150).setVisible(false).refreshBody();
+
+        var mountainBox2 = this.physics.add.staticGroup();
+        mountainBox2.create(screenWidth, screenHeight, groundName).setDisplaySize(600, 150).setVisible(false).refreshBody();
+
+        var mountainBox3 = this.physics.add.staticGroup();
+        mountainBox3.create(screenWidth/2 - 25, screenHeight, groundName).setDisplaySize(180, 435).setVisible(false).refreshBody();
+
         var hudBox = this.physics.add.staticGroup();
         hudBox.create(screenWidth / 2, hudHeight / 2, groundName).setDisplaySize(screenWidth, hudHeight + playerStartY).setVisible(false).refreshBody();
 
@@ -150,6 +159,9 @@ var Game = new Phaser.Class({
 
         //collider between player and platforms
         this.physics.add.collider(player, platforms, playerCrash, null, this);
+        this.physics.add.collider(player, mountainBox1, playerCrash, null, this);
+        this.physics.add.collider(player, mountainBox2, playerCrash, null, this);
+        this.physics.add.collider(player, mountainBox3, playerCrash, null, this);
         this.physics.add.collider(player, hudBox, function () {}, null, this);
 
         //for landing zones
