@@ -20,9 +20,9 @@ var Preloader = new Phaser.Class({
         var loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 50,
-            text: 'Loading Game...',
+            text: 'Loading...',
             style: {
-                font: '20px monospace',
+                font: '20px Courier',
                 fill: '#ffffff'
             }
         });
@@ -33,7 +33,7 @@ var Preloader = new Phaser.Class({
             y: height / 2 - 5,
             text: '0%',
             style: {
-                font: '18px monospace',
+                font: '18px Courier',
                 fill: '#ffffff'
             }
         });
@@ -44,7 +44,7 @@ var Preloader = new Phaser.Class({
             y: height / 2 + 50,
             text: '',
             style: {
-                font: '18px monospace',
+                font: '18px Courier',
                 fill: '#ffffff'
             }
         });
@@ -73,6 +73,7 @@ var Preloader = new Phaser.Class({
         this.load.image(backgroundName, backgroundPath);
         this.load.image(blackBackgroundName, blackBackgroundPath);
         this.load.image(foregroundName, foregroundPath);
+        this.load.image(titleName, titlePath);
         this.load.image(opacityName, opacityPath);
         this.load.image(groundName, groundPath);
         this.load.image(spotlightName, spotlightPath);

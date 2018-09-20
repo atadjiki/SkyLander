@@ -51,6 +51,7 @@ var landingFactor = 1;
 var hasJumped = false;
 var alive = true;
 var paused = false;
+var gameStarted = false;
 
 var opacity;
 
@@ -58,7 +59,7 @@ var opacity;
 //UI
 var hudText;
 var messageText;
-var message = 'Space to Insert Coin';;
+var message = 'Space to Begin';;
 
 //inputs
 var qKey;
@@ -91,6 +92,7 @@ var killboxName = 'hitbox';
 var towerName = 'tower';
 var backgroundName = 'background';
 var blackBackgroundName = 'blackbackground';
+var titleName = 'title';
 var opacityName = 'opacity';
 var foregroundName = 'foreground';
 var goldName = 'gold';
@@ -107,6 +109,7 @@ var killboxPath = 'assets/killbox.png';
 var towerPath = 'assets/tower.png';
 var backgroundPath = 'assets/background.png';
 var blackBackgroundPath = 'assets/blackbackground.png';
+var titlePath = 'assets/title.png';
 var opacityPath = 'assets/opacity.png';
 var foregroundPath = 'assets/foreground.png';
 var goldPath = 'assets/gold.png';

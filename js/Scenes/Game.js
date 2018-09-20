@@ -25,14 +25,14 @@ var Game = new Phaser.Class({
 
         if (debug) console.log("Creating Tweens");
         //to add a spotlight, add the x and y coordinates, and the rotation below
-        var xSP =    [537, 675, 843, 210, 58,  1150]; //screen width = 1280/1920
-        var ySP =    [430, 450, 650, 558, 600, 625]; //screen height = 800/1080
-        var rotSP =  [35,  50,  30,  30,  30,  30];
-        var durSP =  [2000,3000,2000,6000,5000,4000];
-        var xScale = [0.3, 0.2, 0.3, 0.2, 0.4, 0.5];
-        var yScale = [0.3, 0.2, 0.3, 0.2, 0.4, 0.5];
-        var yOffset =[150, 150, 150, 150, 150, 150];
-        var xTrail = [140, 210,  70, 70,  70,  70];
+        var xSP =    [58,  210, 537, 675, 843, 1150]; //screen width = 1280/1920
+        var ySP =    [600, 558, 430, 450, 650, 625 ]; //screen height = 800/1080
+        var rotSP =  [45,  30,  35,  50,  30,  30];
+        var durSP =  [5000,6000,2000,3000,2000,4000];
+        var xScale = [0.4, 0.2, 0.3, 0.2, 0.3, 0.5];
+        var yScale = [0.4, 0.2, 0.3, 0.2, 0.3, 0.5];
+        var yOffset =[175, 150, 150, 175, 150, 135];
+        var xTrail = [70,  50,  140, 210, 140, 70];
 
 
         //the darker image to mask
@@ -180,8 +180,8 @@ var Game = new Phaser.Class({
         var headerPanel = new Phaser.Geom.Rectangle(0, 0, screenWidth, hudHeight);
         var graphics = this.add.graphics({fillStyle: {color: 0x000000}});
         graphics.fillRectShape(headerPanel);
-        this.hudText = this.add.text(5, 2, '   ', {fontSize: '16px', fill: white});
-        messageText = this.add.text(screenWidth / 2, 10, message, {fontSize: '16px', fill: green});
+        this.hudText = this.add.text(5, 10, '   ', {fontSize: '16px', fill: white});
+        messageText = this.add.text(screenWidth / 2 + 100, 10, message, {fontSize: '16px', fill: green});
 
         integrity = integrityMax;
 
@@ -207,6 +207,25 @@ var Game = new Phaser.Class({
 
 
         if(audio) backgroundMusic.play();
+
+        //kick the player out of the heli if they dont launch in time
+        var bootPlayerEvent = this.time.delayedCall(21000 + Math.floor((Math.random() * 900) + 250), function(){
+
+            if(!hasJumped){
+                hasJumped = true;
+                jumpFX.play();
+                player.x = helicopter.x;
+                player.y = helicopter.y + 50;
+                player.visible = true;
+                messageText.setText('');
+                this.physics.resume();
+                startTime = new Date();
+                currentTime = startTime;
+                if (debug) console.log("Booting Player");
+                if (debug) console.log("Start Time is " + startTime);
+            }
+
+        }, [], this);
     },
 
 
@@ -410,7 +429,7 @@ var Game = new Phaser.Class({
 
     doDeath: function () {
 
-        messageText.setText('Game Over!');
+        messageText.setText('Game Over! Space to Insert Coin');
         messageText.setColor(red);
         player.setVelocity(0, 0);
 
