@@ -88,7 +88,7 @@ var Preloader = new Phaser.Class({
         this.load.spritesheet(parachuteName, parachutePath, { frameWidth: 64, frameHeight: 64, endFrame: 2 });
         this.load.spritesheet(landedParachuteName, landedParachutePath, {frameWidth: 64, frameHeight: 64, endFrame: 1});
 
-        for(var i = 1; i < 15; i++){
+        for(var i = 1; i < 16; i++){
             this.load.image(explosionName+i, explosionPath + i +'.png');
         }
 
@@ -155,10 +155,10 @@ var Preloader = new Phaser.Class({
                 { key: explosionName+'11'},
                 { key: explosionName+'12'},
                 { key: explosionName+'13'},
-                { key: explosionName+'14'}
+                { key: explosionName+'14'},
+                { key: explosionName+'15'}
             ],
             frameRate: 20,
-            repeat: -1
         });
 
         this.scene.start('mainmenu');

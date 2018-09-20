@@ -68,31 +68,31 @@ var Game = new Phaser.Class({
         }
 
         //create spotlight cones
-        for (let i = 0; i < xSP.length; i++) {
-            var spotlight = this.physics.add.image(xSP[i] + 15, ySP[i] - 35, spotlightName);
-            spotlight.setScale(0.05, 0.08);
-            spotlight.setGravityY(-1 * gravity); //for now we have to suspend these objects
-            spotlight.setGravityX(0);
-            spotlight.setAlpha(0.5);
-            if (lunarMode) temp.visible = false;
-            var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth, screenHeight);
-            pic.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
-            pic.setAlpha(0.5);
-
-            //animate spotlights
-            var temp = this.tweens.add({
-                targets: spotlight,
-                angle: rotSP[i],
-                duration: durSP[i],
-                ease: 'Power.5',
-                yoyo: true,
-                delay: 250,
-                loop: -1,
-            });
-            gameTweens.push(temp);
-            spotlights.push(spotlight);
-            spotlights.push(pic);
-        }
+        // for (let i = 0; i < xSP.length; i++) {
+        //     var spotlight = this.physics.add.image(xSP[i] + 15, ySP[i] - 35, spotlightName);
+        //     spotlight.setScale(0.05, 0.08);
+        //     spotlight.setGravityY(-1 * gravity); //for now we have to suspend these objects
+        //     spotlight.setGravityX(0);
+        //     spotlight.setAlpha(0.5);
+        //     if (lunarMode) temp.visible = false;
+        //     var pic = this.add.image(screenWidth / 2, screenHeight / 2, backgroundName).setDisplaySize(screenWidth, screenHeight);
+        //     pic.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+        //     pic.setAlpha(0.5);
+        //
+        //     //animate spotlights
+        //     var temp = this.tweens.add({
+        //         targets: spotlight,
+        //         angle: rotSP[i],
+        //         duration: durSP[i],
+        //         ease: 'Power.5',
+        //         yoyo: true,
+        //         delay: 250,
+        //         loop: -1,
+        //     });
+        //     gameTweens.push(temp);
+        //     spotlights.push(spotlight);
+        //     spotlights.push(pic);
+        // }
 
         //static group for ground, these are unnaffected by physics
         platforms = this.physics.add.staticGroup();
@@ -438,7 +438,7 @@ var Game = new Phaser.Class({
             player.visible = false;
 
             var explode = this.physics.add.sprite(player.x, player.y, explosionName);
-            explode.anims.play(explosionName, true);
+            explode.anims.play(explosionName, false);
             if(audio) spottedFX.play();
 
         }, [], this);
