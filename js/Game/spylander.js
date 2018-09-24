@@ -1,3 +1,8 @@
+/*
+ * Arash Tadjiki
+ * 2018 - University of Utah MEAE
+ * Prototype II
+ */
 var config = {
     type: Phaser.AUTO,
     width: screenWidth,

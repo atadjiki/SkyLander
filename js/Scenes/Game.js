@@ -98,6 +98,7 @@ var Game = new Phaser.Class({
         platforms = this.physics.add.staticGroup();
         platforms.create(screenWidth / 2, screenHeight, groundName).setDisplaySize(screenWidth, screenHeight / 15).setVisible(false).refreshBody();
 
+        //hitboxes for mountains
         var mountainBox1 = this.physics.add.staticGroup();
         mountainBox1.create(0, screenHeight, groundName).setDisplaySize(screenWidth + 350, 150).setVisible(false).refreshBody();
 
@@ -107,6 +108,7 @@ var Game = new Phaser.Class({
         var mountainBox3 = this.physics.add.staticGroup();
         mountainBox3.create(screenWidth/2 - 25, screenHeight, groundName).setDisplaySize(180, 435).setVisible(false).refreshBody();
 
+        //UI bar at the top of screen
         var hudBox = this.physics.add.staticGroup();
         hudBox.create(screenWidth / 2, hudHeight / 2, groundName).setDisplaySize(screenWidth, hudHeight + playerStartY).setVisible(false).refreshBody();
 
@@ -253,6 +255,7 @@ var Game = new Phaser.Class({
             qKey.reset();
         }
 
+        //pause game
         if (pKey.isDown && !gameEnded && hasJumped) {
 
             if (!paused) {
@@ -393,7 +396,7 @@ var Game = new Phaser.Class({
         messageText.setText(message);
         messageText.setColor(green);
         player.setVelocity(0, 0);
-        player.body.setAccelerationY(0);
+        palyer.body.setAcceleration(0,0);
         player.x = playerStartX;
         player.y = playerStartY + (screenHeight * 0.0125) + hudHeight;
         player.visible = false;
@@ -432,6 +435,7 @@ var Game = new Phaser.Class({
 
         player.x = helicopter.x;
         player.y = helicopter.y + 50;
+        player.body.acceleration(0,0);
         jumpFX.play();
 
         endTime = new Date();

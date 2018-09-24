@@ -1,18 +1,18 @@
-var debug = false;
-var lunarMode = false;
-var audio = true;
+var debug = false; //set true to get console printouts and hitboxes
+var lunarMode = false; //turns off all spotlights
+var audio = true; //controls both music and sfx
 
 var screenWidth = 1280; //1280
 var screenHeight = 800; //800
-var hudHeight = 30;
+var hudHeight = 30; //the size of the UI bar at the top of the screen. paratrooper starts below this
 var gravity = 10 //gravitational constant
 var accelMax = 75; //how much over gravity we can fall
-var accelMin = -50;
+var accelMin = -50; //how much upwards acceleration is allowed
 
-var integrityMax = 2000;
+var integrityMax = 2000; //set this higher to allow players more runs
 var integrity;
-var horizDamage = 1;
-var vertDamage = 10;
+var horizDamage = 1; //how much integrity damage for left and right movement
+var vertDamage = 10; //for up and down
 
 
 //player variables
@@ -36,10 +36,10 @@ var bronzeX = 905;
 var bronzeY = 760;
 
 //spotlight animation stuff
-var spotlights;
-var killboxes;
-var gameTweens;
-var killBoxOffsetX = 60;
+var spotlights; //list of watchtowers
+var killboxes; //list of all circle killboxes
+var gameTweens; //list of all tweens
+var killBoxOffsetX = 60; //offsets for placing the hitboxes above the towers
 var killBoxOffsetY = 75;
 var killBoxTrailX = 70;
 
@@ -48,7 +48,7 @@ var score = 0;
 var landingFactor = 1;
 
 //bools/gamestates
-var hasJumped = false;
+var hasJumped = false; //has the player launched from heli
 var alive = true;
 var paused = false;
 var gameStarted = false;
@@ -60,16 +60,16 @@ var fontName = 'Verdana';
 //UI
 var hudText;
 var messageText;
-var message = 'Space to Begin';;
+var message = 'Space to Begin'; //text displayed on right side of HUD
 
 //inputs
-var qKey;
-var pKey;
+var qKey; //quit
+var pKey; //pause
 var leftKey;
 var rightKey;
 var upKey;
 var downKey;
-var spaceKey;
+var spaceKey; //launch/start game
 
 //elapsed time
 var startTime;
